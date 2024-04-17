@@ -47,7 +47,6 @@ jobs:
       - name: Read .env File
         id: read-env
         run: |
-          cat .env
           echo "VITE_SERVER_URL=$(grep -Eo 'VITE_SERVER_URL=\s*[^ ]+' .env | sed 's/VITE_SERVER_URL=//')" >> $GITHUB_ENV
 
       - name: Use VITE_SERVER_URL in Deployment
