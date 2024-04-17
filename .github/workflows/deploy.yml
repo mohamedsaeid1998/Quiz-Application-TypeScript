@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout Repository
         uses: actions/checkout@v2
 
       - name: Setup Node
@@ -19,13 +19,13 @@ jobs:
         with:
           node-version: 16
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: npm install
 
-      - name: Build project
+      - name: Build Project
         run: npm run build
 
-      - name: Upload production-ready build files
+      - name: Upload Production-ready Build Files
         uses: actions/upload-artifact@v2
         with:
           name: production-files
@@ -38,18 +38,21 @@ jobs:
     if: github.ref == 'refs/heads/main'
 
     steps:
-      - name: Download artifact
+      - name: Download Artifact
         uses: actions/download-artifact@v2
         with:
           name: production-files
           path: ./dist
 
-      - name: Read .env file
+      - name: Read .env File
         id: read-env
         run: |
           cat .env
           echo "VITE_SERVER_URL=$(grep -Eo 'VITE_SERVER_URL=\s*[^ ]+' .env | sed 's/VITE_SERVER_URL=//')" >> $GITHUB_ENV
-          echo "VITE_SERVER_URL=$(printenv VITE_SERVER_URL)"
+
+      - name: Use VITE_SERVER_URL in Deployment
+        run: |
+          echo "The VITE_SERVER_URL is ${{ env.VITE_SERVER_URL }}"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
