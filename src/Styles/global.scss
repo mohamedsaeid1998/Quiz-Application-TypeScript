@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+@import "./variables.scss";
+@import "./responsive.scss";
+
+* {
+  font-family: "Nunito", sans-serif;
+  box-sizing: border-box;
+}
+
+.active {
+  background-color: #0092471a !important;
+
+  .ps-menu-label {
+    color: white !important;
+  }
+}
+
+.ps-sidebar-root {
+  border: 1px solid #c0c0c0 !important;
+}
+
+.design {
+  width: 20rem !important;
+}
+
+.loader {
+  position: relative;
+  font-size: 48px;
+  letter-spacing: 2px;
+}
+.loader:before {
+  content: "Loading";
+  color: #000000;
+}
+.loader:after {
+  content: "";
+  width: 20px;
+  height: 20px;
+  background-color: #ff4e08;
+  border-radius: 50%;
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  top: -70px;
+  animation: motion 3s ease-in-out infinite;
+}
+
+@keyframes motion {
+  0%,
+  50%,
+  100% {
+    transform: translateX(0) scale(1);
+  }
+  25% {
+    transform: translateX(-100px) scale(0.3);
+  }
+  75% {
+    transform: translateX(100px) scale(0.3);
+  }
+}
+.modalDeleteBtn {
+  background-color: #752626fd;
+  font-weight: 550;
+
+  &:hover {
+    color: #ffffff;
+    background-color: rgb(255, 93, 93);
+    box-shadow: rgba(79, 0, 0, 0.663) 0px -50px 36px -28px inset;
+    transform: scaleX(1.01);
+    font-weight: 500;
+    transition: box-shadow 1s ease, transform 1s ease, background-color 1s,
+      color 1s ease, font-weight 0.3s ease;
+  }
+
+  transition: box-shadow 1s ease, transform 1s ease;
+}
+.modalBtn {
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+
+  &:hover {
+    color: #000;
+    background-color: white;
+    box-shadow: rgba(165, 165, 165, 0.663) 0px -50px 36px -28px inset;
+    transform: scaleX(1.01);
+    font-weight: 500;
+    transition: box-shadow 1s ease, transform 1s ease, background-color 1s,
+      color 1s ease, font-weight 0.3s ease;
+  }
+
+  transition: box-shadow 1s ease, transform 1s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .dark\:bg-gray-700 {
+    --tw-bg-opacity: 1;
+    // background-color: white !important;
+  }
+}
+.quizBox {
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+
+  &:hover {
+    color: #000;
+    background-color: white;
+    box-shadow: rgba(165, 165, 165, 0.663) 0px -50px 36px -28px inset;
+    transform: scaleX(1.01);
+    font-weight: 500;
+    transition: box-shadow 1s ease, transform 1s ease, background-color 1s,
+      color 1s ease, font-weight 0.3s ease;
+    img {
+      transform: scale(1.02);
+    }
+  }
+  transition: box-shadow 1s ease, transform 1s ease;
+}
+
+.ps-menu-icon:first() {
+  width: 100% !important;
+}
+
+// .css-1t8x7v1 > .ps-menu-button:hover {
+//   background-color: #ffeddf !important;
+// }
+.h-16 .ps-menu-button {
+  height: 100% !important;
+}
+
+.link {
+  .ps-menu-button:hover {
+    background-color: #ffeddf !important;
+  }
+}
+
+.show {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: 20px;
+}
+.hide {
+  display: none;
+}
+
+.radioInput {
+  width: 20px;
+  height: 20px;
+}
+// .inputWrapper {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   margin-top: 25px;
+//   gap: 5px;
+// }

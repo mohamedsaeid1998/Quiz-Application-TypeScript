@@ -1,0 +1,51 @@
+// ****************************** BaseUrl ************************************
+
+export const BASE_URL = import.meta.env.VITE_SERVER_URL
+
+// ****************************** Auth ************************************
+
+export const AUTH_URLS = {
+  login: "/api/auth/login",
+  register: "/api/auth/register",
+  forgotPass: "/api/auth/forgot-password",
+  resetPass: "/api/auth/reset-password",
+  changePass: "/api/auth/change-password",
+}
+
+// ****************************** Groups ************************************
+
+export const GROUPS_URLS = {
+  groupsList: "/api/group",
+  UpdateOrDeleteGroup: (id: string) => `/api/group/${id}`
+}
+
+// ****************************** STUDENTS ************************************
+
+export const STUDENTS_URLS = {
+  allStudents: "/api/student",
+  topFiveStudents: "/api/student/top-five",
+  allStudentsWithoutGroups: "/api/student/without-group"
+}
+
+// ****************************** Quizzes ************************************
+
+export const QUIZZES_URLS = {
+  upcomingQuizzes: "/api/quiz/incomming",
+  completedQuizzes: "/api/quiz/completed",
+  createQuiz: "/api/quiz",
+  quizzesOperations: (id: string) => `/api/quiz/${id}`
+}
+
+// ****************************** Results ************************************
+
+export const RESULTS_URLS = {
+  resultsList: "/api/quiz/result",
+
+}
+
+// ****************************** Questions ************************************
+
+export const QUESTIONS_URLS = {
+  questionsOperations: "/api/question",
+}
+
