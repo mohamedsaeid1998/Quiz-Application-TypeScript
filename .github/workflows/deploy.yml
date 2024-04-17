@@ -20,7 +20,7 @@ jobs:
           node-version: 16
 
       - name: Install dependencies
-        uses: bahmutov/npm-install@v1
+        run: npm install
 
       - name: Build project
         run: npm run build
@@ -47,7 +47,9 @@ jobs:
       - name: Read .env file
         id: read-env
         run: |
+          cat .env
           echo "VITE_SERVER_URL=$(grep -Eo 'VITE_SERVER_URL=\s*[^ ]+' .env | sed 's/VITE_SERVER_URL=//')" >> $GITHUB_ENV
+          echo "VITE_SERVER_URL=$(printenv VITE_SERVER_URL)"
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
