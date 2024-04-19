@@ -53,6 +53,20 @@ export interface IQuizzesResponse {
   message: string
 }
 
+export interface IEditQuiz {
+  title: string,
+}
+
+
+export interface IQuestions {
+  title: string,
+  description: string,
+  answer: typeof RightAnswers,
+  difficulty: string,
+  type: string
+  _id:string
+}
+
 export interface ICreateQuestions {
   title: string,
   description: string,
@@ -65,12 +79,6 @@ export interface ICreateQuestions {
   answer: typeof RightAnswers,
   difficulty: string,
   type: string
-}
-
-
-
-export interface IEditQuiz {
-  title: string,
 }
 
 export interface IQuestionResponse {

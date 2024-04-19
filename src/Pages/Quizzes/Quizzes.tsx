@@ -1,6 +1,5 @@
 //@ts-nocheck
 import { BankIcon, quizIcon, quizImg, studentLogo } from '@/Assets/Images'
-import './Quizzes.module.scss'
 import { useTranslation } from 'react-i18next';
 import { ArrowRight } from 'lucide-react';
 import { useCompletedQuizzesQuery, useGetFirstUpcomingQuizzesQuery } from '@/Redux/Services/Quizzes/QuizzesSlice';
@@ -11,6 +10,7 @@ import { Link } from 'react-router-dom';
 import { CreateQuizModal, InfoQuizModal } from './QuizzesModels';
 import { useLayoutEffect, useState } from 'react';
 import { useGroupsListQuery } from '@/Redux/Services/Groups/GroupsSlice';
+import './Quizzes.module.scss'
 interface IProps {
 
 }

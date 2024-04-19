@@ -5,6 +5,7 @@ import { Eye, FilePenLine, Plus, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
 import { CreateQuestionModal } from './QuestionsModels';
+import { IQuestions } from '@/InterFaces/QuestionsInterFaces';
 interface IProps {
 
 }
@@ -83,7 +84,7 @@ const Questions = ({ }: IProps) => {
               <td className='py-3 border border-slate-300'><div className='flex justify-around items-center'><span className='animate-pulse rounded-md mr-1 h-[28px] w-[20px] bg-gray-500 ' /> <span className=' animate-pulse rounded-md mr-1 h-[28px] w-[20px] bg-gray-500 ' /> <span className=' animate-pulse rounded-md mr-1 h-[28px] w-[20px] bg-gray-500 ' /> </div></td>
             </tr>) : null}
 
-            {allQuestions?.map(({ title, description, answer, difficulty, type, _id }: any) => <tr key={_id} className='bg-white dark:border-gray-700 hover:bg-blue-200'>
+            {allQuestions?.map(({ title, description, answer, difficulty, type, _id }: IQuestions) => <tr key={_id} className='bg-white dark:border-gray-700 hover:bg-blue-200'>
               <td title={title} className='py-3 font-medium border whitespace-nowrap border-slate-300 truncate text-balance max-w-60'>{title}</td>
               <td className='hidden lg:table-cell py-3 font-medium border whitespace-nowrap border-slate-300 truncate max-w-60'>{description}</td>
               <td className='hidden md:table-cell py-3 font-medium border whitespace-nowrap border-slate-300 truncate'>{answer}</td>
