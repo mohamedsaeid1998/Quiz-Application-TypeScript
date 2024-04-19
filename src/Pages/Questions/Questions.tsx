@@ -3,16 +3,45 @@ import './Questions.module.scss'
 import { Button } from '@/Components';
 import { Eye, FilePenLine, Plus, Trash2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useState } from 'react';
+import { CreateQuestionModal } from './QuestionsModels';
 interface IProps {
 
 }
 
 const Questions = ({ }: IProps) => {
   const { t } = useTranslation();
+
+  //? ***************Get Questions ***************
   const { data: allQuestions, isLoading } = useAllQuestionsQuery(0)
-  console.log(allQuestions);
+
+  //* ***************Create New Question ***************
+  const [isOpen, setIsOpen] = useState(false)
+  const openModal = () => setIsOpen(true)
+  const closeModal = () => setIsOpen(false)
+
+  const difficulty = [
+    { _id: "easy", title: "Easy" },
+    { _id: "medium", title: "Medium" },
+    { _id: "hard", title: "Hard" },
+  ]
+
+  const Answers = [
+    { _id: "A", title: "A" },
+    { _id: "B", title: "B" },
+    { _id: "C", title: "C" },
+    { _id: "D", title: "D" },
+  ]
+
+  const type = [
+    { _id: "FE", title: "FE" },
+    { _id: "BE", title: "BE" },
+  ]
 
   return <>
+    <CreateQuestionModal {...{ closeModal, isOpen, difficulty, type, Answers }} />
+
+
     <main className='m-5 mt-3'>
       <div className="p-3 mt-2 overflow-x-auto border-2 rounded-md" >
         {isLoading ? <div className='flex justify-between items-center font-semibold'>
@@ -21,7 +50,7 @@ const Questions = ({ }: IProps) => {
         </div>
           : <div className='flex justify-between items-center font-semibold'>
             {t("BankOfQuestions")}
-            <Button variant={'outline'} rounded={'full'} className="text-left gap-2 group"><Plus className='bg-black group-hover:bg-white rounded-full p-1 text-2xl text-white group-hover:text-black transition duration-0' size={20} strokeWidth={5} /> {t("AddQuestion")} </Button>
+            <Button onClick={openModal} variant={'outline'} rounded={'full'} className="text-left gap-2 group"><Plus className='bg-black group-hover:bg-white rounded-full p-1 text-2xl text-white group-hover:text-black transition duration-0' size={20} strokeWidth={5} /> {t("AddQuestion")} </Button>
           </div>}
         <table className='w-full  border-separate rounded-md mt-2 border-slate-400'>
           <thead className='text-white '>
@@ -60,7 +89,7 @@ const Questions = ({ }: IProps) => {
               <td className='hidden md:table-cell py-3 font-medium border whitespace-nowrap border-slate-300 truncate'>{answer}</td>
               <td className='hidden md:table-cell py-3 font-medium border whitespace-nowrap border-slate-300 truncate'>{difficulty}</td>
               <td className='hidden md:table-cell py-3 font-medium border whitespace-nowrap border-slate-300 truncate'>{type}</td>
-              <td className='py-3 font-medium border whitespace-nowrap border-slate-300 truncate  p-3'> <div className='flex justify-around items-center'><Eye className='cursor-pointer' color='green'/> <FilePenLine className='cursor-pointer' color='gold'/> <Trash2 className='cursor-pointer' color='red'/></div></td>
+              <td className='py-3 font-medium border whitespace-nowrap border-slate-300 truncate  p-3'> <div className='flex justify-around items-center'><Eye className='cursor-pointer' color='green' /> <FilePenLine className='cursor-pointer' color='gold' /> <Trash2 className='cursor-pointer' color='red' /></div></td>
             </tr>)}
 
 

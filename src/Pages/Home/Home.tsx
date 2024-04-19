@@ -48,8 +48,6 @@ const Home = ({ }: IProps) => {
         {allDataLoaded && UpcomingQuizzes?.map(({ title, createdAt, schadule, _id }: IUpcomingQuizzes) => <div key={_id} className=' border-2 flex items-center mt-4 rounded-lg'>
 
           <img src={quizImg} alt="quizImg" />
-
-
           <div className='p-3 w-full '>
             <h3 className='font-bold text-lg'>{title}</h3>
             <div className="text-[#777]">
@@ -61,7 +59,6 @@ const Home = ({ }: IProps) => {
 
             </div>
           </div>
-
         </div>)}
 
 

@@ -1,9 +1,9 @@
 import { IFormError } from "@/InterFaces/AuthInterFaces";
+import { IQuestionResponse } from "@/InterFaces/QuestionsInterFaces";
 import CookieServices from "@/Services/CookieServices/CookieServices";
 import { BASE_URL, QUESTIONS_URLS } from "@/Services/EndPoints/EndPoints";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { toast } from "react-toastify";
-
 
 export const QuestionsApiSlice = createApi({
   reducerPath: "questions",
@@ -34,13 +34,11 @@ export const QuestionsApiSlice = createApi({
       },
       invalidatesTags: ["Questions"],
 
-      transformResponse: (response: any) => {
-        console.log(response);
-        toast.success(response.message);
+      transformResponse: (response: IQuestionResponse) => {
+        toast.success(response?.message);
         return response;
       },
       transformErrorResponse: (error: IFormError) => {
-        console.log(error);
         toast.error(error?.data?.message);
         return error;
       }

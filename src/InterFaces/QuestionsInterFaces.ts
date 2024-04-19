@@ -1,3 +1,5 @@
+import { RightAnswers } from "@/Types"
+
 export interface IUpcomingQuizzes {
   _id: string
   title: string,
@@ -52,7 +54,6 @@ export interface IQuizzesResponse {
 }
 
 export interface ICreateQuestions {
-
   title: string,
   description: string,
   options: {
@@ -61,32 +62,31 @@ export interface ICreateQuestions {
     C: string,
     D: string
   },
-  answer: string,
+  answer: typeof RightAnswers,
   difficulty: string,
   type: string
 }
+
 
 
 export interface IEditQuiz {
   title: string,
 }
 
-export interface IQuizzesResponse {
-  participants: [],
-  quiz: {
-    closed_at: string
-    code: string
+export interface IQuestionResponse {
+  data: {
+    answer: string
     createdAt: string
     description: string
     difficulty: string
-    duration: number
-    group: string
     instructor: string
-    participants: number
-    questions: []
-    questions_number: number
-    schadule: string
-    score_per_question: number
+    options: {
+      A: string,
+      B: string,
+      C: string,
+      D: string
+    },
+    points: number
     status: string
     title: string
     type: string
@@ -94,6 +94,9 @@ export interface IQuizzesResponse {
     __v: number
     _id: string
   },
+  message: string
 }
+
+
 
 
