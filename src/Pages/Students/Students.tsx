@@ -1,11 +1,11 @@
 
-import './Students.module.scss'
-import { useTranslation } from 'react-i18next';
 import { studentLogo } from '@/Assets/Images';
-import { Eye, Trash2 } from 'lucide-react';
-import { useAllStudentsQuery } from '@/Redux/Services/Students/StudentsSlice';
 import { IAllStudents } from '@/InterFaces/StudentsInterFaces';
+import { useAllStudentsQuery } from '@/Redux/Services/Students/StudentsSlice';
+import { Eye } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import './Students.module.scss';
 import { DetailsStudentModal } from './StudentsModels';
 interface IProps {
 
