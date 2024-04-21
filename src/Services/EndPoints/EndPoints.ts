@@ -24,7 +24,8 @@ export const GROUPS_URLS = {
 export const STUDENTS_URLS = {
   allStudents: "/api/student",
   topFiveStudents: "/api/student/top-five",
-  allStudentsWithoutGroups: "/api/student/without-group"
+  allStudentsWithoutGroups: "/api/student/without-group",
+  StudentDetails: (id: string) => `/api/student/${id}`
 }
 
 // ****************************** Quizzes ************************************

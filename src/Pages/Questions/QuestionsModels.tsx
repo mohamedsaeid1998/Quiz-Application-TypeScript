@@ -8,7 +8,7 @@ import { RightAnswers } from "@/Types"
 import { renderErrors } from "@/Utils/Helpers/ErrorMessage/ErrorMessage"
 import { FieldValidation } from "@/Utils/Validation"
 import { Loader } from "lucide-react"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 
 interface IAddQuestionsProps {
@@ -153,7 +153,6 @@ export const EditQuestionModal = ({ isOpenEditModel, closeModalEdit, editItemId,
   </>
 }
 
-// DetailsModel
 
 interface IDetailsQuestionsProps {
   isOpenDetailsModel: boolean
@@ -166,7 +165,7 @@ export const DetailsQuestionModal = ({ closeDetailsModel, isOpenDetailsModel, de
   const { data: questionDetails,status} = useQuestionDetailsQuery(detailsItemId)
 
   return <>
-    <DetailsModel title="Set up a new Question"  {...{ isOpenDetailsModel, closeDetailsModel }}>
+    <DetailsModel title="Question Details"  {...{ isOpenDetailsModel, closeDetailsModel }}>
 
 
 
@@ -198,10 +197,9 @@ export const DetailsQuestionModal = ({ closeDetailsModel, isOpenDetailsModel, de
         </div>
 
         <div className="flex justify-between items-center gap-4 mt-4 w-full">
-          <DetailsInput className="w-3/12" label="answer" content={`${questionDetails?.answer}`} />
-          <DetailsInput className="w-3/12" label="type" content={`${questionDetails?.type}`} />
-          <DetailsInput className="w-3/12" label="difficulty" content={`${questionDetails?.difficulty}`} />
-          <DetailsInput className="w-3/12" label="point" content={`${questionDetails?.points}`} />
+          <DetailsInput className="w-4/12" label="answer" content={`${questionDetails?.answer}`} />
+          <DetailsInput className="w-4/12" label="type" content={`${questionDetails?.type}`} />
+          <DetailsInput className="w-4/12" label="difficulty" content={`${questionDetails?.difficulty}`} />
         </div>
 
 
