@@ -1,13 +1,13 @@
 //@ts-nocheck
 import { Button } from '@/Components';
-import { Input, Textarea } from '@/Components/Shared/Inputs/Inputs';
+import { DetailsInput } from '@/Components/Shared/DetailsInputs/DetailsInput';
 import { useQuizzesDetailsQuery } from '@/Redux/Services/Quizzes/QuizzesSlice';
 import { CalendarDays, ChevronsRight, Clock, Pencil, SaveAll, Trash2 } from 'lucide-react';
 import moment from 'moment';
-import { Link, useParams } from 'react-router-dom';
-import './QuizDetails.module.scss';
-import { toast } from 'react-toastify';
 import { useRef, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import './QuizDetails.module.scss';
 import { DeleteQuizModal, EditQuizModal } from './QuizDetailsModels';
 interface IProps {
 
@@ -15,8 +15,7 @@ interface IProps {
 
 const QuizDetails = ({ }: IProps) => {
   const { id } = useParams()
-  const { data: QuizData,refetch } = useQuizzesDetailsQuery(id)
-  console.log(QuizData);
+  const { data: QuizData, refetch } = useQuizzesDetailsQuery(id)
   const textRef = useRef<HTMLParagraphElement>(null);
 
   const handleCopy = () => {
@@ -29,6 +28,8 @@ const QuizDetails = ({ }: IProps) => {
     }
   };
 
+
+  //! *************** Delete Quiz ***************
   const [deleteItemId, setDeleteItem] = useState("")
   const [isOpenDeleteModel, setIsOpenDeleteModel] = useState(false)
   const openModalDelete = (_id: string) => {
@@ -41,8 +42,7 @@ const QuizDetails = ({ }: IProps) => {
   }
 
 
-
-
+  //TODO *************** Edit Quiz ***************
   const [editItemId, setEditItem] = useState("")
   const [quizTitle, setQuizTitle] = useState("")
   const [isOpenEditModel, setIsOpenEditModel] = useState(false)
@@ -59,11 +59,9 @@ const QuizDetails = ({ }: IProps) => {
     setQuizTitle(QuizData?.title)
   }
 
-
-
   return <>
     <DeleteQuizModal {...{ closeModalDelete, isOpenDeleteModel, deleteItemId }} />
-    <EditQuizModal {...{ quizTitle,isOpenEditModel, closeModalEdit, editItemId,refetch }} />
+    <EditQuizModal {...{ quizTitle, isOpenEditModel, closeModalEdit, editItemId, refetch }} />
 
     <main className='m-5 mt-3 flex justify-center items-center'>
       <div className="p-3 border-2 rounded-md w-fit " >
@@ -96,38 +94,30 @@ const QuizDetails = ({ }: IProps) => {
 
         </div>
 
-        <div className='flex flex-col gap-3 mt-5'>
-          <Input label='Duration' value={`${QuizData?.duration} Hour`} />
-          <Input label='Number of questions' value={`${QuizData?.questions_number} Questions`} />
-          <Input label='Score_per_question' value={`${QuizData?.score_per_question} Points`} />
-          <Textarea className='mt-0' label='Description' value={`${QuizData?.description}`} />
-          <Input label='difficulty' value={`${QuizData?.difficulty}`} />
-          <Input label='Type' value={`${QuizData?.type == "FE" ? "Frontend Task" : "Backend Task"}`} />
-          <div onClick={handleCopy} className={`w-full flex border-2 rounded-lg focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor `}>
-            <label htmlFor="Info" className='bg-secondColor p-2 font-semibold  flex justify-center min-w-20'>
-              Code
-            </label>
-            <p ref={textRef} id="Info" className="  pl-3 text-black  outline-none flex-1 border-none  bg-transparent py-1.5 placeholder:text-gray-400  caret-mainColor " >
-              {QuizData?.code}
-            </p>
-            <span className="flex items-center me-3 pl-3 text-white ">
-              <SaveAll color='black' />
-            </span>
-          </div>
-          <div className='flex items-center justify-between'>
+        <div className='flex flex-col gap-3 mt-5  w-[400px]'>
+          {!QuizData ? <>
+            {Array.from({ length: 6 }, (_, idx) => <h6 key={idx} className="h-[43.2px] mb-2 w-[400px] animate-pulse bg-gray-500 rounded-md">{""}</h6>)}
+            <div className='flex items-center justify-between'>
+            <h6 className="h-[30px] mb-2 w-[75px] animate-pulse bg-gray-500 rounded-md">{""}</h6>
+            <h6 className="h-[30px] mb-2 w-[75px] animate-pulse bg-gray-500 rounded-md">{""}</h6>
+            </div>
+          </>
+            :
+            <>
 
-            <Button onClick={() => openModalDelete(QuizData?._id)} variant={'destructive'} size={'sm'}><Trash2 size={20} className='me-1' /> Delete</Button>
-            <Button onClick={() => openModalEdit(QuizData?._id)} variant={'ghost'} size={'sm'}><Pencil size={20} className='me-1' />Edit</Button>
-          </div>
+              <DetailsInput label='Number of questions' content={`${QuizData?.questions_number} Questions`} />
+              <DetailsInput label='Score_per_question' content={`${QuizData?.score_per_question} Points`} />
+              <DetailsInput title={QuizData?.description} className='mt-0' label='Description' content={`${QuizData?.description}`} />
+              <DetailsInput label='difficulty' content={`${QuizData?.difficulty}`} />
+              <DetailsInput label='Type' content={`${QuizData?.type == "FE" ? "Frontend Task" : "Backend Task"}`} />
+              <DetailsInput ref={textRef} onClick={handleCopy} label='Code' content={QuizData?.code} icon={<SaveAll color='black' />} />
+              <div className='flex items-center justify-between'>
+                <Button onClick={() => openModalDelete(QuizData?._id)} variant={'destructive'} size={'sm'}><Trash2 size={20} className='me-1' /> Delete</Button>
+                <Button onClick={() => openModalEdit(QuizData?._id)} variant={'ghost'} size={'sm'}><Pencil size={20} className='me-1' />Edit</Button>
+              </div>
 
+            </>}
         </div>
-
-
-
-
-
-
-
 
       </div>
     </main>

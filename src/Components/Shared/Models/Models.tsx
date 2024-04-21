@@ -27,6 +27,12 @@ interface IPropsInfoModel {
   closeInfoModel: () => void
   children: ReactNode
 }
+interface IPropsDetailsModel {
+  isOpenDetailsModel: boolean
+  closeDetailsModel: () => void
+  title?: string
+  children: ReactNode
+}
 
 export const AddModel = ({ isOpen, closeModal, children, title }: IProps) => {
   return (
@@ -157,7 +163,7 @@ export const EditModel = ({ isOpenEditModel, closeModalEdit, children, title }: 
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                 >
-                  <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                     <Dialog.Title
                       as="h3"
                       className="text-lg font-bold leading-6 text-gray-900"
@@ -210,12 +216,63 @@ export const InfoModel = ({ isOpenInfoModel, closeInfoModel, children }: IPropsI
                 >
                   <Dialog.Panel className="w-full max-w-sm transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                     <div className="mt-2 flex flex-col items-center  gap-3">
-                    <Check className='bg-black rounded-full p-1 text-2xl' size={70} strokeWidth={3} color='white' />
+                      <Check className='bg-black rounded-full p-1 text-2xl' size={70} strokeWidth={3} color='white' />
                       <div className='text-center font-extrabold text-2xl '>
-                      Quiz was successfully created
+                        Quiz was successfully created
                       </div>
-                        {children}
+                      {children}
 
+                    </div>
+
+                  </Dialog.Panel>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition>
+      </div>
+    </>
+  )
+}
+
+export const DetailsModel = ({ isOpenDetailsModel, closeDetailsModel, children, title }: IPropsDetailsModel) => {
+  return (
+    <>
+      <div className='w-full'>
+        <Transition appear show={isOpenDetailsModel} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={closeDetailsModel}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-black/25" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 overflow-y-auto">
+              <div className="flex min-h-full items-center justify-center p-4 text-center">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 scale-95"
+                  enterTo="opacity-100 scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 scale-100"
+                  leaveTo="opacity-0 scale-95"
+                >
+                  <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-lg font-bold leading-6 text-gray-900"
+                    >
+                      {title}
+                    </Dialog.Title>
+                    <div className="mt-2">
+                      {children}
                     </div>
 
                   </Dialog.Panel>

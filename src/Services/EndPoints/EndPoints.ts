@@ -40,12 +40,12 @@ export const QUIZZES_URLS = {
 
 export const RESULTS_URLS = {
   resultsList: "/api/quiz/result",
-
 }
 
 // ****************************** Questions ************************************
 
 export const QUESTIONS_URLS = {
-  questionsOperations: "/api/question",
+  createQuestion: "/api/question",
+  questionOperations: (id: string) => `/api/question/${id}`
 }
 

@@ -1,19 +1,15 @@
 import { Button } from "@/Components"
+import { DetailsInput } from "@/Components/Shared/DetailsInputs/DetailsInput"
 import { Input, SelectInput, Textarea } from "@/Components/Shared/Inputs/Inputs"
-import { AddModel } from "@/Components/Shared/Models/Models"
-import { ICreateQuestions } from "@/InterFaces/QuestionsInterFaces"
-import { useCreateQuestionMutation } from "@/Redux/Services/Questions/QuestionsSlice"
+import { AddModel, DeleteModel, DetailsModel, EditModel } from "@/Components/Shared/Models/Models"
+import { ICreateQuestions, IEditQuestion } from "@/InterFaces/QuestionsInterFaces"
+import { useCreateQuestionMutation, useDeleteQuestionMutation, useEditQuestionMutation, useQuestionDetailsQuery } from "@/Redux/Services/Questions/QuestionsSlice"
+import { RightAnswers } from "@/Types"
 import { renderErrors } from "@/Utils/Helpers/ErrorMessage/ErrorMessage"
 import { FieldValidation } from "@/Utils/Validation"
+import { Loader } from "lucide-react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-
-
-
-
-
-
-
-
 
 interface IAddQuestionsProps {
   isOpen: boolean
@@ -27,31 +23,12 @@ export const CreateQuestionModal = ({ closeModal, isOpen, difficulty, type, Answ
   const { register, handleSubmit, reset, formState: { errors: addErrors } } = useForm<ICreateQuestions>()
   const [submitCreateQuestion, { isLoading: createLoading }] = useCreateQuestionMutation()
   const handleCreateQuestion = async (data: ICreateQuestions) => {
-    console.log(data);
-
     const response = await submitCreateQuestion(data)
-    console.log(response);
     if ('data' in response && response.data.message === "Record created successfully") {
       reset()
       closeModal()
     }
   }
-
-
-  // export interface ICreateQuestions {
-
-  //   title: string,
-  //   description: string,
-  //   options: {
-  //     A: string,
-  //     B: string,
-  //     C: string,
-  //     D: string
-  //   },
-  //   answer: string,
-  //   difficulty: string,
-  //   type: string
-  // }
 
 
   return <>
@@ -103,94 +80,136 @@ export const CreateQuestionModal = ({ closeModal, isOpen, difficulty, type, Answ
   </>
 }
 
+interface IDeleteQuestionProps {
+  isOpenDeleteModel: boolean
+  closeModalDelete: () => void
+  deleteItemId: string
+}
+
+export const DeleteQuestionModal = ({ isOpenDeleteModel, closeModalDelete, deleteItemId }: IDeleteQuestionProps) => {
+
+  const { handleSubmit: handleSubmitDelete } = useForm()
+  const [submitDeleteQuestion, { isLoading: deleteLoading }] = useDeleteQuestionMutation()
+
+  const handleDeleteQuiz = async () => {
+    const response = await submitDeleteQuestion(deleteItemId)
+    if ('data' in response && response.data.message === "Record deleted successfully") {
+      closeModalDelete()
+    }
+  }
 
 
 
 
+  return <>
+    <DeleteModel {...{ isOpenDeleteModel, closeModalDelete }}>
+      <form onSubmit={handleSubmitDelete(handleDeleteQuiz)}>
+        <span className='text-xl font-extrabold'>Confirm Delete</span>
+        <p className="text-sm text-gray-500">
+          Are you sure you want to delete this Question ?
+        </p>
+        <div className='flex justify-between mt-4'>
+          <Button onClick={closeModalDelete} rounded={'lg'} type='button' >Cancel</Button>
+          <Button isLoading={deleteLoading} rounded={'lg'} type='submit' variant={"destructive"}>Delete</Button>
+        </div>
+      </form>
+    </DeleteModel>
+  </>
+}
+
+interface IEditQuestionProps {
+  isOpenEditModel: boolean
+  closeModalEdit: () => void
+  editItemId: string
+  rightAnswer: typeof RightAnswers
+  Answers: {}[]
+}
+
+export const EditQuestionModal = ({ isOpenEditModel, closeModalEdit, editItemId, rightAnswer, Answers }: IEditQuestionProps) => {
+
+  const { handleSubmit, register, setValue } = useForm<IEditQuestion>()
+  const [submitEditQuestion, { isLoading: editLoading }] = useEditQuestionMutation()
+
+  const handleEditQuestion = async (data: IEditQuestion) => {
+    const response = await submitEditQuestion({ ...data, editItemId })
+    if ('data' in response && response.data.message === "Record updated successfully") {
+      closeModalEdit()
+    }
+  }
+
+  useEffect(() => {
+    setValue("answer", rightAnswer)
+  }, [rightAnswer])
+
+  return <>
+    <EditModel title="Update Question Title"  {...{ isOpenEditModel, closeModalEdit }}>
+      <form onSubmit={handleSubmit(handleEditQuestion)} className="">
+        <SelectInput label="RightAnswer"  {...register("answer", FieldValidation)} list={Answers} />
+        <div className="flex justify-center">
+          <Button isLoading={editLoading} rounded={'lg'} variant={"ghost"} className="mt-4" >Edit Question</Button>
+        </div>
+      </form>
+    </EditModel>
+  </>
+}
+
+// DetailsModel
+
+interface IDetailsQuestionsProps {
+  isOpenDetailsModel: boolean
+  closeDetailsModel: () => void
+  detailsItemId: string
+}
+
+export const DetailsQuestionModal = ({ closeDetailsModel, isOpenDetailsModel, detailsItemId }: IDetailsQuestionsProps) => {
+
+  const { data: questionDetails,status} = useQuestionDetailsQuery(detailsItemId)
+
+  return <>
+    <DetailsModel title="Set up a new Question"  {...{ isOpenDetailsModel, closeDetailsModel }}>
 
 
 
+      {status==="fulfilled"? <>
+        <DetailsInput label="Title" content={`${questionDetails?.title}`} />
+
+
+        <DetailsInput className="mt-4" label="Description" content={`${questionDetails?.description}`} />
+
+        <div className="grid grid-cols-2 gap-4 mt-4">
+
+          <div className='w-full'>
+            <DetailsInput label="A" content={`${questionDetails?.options?.A}`} />
+          </div>
+
+          <div className='w-full'>
+            <DetailsInput label="B" content={`${questionDetails?.options?.B}`} />
+          </div>
+
+          <div className='w-full'>
+            <DetailsInput label="C" content={`${questionDetails?.options?.C}`} />
+
+          </div>
+
+          <div className='w-full'>
+            <DetailsInput label="D" content={`${questionDetails?.options?.D}`} />
+          </div>
+
+        </div>
+
+        <div className="flex justify-between items-center gap-4 mt-4 w-full">
+          <DetailsInput className="w-3/12" label="answer" content={`${questionDetails?.answer}`} />
+          <DetailsInput className="w-3/12" label="type" content={`${questionDetails?.type}`} />
+          <DetailsInput className="w-3/12" label="difficulty" content={`${questionDetails?.difficulty}`} />
+          <DetailsInput className="w-3/12" label="point" content={`${questionDetails?.points}`} />
+        </div>
 
 
 
+        <div className="flex justify-center">
+          <Button onClick={closeDetailsModel} rounded={'lg'} className='gap-2 mt-4' variant={"destructive"}>Cancel</Button>
+        </div></> : <div className="flex justify-center items-center"><Loader className="animate-spin" size={100} color="#C5D86D" /></div>}
 
-
-
-
-
-
-// interface IDeleteQuizProps {
-//   isOpenDeleteModel: boolean
-//   closeModalDelete: () => void
-//   deleteItemId: string
-// }
-
-// export const DeleteQuizModal = ({ isOpenDeleteModel, closeModalDelete, deleteItemId }: IDeleteQuizProps) => {
-
-//   const { handleSubmit: handleSubmitDelete } = useForm()
-//   const navigate = useNavigate()
-//   const [submitDeleteQuiz, { isLoading: deleteLoading }] = useDeleteQuizMutation()
-
-//   const handleDeleteQuiz = async () => {
-//     const response = await submitDeleteQuiz(deleteItemId)
-//     if ('data' in response && response.data.message === "Record deleted successfully") {
-//       closeModalDelete()
-//       navigate('/dashboard/quiz')
-//     }
-//   }
-
-
-
-
-//   return <>
-//     <DeleteModel {...{ isOpenDeleteModel, closeModalDelete }}>
-//       <form onSubmit={handleSubmitDelete(handleDeleteQuiz)}>
-//         <span className='text-xl font-extrabold'>Confirm Delete</span>
-//         <p className="text-sm text-gray-500">
-//           Are you sure you want to delete this Quiz ?
-//         </p>
-//         <div className='flex justify-between mt-4'>
-//           <Button onClick={closeModalDelete} rounded={'lg'} type='button' >Cancel</Button>
-//           <Button isLoading={deleteLoading} rounded={'lg'} type='submit' variant={"destructive"}>Delete</Button>
-//         </div>
-//       </form>
-//     </DeleteModel>
-//   </>
-// }
-
-// interface IEditQuizProps {
-//   isOpenEditModel: boolean
-//   closeModalEdit: () => void
-//   refetch: () => void
-//   editItemId: string
-//   quizTitle: string
-
-// }
-
-// export const EditQuizModal = ({ isOpenEditModel, closeModalEdit, editItemId, quizTitle,refetch }: IEditQuizProps) => {
-
-//   const { handleSubmit, register, formState: { errors } } = useForm<IEditQuiz>()
-//   const [submitEditQuiz, { isLoading: editLoading }] = useEditQuizMutation()
-
-//   const handleEditQuiz = async (data: IEditQuiz) => {
-//     const response = await submitEditQuiz({ ...data, editItemId })
-//     if ('data' in response && response.data.message === "Record updated successfully") {
-//       refetch()
-//       closeModalEdit()
-//     }
-//   }
-
-
-//   return <>
-//     <EditModel title="Update Quiz Title"  {...{ isOpenEditModel, closeModalEdit }}>
-//       <form onSubmit={handleSubmit(handleEditQuiz)} className="mt-4">
-//         <Input label="Title" {...register("title", FieldValidation)} defaultValue={quizTitle} />
-//         {renderErrors(errors?.title?.message)}
-//         <div className="flex justify-center">
-//         <Button isLoading={editLoading} rounded={'lg'} variant={"ghost"} className="mt-4" >Edit Quiz</Button>
-//         </div>
-//       </form>
-//     </EditModel>
-//   </>
-// }
-
+    </DetailsModel>
+  </>
+}

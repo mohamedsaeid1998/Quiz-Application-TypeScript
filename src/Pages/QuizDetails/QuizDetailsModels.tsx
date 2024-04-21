@@ -28,9 +28,6 @@ export const DeleteQuizModal = ({ isOpenDeleteModel, closeModalDelete, deleteIte
     }
   }
 
-
-
-
   return <>
     <DeleteModel {...{ isOpenDeleteModel, closeModalDelete }}>
       <form onSubmit={handleSubmitDelete(handleDeleteQuiz)}>
@@ -53,7 +50,6 @@ interface IEditQuizProps {
   refetch: () => void
   editItemId: string
   quizTitle: string
-
 }
 
 export const EditQuizModal = ({ isOpenEditModel, closeModalEdit, editItemId, quizTitle,refetch }: IEditQuizProps) => {
@@ -69,8 +65,7 @@ export const EditQuizModal = ({ isOpenEditModel, closeModalEdit, editItemId, qui
     }
   }
 
-
-  return <>
+  return <> 
     <EditModel title="Update Quiz Title"  {...{ isOpenEditModel, closeModalEdit }}>
       <form onSubmit={handleSubmit(handleEditQuiz)} className="mt-4">
         <Input label="Title" {...register("title", FieldValidation)} defaultValue={quizTitle} />

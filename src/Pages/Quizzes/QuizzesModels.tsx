@@ -28,7 +28,6 @@ export const CreateQuizModal = ({ closeModal, isOpen, duration, questions_number
   const [submitCreateQuiz, { isLoading: createLoading }] = useCreateQuizMutation()
   const handleCreateQuiz = async (data: ICreateQuiz) => {
     const response = await submitCreateQuiz(data)
-    console.log(response);
     if ('data' in response && response.data.message === "Record created successfully") {
       const { code } = response?.data?.data
       reset()

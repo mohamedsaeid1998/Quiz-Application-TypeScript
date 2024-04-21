@@ -14,7 +14,7 @@ export const QuestionsApiSlice = createApi({
   endpoints: (builder) => ({
     allQuestions: builder.query({
       query: () => ({
-        url: QUESTIONS_URLS.questionsOperations,
+        url: QUESTIONS_URLS.createQuestion,
         headers: {
           Authorization: `Bearer ${CookieServices.get("token")}`
         }
@@ -24,7 +24,7 @@ export const QuestionsApiSlice = createApi({
     createQuestion: builder.mutation({
       query: (data) => {
         return {
-          url: QUESTIONS_URLS.questionsOperations,
+          url: QUESTIONS_URLS.createQuestion,
           method: "POST",
           body: data,
           headers: {
@@ -44,6 +44,61 @@ export const QuestionsApiSlice = createApi({
       }
 
     }),
+
+    deleteQuestion: builder.mutation({
+      query: (id) => {
+        return {
+          url: QUESTIONS_URLS.questionOperations(id),
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${CookieServices.get("token")}`
+          }
+        }
+      },
+      invalidatesTags: ["Questions"],
+
+      transformResponse: (response: IQuestionResponse) => {
+        toast.success(response?.message);
+        return response;
+      },
+      transformErrorResponse: (error: IFormError) => {
+        toast.error(error?.data?.message);
+        return error;
+      }
+    }),
+    editQuestion: builder.mutation({
+      query: (data) => {
+        const { editItemId, ...bodyData } = data
+        return {
+          url: QUESTIONS_URLS.questionOperations(editItemId),
+          method: "PUT",
+          body: bodyData,
+          headers: {
+            Authorization: `Bearer ${CookieServices.get("token")}`
+          }
+        }
+      },
+      invalidatesTags: ["Questions"],
+
+      transformResponse: (response: IQuestionResponse) => {
+        toast.success(response?.message);
+        return response;
+      },
+      transformErrorResponse: (error: IFormError) => {
+        toast.error(error?.data?.message);
+        return error;
+      }
+
+    }),
+    questionDetails: builder.query({
+      query: (id) => ({
+        url: QUESTIONS_URLS.questionOperations(id),
+        headers: {
+          Authorization: `Bearer ${CookieServices.get("token")}`
+        }
+      }),
+
+    }),
   }),
 })
-export const { useAllQuestionsQuery,useCreateQuestionMutation } = QuestionsApiSlice
+export const { useAllQuestionsQuery, useCreateQuestionMutation, useDeleteQuestionMutation,useEditQuestionMutation,useQuestionDetailsQuery } = QuestionsApiSlice

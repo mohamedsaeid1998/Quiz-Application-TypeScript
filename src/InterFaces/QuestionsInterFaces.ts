@@ -1,70 +1,23 @@
 import { RightAnswers } from "@/Types"
 
-export interface IUpcomingQuizzes {
-  _id: string
-  title: string,
-  createdAt: string,
-  schadule: string
+export interface IEditQuestion {
+  answer: typeof RightAnswers,
 }
-
-export interface ICompletedQuizzes {
-  closed_at: string
-  code: string
-  createdAt: string
-  description: string
-  difficulty: string
-  duration: number
-  group: string
-  instructor: string
-  participants: number
-  questions: []
-  questions_number: number
-  schadule: string
-  score_per_question: number
-  status: string
-  title: string
-  type: string
-  updatedAt: string
-  __v: number
-  _id: string
-}
-export interface IQuizzesResponse {
-  data: {
-    closed_at: string
-    code: string
-    createdAt: string
-    description: string
-    difficulty: string
-    duration: number
-    group: string
-    instructor: string
-    participants: number
-    questions: []
-    questions_number: number
-    schadule: string
-    score_per_question: number
-    status: string
-    title: string
-    type: string
-    updatedAt: string
-    __v: number
-    _id: string
-  },
-  message: string
-}
-
-export interface IEditQuiz {
-  title: string,
-}
-
 
 export interface IQuestions {
   title: string,
   description: string,
   answer: typeof RightAnswers,
   difficulty: string,
+  options: {
+    A: string,
+    B: string,
+    C: string,
+    D: string,
+    _id: string
+  },
   type: string
-  _id:string
+  _id: string
 }
 
 export interface ICreateQuestions {
@@ -104,7 +57,4 @@ export interface IQuestionResponse {
   },
   message: string
 }
-
-
-
 

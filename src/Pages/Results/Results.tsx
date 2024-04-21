@@ -14,7 +14,6 @@ const Results = ({ }: IProps) => {
   const { t } = useTranslation();
   //? *************** Get QuizzesResults ***************
   const { isLoading, data: quizzesResults } = useQuizzesResultsQuery(0)
-  console.log(quizzesResults)
 
   return <>
 

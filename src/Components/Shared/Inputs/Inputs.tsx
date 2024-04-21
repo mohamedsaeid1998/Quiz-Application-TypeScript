@@ -15,10 +15,17 @@ interface ITextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label: string
   className?: string
 }
+
 interface IDateProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
   className?: string
 }
+
+interface IPropsList {
+  title?: string
+  _id?: string
+}
+
 
 export const Input = forwardRef(({ className = "", label, ...rest }: IProps, ref: Ref<HTMLInputElement>) => {
   const appliedClass = `${className} `
@@ -49,7 +56,7 @@ export const SelectInput = forwardRef(({ className = "", label, list = [], ...re
         {label}
       </label>
       <select ref={ref} id={inputId} {...rest} className="px-2 rounded-r-md outline-none flex-1 border-none text-center  bg-transparent py-1.5 pl-1 text-black placeholder:text-gray-400  sm:text-sm sm:leading-6"  >
-        {list?.map(({ _id, title }: any) => (
+        {list?.map(({ _id, title }: IPropsList) => (
           <option
             key={_id}
             value={_id}
@@ -91,20 +98,3 @@ export const DateInput = forwardRef(({ className = "", label, ...rest }: IDatePr
     </div>
   </>
 })
-
-
-// export const InfoInput = forwardRef(({ className = "", label, ...rest }: IProps, ref: Ref<HTMLInputElement>) => {
-//   const appliedClass = `${className} `
-//   const inputId = useId()
-//   return <>
-//     <div className={`${appliedClass} w-full flex border-2 rounded-lg focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor `}>
-//       <label htmlFor={inputId} className='bg-secondColor p-2 font-semibold  flex justify-center min-w-20'>
-//         {label}
-//       </label>
-//       <input ref={ref} id={inputId} className=" w-fit pl-3 text-black  outline-none flex-1 border-none  bg-transparent py-1.5  placeholder:text-gray-400  caret-mainColor " {...rest} />
-//       <span className="flex items-center me-3 pl-3 text-white ">
-//         <SaveAll color='black'/>
-//       </span>
-//     </div>
-//   </>
-// })

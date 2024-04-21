@@ -1,8 +1,10 @@
+
 const required = "This Field is required";
 
 export const FieldValidation = {
   required,
 }
+
 
 export const emailValidation = {
   required: "Email is required !!",

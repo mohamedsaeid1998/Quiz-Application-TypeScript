@@ -83,7 +83,6 @@ export const GroupsApiSlice = createApi({
       invalidatesTags: ["Groups"],
 
       transformResponse: (response: IGroupResponse) => {
-        console.log(response);
         toast.success(response.message);
         return response;
       },

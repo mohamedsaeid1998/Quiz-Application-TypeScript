@@ -1,11 +1,12 @@
-import { useAllQuestionsQuery } from '@/Redux/Services/Questions/QuestionsSlice'
-import './Questions.module.scss'
 import { Button } from '@/Components';
-import { Eye, FilePenLine, Plus, Trash2 } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
-import { CreateQuestionModal } from './QuestionsModels';
 import { IQuestions } from '@/InterFaces/QuestionsInterFaces';
+import { useAllQuestionsQuery } from '@/Redux/Services/Questions/QuestionsSlice';
+import { Eye, FilePenLine, Plus, Trash2 } from 'lucide-react';
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import './Questions.module.scss';
+import { CreateQuestionModal, DeleteQuestionModal, DetailsQuestionModal, EditQuestionModal } from './QuestionsModels';
+import { RightAnswers } from '@/Types';
 interface IProps {
 
 }
@@ -20,6 +21,51 @@ const Questions = ({ }: IProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const openModal = () => setIsOpen(true)
   const closeModal = () => setIsOpen(false)
+
+
+  //! *************** Delete Question ***************
+  const [deleteItemId, setDeleteItem] = useState("")
+  const [isOpenDeleteModel, setIsOpenDeleteModel] = useState(false)
+  const openModalDelete = (_id: string) => {
+    setIsOpenDeleteModel(true)
+    setDeleteItem(_id)
+  }
+  const closeModalDelete = () => {
+    setIsOpenDeleteModel(false)
+    setDeleteItem("")
+  }
+
+
+  //TODO *************** Edit Question ***************
+  const [editItemId, setEditItem] = useState("")
+  const [rightAnswer, setRightAnswer] = useState<typeof RightAnswers>("A")
+  const [isOpenEditModel, setIsOpenEditModel] = useState(false)
+
+  const closeModalEdit = () => {
+    setIsOpenEditModel(false)
+    setEditItem("")
+    setRightAnswer("A")
+  }
+
+  const openModalEdit = (_id: string, answer: typeof RightAnswers) => {
+    setIsOpenEditModel(true)
+    setEditItem(_id)
+    setRightAnswer(answer)
+  }
+
+  //? *************** Get Question Details ***************
+
+  const [isOpenDetailsModel, setIsOpenDetailsModel] = useState(false)
+  const [detailsItemId, setDetailsItem] = useState("")
+  const closeDetailsModel = () => {
+    setIsOpenDetailsModel(false)
+    setDetailsItem("")
+  }
+
+  const openDetailsModel = (_id: string) => {
+    setIsOpenDetailsModel(true)
+    setDetailsItem(_id)
+  }
 
   const difficulty = [
     { _id: "easy", title: "Easy" },
@@ -41,7 +87,9 @@ const Questions = ({ }: IProps) => {
 
   return <>
     <CreateQuestionModal {...{ closeModal, isOpen, difficulty, type, Answers }} />
-
+    <DeleteQuestionModal {...{ deleteItemId, isOpenDeleteModel, closeModalDelete }} />
+    <EditQuestionModal {...{ rightAnswer, isOpenEditModel, closeModalEdit, editItemId ,Answers}} />
+    <DetailsQuestionModal {...{ detailsItemId, isOpenDetailsModel, closeDetailsModel }} />
 
     <main className='m-5 mt-3'>
       <div className="p-3 mt-2 overflow-x-auto border-2 rounded-md" >
@@ -53,6 +101,7 @@ const Questions = ({ }: IProps) => {
             {t("BankOfQuestions")}
             <Button onClick={openModal} variant={'outline'} rounded={'full'} className="text-left gap-2 group"><Plus className='bg-black group-hover:bg-white rounded-full p-1 text-2xl text-white group-hover:text-black transition duration-0' size={20} strokeWidth={5} /> {t("AddQuestion")} </Button>
           </div>}
+
         <table className='w-full  border-separate rounded-md mt-2 border-slate-400'>
           <thead className='text-white '>
             {isLoading ? <tr >
@@ -86,19 +135,23 @@ const Questions = ({ }: IProps) => {
 
             {allQuestions?.map(({ title, description, answer, difficulty, type, _id }: IQuestions) => <tr key={_id} className='bg-white dark:border-gray-700 hover:bg-blue-200'>
               <td title={title} className='py-3 font-medium border whitespace-nowrap border-slate-300 truncate text-balance max-w-60'>{title}</td>
-              <td className='hidden lg:table-cell py-3 font-medium border whitespace-nowrap border-slate-300 truncate max-w-60'>{description}</td>
+              <td title={description} className='hidden lg:table-cell py-3 font-medium border whitespace-nowrap border-slate-300 truncate max-w-60'>{description}</td>
               <td className='hidden md:table-cell py-3 font-medium border whitespace-nowrap border-slate-300 truncate'>{answer}</td>
               <td className='hidden md:table-cell py-3 font-medium border whitespace-nowrap border-slate-300 truncate'>{difficulty}</td>
               <td className='hidden md:table-cell py-3 font-medium border whitespace-nowrap border-slate-300 truncate'>{type}</td>
-              <td className='py-3 font-medium border whitespace-nowrap border-slate-300 truncate  p-3'> <div className='flex justify-around items-center'><Eye className='cursor-pointer' color='green' /> <FilePenLine className='cursor-pointer' color='gold' /> <Trash2 className='cursor-pointer' color='red' /></div></td>
+              <td className='py-3 font-medium border whitespace-nowrap border-slate-300 truncate  p-3'> <div className='flex justify-around items-center'><Eye onClick={() => openDetailsModel(_id)} className='cursor-pointer' color='green' /> <FilePenLine onClick={() => openModalEdit(_id, answer)} className='cursor-pointer' color='gold' /> <Trash2 onClick={() => openModalDelete(_id)} className='cursor-pointer' color='red' /></div></td>
             </tr>)}
 
 
           </tbody>
 
         </table>
+
       </div>
+
     </main>
+
+    
   </>
 }
 

@@ -13,9 +13,6 @@ const Students = ({ }: IProps) => {
   const { t } = useTranslation();
   const { isLoading: loading, data: allStudents } = useAllStudentsQuery(0)
 
-  console.log(allStudents);
-
-
   return <>
     <main className='m-5 mt-3'>
       <div className="border-2 rounded-md p-3" >

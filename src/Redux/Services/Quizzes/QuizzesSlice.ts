@@ -30,7 +30,6 @@ export const QuizzesApiSlice = createApi({
         }
       })
     }),
-    // providesTags: (result) => ['Quizzes', ...result.map(({ _id }: any) => ({ type: 'Quizzes', _id }))],
     createQuiz: builder.mutation({
       query: (data) => {
         return {
@@ -91,12 +90,10 @@ export const QuizzesApiSlice = createApi({
       invalidatesTags: ["Quizzes"],
 
       transformResponse: (response: IQuizzesResponse) => {
-        console.log(response);
         toast.success(response.message);
         return response;
       },
       transformErrorResponse: (error: IFormError) => {
-        console.log(error);
         toast.error(error?.data?.message);
         return error;
       }
