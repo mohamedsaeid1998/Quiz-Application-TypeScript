@@ -1,5 +1,5 @@
 import { IFormError } from "@/InterFaces/AuthInterFaces";
-import { IQuizzesResponse } from "@/InterFaces/QuizzesInterFaces";
+import { IJoinQuizResponse, IQuizzesResponse } from "@/InterFaces/QuizzesInterFaces";
 import CookieServices from "@/Services/CookieServices/CookieServices";
 import { BASE_URL, QUIZZES_URLS } from "@/Services/EndPoints/EndPoints";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
@@ -108,6 +108,33 @@ export const QuizzesApiSlice = createApi({
         }
       }),
     }),
+
+
+    //! ******************* Students Functions *******************
+    joinQuiz: builder.mutation({
+      query: (data) => {
+        return {
+          url: QUIZZES_URLS.joinQuiz,
+          method: "POST",
+          body: data,
+          headers: {
+            Authorization: `Bearer ${CookieServices.get("token")}`
+          }
+        }
+      },
+      invalidatesTags: ["Quizzes"],
+      transformResponse: (response: IJoinQuizResponse) => {
+        console.log(response);
+        toast.success(response.message);
+        return response as IJoinQuizResponse;
+      } ,
+      transformErrorResponse: (error: IFormError) => {
+        console.log(error);
+        toast.error(error?.data?.message);
+        return error;
+      }
+
+    }),
   }),
 })
-export const { useGetFirstUpcomingQuizzesQuery, useCompletedQuizzesQuery, useCreateQuizMutation, useQuizzesDetailsQuery, useDeleteQuizMutation, useEditQuizMutation } = QuizzesApiSlice
+export const { useJoinQuizMutation, useGetFirstUpcomingQuizzesQuery, useCompletedQuizzesQuery, useCreateQuizMutation, useQuizzesDetailsQuery, useDeleteQuizMutation, useEditQuizMutation } = QuizzesApiSlice

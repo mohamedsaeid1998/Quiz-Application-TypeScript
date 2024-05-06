@@ -1,7 +1,9 @@
 import { tailwindCMerge } from "@/Utils/Config/TailwindCMerge";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Loader } from "lucide-react";
+import { motion } from "framer-motion";
 import { ButtonHTMLAttributes, ReactNode, useEffect, useState } from "react";
+
 
 export const buttonVariants = cva("inline-flex items-center justify-center font-extrabold transition duration-200 ", {
   variants: {
@@ -54,10 +56,11 @@ const Button = ({ className, children, variant, size, fullWidth, rounded, isLoad
   }, [isLoading])
 
   return <>
-    <button className={`${tailwindCMerge(buttonVariants({ variant, size, fullWidth, rounded }))} ${className} ${loading ? "opacity-70" : ""}`} {...rest} disabled={loading} >
+    <motion.button whileHover={{ scale: 1.1 ,transition:0.1  }}
+      whileTap={{ scale: 0.9 , transition:0.5}} className={`${tailwindCMerge(buttonVariants({ variant, size, fullWidth, rounded }))} ${className} ${loading ? "opacity-70" : ""}`} {...rest} disabled={loading} >
       {loading ? <><span className='animate-spin'>  <Loader />  </span><span>Processing...</span> </> : children}
 
-    </button>
+    </motion.button>
   </>
 }
 

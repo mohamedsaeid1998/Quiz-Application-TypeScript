@@ -15,7 +15,6 @@ interface IDetailsQuestionsProps {
 export const DetailsStudentModal = ({ closeDetailsModel, isOpenDetailsModel, detailsItemId }: IDetailsQuestionsProps) => {
 
   const { data: studentDetails, status } = useStudentDetailsQuery(detailsItemId)
-  console.log(studentDetails);
 
   return <>
     <DetailsModel title="Student Details"  {...{ isOpenDetailsModel, closeDetailsModel }}>

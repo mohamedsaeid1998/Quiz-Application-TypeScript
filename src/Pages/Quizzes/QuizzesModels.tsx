@@ -1,14 +1,16 @@
 
 import { Button } from "@/Components"
 import { DateInput, Input, SelectInput, Textarea } from "@/Components/Shared/Inputs/Inputs"
-import { AddModel, InfoModel } from "@/Components/Shared/Models/Models"
-import { ICreateQuiz } from "@/InterFaces/QuizzesInterFaces"
-import { useCreateQuizMutation } from "@/Redux/Services/Quizzes/QuizzesSlice"
+import { AddModel, InfoModel, JoinTaskModel } from "@/Components/Shared/Models/Models"
+import { ICreateQuiz, IJoinQuiz } from "@/InterFaces/QuizzesInterFaces"
+import { useGroupsListQuery } from "@/Redux/Services/Groups/GroupsSlice"
+import { useCreateQuizMutation, useJoinQuizMutation } from "@/Redux/Services/Quizzes/QuizzesSlice"
 import { renderErrors } from "@/Utils/Helpers/ErrorMessage/ErrorMessage"
 import { FieldValidation } from "@/Utils/Validation"
 import { Loader, SaveAll } from "lucide-react"
 import { useRef } from "react"
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 
 interface IAddQuizzesProps {
@@ -19,11 +21,11 @@ interface IAddQuizzesProps {
   questions_number: {}[]
   difficulty: {}[]
   type: {}[]
-  groupsList: []
-  groupsLoading: boolean
 }
 
-export const CreateQuizModal = ({ closeModal, isOpen, duration, questions_number, difficulty, type, groupsList, groupsLoading, openInfoModel }: IAddQuizzesProps) => {
+export const CreateQuizModal = ({ closeModal, isOpen, duration, questions_number, difficulty, type, openInfoModel }: IAddQuizzesProps) => {
+  //? ***************Get Groups List ***************
+  const { isLoading: groupsLoading, data: groupsList } = useGroupsListQuery(0)
   const { register, handleSubmit, reset, formState: { errors: addErrors } } = useForm<ICreateQuiz>()
   const [submitCreateQuiz, { isLoading: createLoading }] = useCreateQuizMutation()
   const handleCreateQuiz = async (data: ICreateQuiz) => {
@@ -43,19 +45,21 @@ export const CreateQuizModal = ({ closeModal, isOpen, duration, questions_number
 
         <Input {...register("title", FieldValidation)} label="Title" />
         {renderErrors(addErrors?.title?.message)}
-        <div className="flex justify-between items-center space-x-5">
+        <div className="flex flex-col sm:flex-row  justify-between items-center sm:space-x-5 ">
 
+          <div className="w-full">
+            <SelectInput label="Duration" {...register("duration", FieldValidation)} list={duration} />
+            {renderErrors(addErrors?.duration?.message)}
+          </div>
+          <div className="w-full">
+            <SelectInput label="Questions_number" {...register("questions_number", FieldValidation)} list={questions_number} />
+            {renderErrors(addErrors?.questions_number?.message)}
+          </div>
+          <div className="w-full">
 
-          <SelectInput label="Duration" {...register("duration", FieldValidation)} list={duration} />
-          {renderErrors(addErrors?.duration?.message)}
-
-
-          <SelectInput label="Questions_number" {...register("questions_number", FieldValidation)} list={questions_number} />
-          {renderErrors(addErrors?.questions_number?.message)}
-
-
-          <SelectInput label="Score_per_question" {...register("score_per_question", FieldValidation)} list={questions_number} />
-          {renderErrors(addErrors?.score_per_question?.message)}
+            <SelectInput label="Score_per_question" {...register("score_per_question", FieldValidation)} list={questions_number} />
+            {renderErrors(addErrors?.score_per_question?.message)}
+          </div>
 
         </div>
 
@@ -63,18 +67,17 @@ export const CreateQuizModal = ({ closeModal, isOpen, duration, questions_number
         {renderErrors(addErrors?.description?.message)}
         <DateInput label="Schedule" {...register("schadule", FieldValidation)} />
         {renderErrors(addErrors?.schadule?.message)}
-        <div className="flex justify-between items-center space-x-5">
-
-          <SelectInput label="level" {...register("difficulty", FieldValidation)} list={difficulty} />
+        <div className="flex flex-col sm:flex-row  justify-between items-center sm:space-x-5">
+        <div className="w-full">
+        <SelectInput label="level" {...register("difficulty", FieldValidation)} list={difficulty} />
           {renderErrors(addErrors?.difficulty?.message)}
-
-
-
-          <SelectInput label="Category" {...register("type", FieldValidation)} list={type} />
+        </div>
+        <div className="w-full">
+        <SelectInput label="Category" {...register("type", FieldValidation)} list={type} />
           {renderErrors(addErrors?.type?.message)}
-
-
-          <div className={` mt-4 flex flex-1 border-2 rounded-lg focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor `}>
+        </div>
+        <div className="w-full">
+        <div className={` mt-4 flex flex-1 border-2 rounded-lg focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor `}>
             <label htmlFor="group" className='bg-secondColor p-2 font-semibold  flex justify-center min-w-20 items-center'>
               Group
             </label>
@@ -91,11 +94,20 @@ export const CreateQuizModal = ({ closeModal, isOpen, duration, questions_number
             </select>
           </div>
           {renderErrors(addErrors?.group?.message)}
+        </div>
+
+
+
+
+
+
+
+
 
         </div>
 
         <div className="flex justify-center">
-          <Button isLoading={createLoading} rounded={'lg'} className='gap-2 mt-4' variant={"destructive"}>Create Quiz</Button>
+          <Button isLoading={createLoading} rounded={'lg'} className='gap-2 mt-4' variant={"ghost"}>Create Quiz</Button>
         </div>
 
       </form>}
@@ -111,6 +123,7 @@ interface IInfoQuizProps {
   closeInfoModel: () => void
   quizCode: string
 }
+
 
 
 export const InfoQuizModal = ({ isOpenInfoModel, closeInfoModel, quizCode }: IInfoQuizProps) => {
@@ -130,7 +143,6 @@ export const InfoQuizModal = ({ isOpenInfoModel, closeInfoModel, quizCode }: IIn
   };
   return <>
     <InfoModel {...{ closeInfoModel, isOpenInfoModel }}>
-
       <div onClick={handleCopy} className={`w-full flex border-2 rounded-lg focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor `}>
         <label htmlFor="Info" className='bg-secondColor p-2 font-semibold  flex justify-center min-w-20'>
           Code
@@ -148,113 +160,34 @@ export const InfoQuizModal = ({ isOpenInfoModel, closeInfoModel, quizCode }: IIn
 }
 
 
+interface IJoinQuizProps {
+  isOpenJoinQuizModel: boolean
+  closeJoinQuizModel: () => void
+}
 
 
-// {
-//   "title":"first quiz",
-//   "description":"",
-//   "group":"65c2bed779b859ea9320885f",
-//   "questions_number":1,
-//   "difficulty":"medium",
-//   "type":"BE",
-//   "schadule":"2024-02-15T21:19:34",
-//   "duration":"60",
-//   "score_per_question":"5"
-// }
+export const JoinQuizModal = ({ isOpenJoinQuizModel, closeJoinQuizModel }: IJoinQuizProps) => {
+  const navigate = useNavigate()
+  const { register, handleSubmit, formState: { errors } } = useForm<IJoinQuiz>()
+  const [submitJoinQuiz, { isLoading }] = useJoinQuizMutation()
+  const handleJoinQuiz = async (data: IJoinQuiz) => {
+    const response = await submitJoinQuiz(data)
+    if ('data' in response && response.data.message === "Student joined successfully") {
+      navigate(`/dashboard/exam-questions/${response?.data?.data?.quiz}`)
+    }
+  }
 
 
+  return <>
+    <JoinTaskModel {...{ closeJoinQuizModel, isOpenJoinQuizModel }}>
+      <form className="w-full" onSubmit={handleSubmit(handleJoinQuiz)}>
+        <Input label="Code" {...register("code", FieldValidation)} className="w-full" />
+        {renderErrors(errors?.code?.message)}
+        <div className="flex justify-center">
+          <Button isLoading={isLoading} rounded={'lg'} className='gap-2 mt-2' variant={"ghost"}>Join Quiz</Button>
+        </div>
+      </form>
 
-
-
-
-
-
-// interface IDeleteGroupProps {
-//   isOpenDeleteModel: boolean
-//   closeModalDelete: () => void
-//   studentsRefetch: () => void
-//   deleteItemId: string
-// }
-
-// export const DeleteGroupModal = ({ isOpenDeleteModel, closeModalDelete, studentsRefetch, deleteItemId }: IDeleteGroupProps) => {
-
-//   const { handleSubmit: handleSubmitDelete } = useForm<IDeleteGroup>()
-
-//   const [submitDeleteGroup, { isLoading: deleteLoading }] = useDeleteGroupMutation()
-
-//   const handleDeleteGroup = async (data: IDeleteGroup) => {
-//     const response = await submitDeleteGroup({ ...data, deleteItemId })
-//     if ('data' in response && response.data.message === "Record deleted successfully") {
-//       closeModalDelete()
-//       studentsRefetch();
-//     }
-//   }
-
-
-
-
-//   return <>
-//     <DeleteModel {...{ isOpenDeleteModel, closeModalDelete }}>
-//       <form onSubmit={handleSubmitDelete(handleDeleteGroup)}>
-//         <span className='text-xl font-extrabold'>Confirm Delete</span>
-//         <p className="text-sm text-gray-500">
-//           Are you sure you want to delete this Group ?
-//         </p>
-//         <div className='flex justify-between mt-4'>
-//           <Button isLoading={deleteLoading} rounded={'lg'} type='submit' variant={"destructive"}>Delete</Button>
-//           <Button onClick={closeModalDelete} rounded={'lg'} type='button' >Cancel</Button>
-//         </div>
-//       </form>
-//     </DeleteModel>
-//   </>
-// }
-
-// interface IEditGroupProps {
-//   isOpenEditModel: boolean
-//   closeModalEdit: () => void
-//   studentsRefetch: () => void
-//   editItemId: string
-//   editRegister: UseFormRegister<IGroups>
-//   handleSubmitEdit: UseFormHandleSubmit<IGroups, undefined>
-//   errors: FieldErrors<IGroups>
-//   allStudents: []
-//   loadingData: boolean
-// }
-
-// export const EditGroupModal = ({ loadingData, isOpenEditModel, closeModalEdit, editItemId, studentsRefetch, editRegister, handleSubmitEdit, errors, allStudents }: IEditGroupProps) => {
-
-
-//   const [submitEditGroup, { isLoading: editLoading }] = useEditGroupMutation()
-
-//   const handleEditGroup = async (data: IGroups) => {
-//     const response = await submitEditGroup({ ...data, editItemId })
-//     if ('data' in response && response.data.message === "Record updated successfully") {
-//       closeModalEdit()
-//       studentsRefetch();
-//     }
-//   }
-
-
-//   return <>
-//     <EditModel title="Update Group"  {...{ isOpenEditModel, closeModalEdit }}>
-//       {loadingData && <div className="flex justify-center items-center"><Loader className="animate-spin" size={100} color="#C5D86D" /></div>}
-//       {!loadingData && <form onSubmit={handleSubmitEdit(handleEditGroup)}>
-
-//         <GroupInput className='mt-5' {...editRegister("name", FieldValidation)} label='Group Name' />
-//         {renderErrors(errors?.name?.message)}
-
-//         <GroupSelectInput list={allStudents} className='mt-7' multiple {...editRegister("students", FieldValidation)} label='List Students' />
-//         {renderErrors(errors?.students?.message)}
-
-//         <div className="flex justify-center">
-//           <Button isLoading={editLoading} rounded={'lg'} className='gap-2 mt-4' variant={"destructive"}>Edit Group</Button>
-//         </div>
-
-//       </form>}
-
-
-//     </EditModel>
-
-//   </>
-// }
-
+    </JoinTaskModel>
+  </>
+}

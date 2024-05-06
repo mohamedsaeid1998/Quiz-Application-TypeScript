@@ -32,7 +32,7 @@ export const AddGroupModal = ({ studentsData, closeModal, isOpen, studentsRefetc
       <form onSubmit={handleSubmit(handleCreateGroup)}>
         <GroupInput className='mt-5' {...register("name", FieldValidation)} label='Group Name' />
         {renderErrors(addErrors?.name?.message)}
-        <div className={` mt-7 flex border-2 rounded-lg focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor `}>
+        <div className={` mt-7 flex flex-col border-2 rounded-lg focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor `}>
           <label htmlFor={"select"} className='bg-secondColor p-2 font-semibold  flex justify-center min-w-20'>
             List Students
           </label>
@@ -52,7 +52,7 @@ export const AddGroupModal = ({ studentsData, closeModal, isOpen, studentsRefetc
         {renderErrors(addErrors?.students?.message)}
 
         <div className="flex justify-center">
-          <Button isLoading={createLoading} rounded={'lg'} className='gap-2 mt-4' variant={"destructive"}>Create Group</Button>
+          <Button isLoading={createLoading} rounded={'lg'} className='gap-2 mt-4' variant={"ghost"}>Create Group</Button>
         </div>
 
       </form>
@@ -134,7 +134,7 @@ export const EditGroupModal = ({ loadingData, isOpenEditModel, closeModalEdit, e
         <GroupInput className='mt-5' {...editRegister("name", FieldValidation)} label='Group Name' />
         {renderErrors(errors?.name?.message)}
 
-        <div className={` mt-7 flex border-2 rounded-lg focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor `}>
+        <div className={` mt-7 flex flex-col border-2 rounded-lg focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor `}>
           <label htmlFor={"select"} className='bg-secondColor p-2 font-semibold  flex justify-center min-w-20'>
             List Students
           </label>
@@ -154,7 +154,7 @@ export const EditGroupModal = ({ loadingData, isOpenEditModel, closeModalEdit, e
         {renderErrors(errors?.students?.message)}
 
         <div className="flex justify-center">
-          <Button isLoading={editLoading} rounded={'lg'} className='gap-2 mt-4' variant={"destructive"}>Edit Group</Button>
+          <Button isLoading={editLoading} rounded={'lg'} className='gap-2 mt-4' variant={"ghost"}>Edit Group</Button>
         </div>
 
       </form>}

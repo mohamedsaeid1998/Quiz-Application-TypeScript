@@ -33,7 +33,6 @@ export const otpValidation = {
   },
 }
 
-
 export const fieldValidation = {
   required,
   minLength: {

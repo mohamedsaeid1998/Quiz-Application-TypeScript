@@ -8,6 +8,8 @@ import { Check, KeyRound, Mail } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import './Login.module.scss'
+import CookieServices from '@/Services/CookieServices/CookieServices'
+
 
 interface IProps {
 
@@ -23,7 +25,7 @@ const Login = ({ }: IProps) => {
   const handleLogin = async (data: IFormLogin) => {
     const response = await submitLogin(data);
     if ('data' in response && response.data.message === "Login Success") {
-      navigate('/dashboard/home')
+      CookieServices.get("role").role === "Instructor" ? navigate('/dashboard/home') : navigate('/dashboard/quiz')
     }
   }
 

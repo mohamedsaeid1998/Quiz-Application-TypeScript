@@ -18,5 +18,6 @@ export { default as Results } from "./Results/Results";
 export { default as ResultsDetails } from "./ResultsDetails/ResultsDetails";
 export { default as ResultFinal } from "./ResultFinal/ResultFinal";
 export { default as Students } from "./Students/Students";
-export { default as QuizQuestions } from "./QuizQuestions/QuizQuestions";
+export { default as ExamQuestions } from "./ExamQuestions/ExamQuestions";
+
 

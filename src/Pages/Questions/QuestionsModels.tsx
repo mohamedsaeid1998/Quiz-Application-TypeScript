@@ -33,7 +33,7 @@ export const CreateQuestionModal = ({ closeModal, isOpen, difficulty, type, Answ
 
   return <>
     <AddModel title="Set up a new Question"  {...{ isOpen, closeModal }}>
-      <form onSubmit={handleSubmit(handleCreateQuestion)}>
+      <form className="text-center" onSubmit={handleSubmit(handleCreateQuestion)}>
 
         <Input {...register("title", FieldValidation)} label="Title" />
         {renderErrors(addErrors?.title?.message)}
@@ -65,10 +65,16 @@ export const CreateQuestionModal = ({ closeModal, isOpen, difficulty, type, Answ
 
         </div>
 
-        <div className="flex justify-between items-center gap-4">
+        <div className="flex flex-col sm:flex-row  justify-between items-center sm:gap-4">
+        <div className='w-full'>
           <SelectInput {...register("answer", FieldValidation)} label=" Answer" list={Answers} />
+        </div>
+        <div className='w-full'>
           <SelectInput label=" difficulty" {...register("difficulty", FieldValidation)} list={difficulty} />
+        </div>
+        <div className='w-full'>
           <SelectInput label="type" {...register("type", FieldValidation)} list={type} />
+        </div>
         </div>
 
         <div className="flex justify-center">
@@ -196,16 +202,22 @@ export const DetailsQuestionModal = ({ closeDetailsModel, isOpenDetailsModel, de
 
         </div>
 
-        <div className="flex justify-between items-center gap-4 mt-4 w-full">
-          <DetailsInput className="w-4/12" label="answer" content={`${questionDetails?.answer}`} />
-          <DetailsInput className="w-4/12" label="type" content={`${questionDetails?.type}`} />
-          <DetailsInput className="w-4/12" label="difficulty" content={`${questionDetails?.difficulty}`} />
+        <div className="flex flex-col sm:flex-row  justify-between items-center sm:gap-4 gap-3  mt-4 ">
+        <div className='w-full'>
+          <DetailsInput label="answer" content={`${questionDetails?.answer}`}  />
+        </div>
+        <div className='w-full'>
+          <DetailsInput label="type" content={`${questionDetails?.type}`} />
+        </div>
+        <div className='w-full'>
+          <DetailsInput label="difficulty" content={`${questionDetails?.difficulty}`} />
+        </div>
         </div>
 
 
 
         <div className="flex justify-center">
-          <Button onClick={closeDetailsModel} rounded={'lg'} className='gap-2 mt-4' variant={"destructive"}>Cancel</Button>
+          <Button onClick={closeDetailsModel} rounded={'lg'} className='gap-2 mt-4' variant={"ghost"}>Cancel</Button>
         </div></> : <div className="flex justify-center items-center"><Loader className="animate-spin" size={100} color="#C5D86D" /></div>}
 
     </DetailsModel>

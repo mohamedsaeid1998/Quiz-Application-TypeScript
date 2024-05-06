@@ -7,4 +7,5 @@ import quizIcon from "./quizIcon.png";
 import allQuizzes from "./allQuizzes.png";
 import userImage from "./userImage.svg";
 import studentLogo from "./studentLogo.png";
-export { background4, authBackground, quizImg, BankIcon, quizIcon, allQuizzes, userImage, studentLogo };
+import NoData from "./NoData-Img.png";
+export { background4, authBackground, quizImg, BankIcon, quizIcon, allQuizzes, userImage, studentLogo, NoData };

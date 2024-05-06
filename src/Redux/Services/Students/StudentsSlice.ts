@@ -47,4 +47,4 @@ export const StudentsApiSlice = createApi({
     }),
   }),
 })
-export const { useGetTopFiveStudentsQuery, useAllStudentsWithoutGroupsQuery, useAllStudentsQuery,useStudentDetailsQuery } = StudentsApiSlice
+export const { useGetTopFiveStudentsQuery, useAllStudentsWithoutGroupsQuery, useAllStudentsQuery, useStudentDetailsQuery } = StudentsApiSlice

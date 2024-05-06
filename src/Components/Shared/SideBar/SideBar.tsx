@@ -1,4 +1,3 @@
-
 import { Button } from "@/Components";
 import { IFormChangePass } from "@/InterFaces/AuthInterFaces";
 import { useChangePasswordMutation } from "@/Redux/Services/Authentication/AuthSlice";
@@ -6,21 +5,30 @@ import CookieServices from "@/Services/CookieServices/CookieServices";
 import { renderErrors } from "@/Utils/Helpers/ErrorMessage/ErrorMessage";
 import { passRegValidation } from "@/Utils/Validation";
 import { Check, FileText, GraduationCap, Home, KeyRound, LayoutList, Menu as List, LockKeyholeOpen, LogOut, MessageCircleQuestion, Users2 } from "lucide-react";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, ReactElement, ReactNode, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ConfirmPasswordInput, PasswordInput } from "../AuthInputs/AuthInputs";
 import { AddModel } from "../Models/Models";
+import { motion } from "framer-motion";
 
-interface Props {
+interface IProps {
   setSidebarOpen: Dispatch<SetStateAction<boolean>>
   isSidebarOpen: boolean
 }
 
+interface IMenu {
+  style: string
+  path?: ReactElement;
+  icon: ReactNode
+  body: string
+  onClick?: () => void
+}
 
-export default function SideBar({ isSidebarOpen, setSidebarOpen }: Props) {
+
+export default function SideBar({ isSidebarOpen, setSidebarOpen }: IProps) {
   const { t } = useTranslation();
   const { register, handleSubmit, reset, getValues, formState: { errors } } = useForm<IFormChangePass>()
 
@@ -59,6 +67,40 @@ export default function SideBar({ isSidebarOpen, setSidebarOpen }: Props) {
     }
   }
 
+  const sidebarInstructorItems: IMenu[] = [
+    { style: `${pathname === "/dashboard/home" ? 'bg-secondColor ' : ""} border-b border-black  link`, path: <Link to="/dashboard/home" />, icon: <Users2 size={'35px'} className="bg-secondColor p-1" />, body: "dashboard" },
+    { style: `${pathname === "/dashboard/groups" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/groups' />, icon: <Home size={'35px'} className="bg-secondColor p-1" />, body: "groups" },
+    { style: `${pathname === "/dashboard/student" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/student' />, icon: <GraduationCap size={'35px'} className="bg-secondColor p-1" />, body: "students" },
+    { style: `${pathname === "/dashboard/quiz" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/quiz' />, icon: <LayoutList size={'35px'} className="bg-secondColor p-1" />, body: "quizzes" },
+    { style: `${pathname === "/dashboard/questions" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/questions' />, icon: <MessageCircleQuestion size={'35px'} className="bg-secondColor p-1" />, body: "questions" },
+    { style: `${pathname === "/dashboard/results" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/results' />, icon: <FileText size={'35px'} className="bg-secondColor p-1" />, body: "results" },
+    { style: `border-b border-black link`, icon: <LockKeyholeOpen size={'35px'} className="bg-secondColor p-1" />, body: "changePassword", onClick: openModal },
+    { style: `border-b border-black link`, icon: <LogOut size={'35px'} className="bg-secondColor p-1" />, body: "logout", onClick: logout },
+  ]
+
+
+  const sidebarStudentItems: IMenu[] = [
+    { style: `${pathname === "/dashboard/quiz" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/quiz' />, icon: <LayoutList size={'35px'} className="bg-secondColor p-1" />, body: "quizzes" },
+    { style: `${pathname === "/dashboard/results" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/results' />, icon: <FileText size={'35px'} className="bg-secondColor p-1" />, body: "results" },
+    { style: `border-b border-black link`, icon: <LockKeyholeOpen size={'35px'} className="bg-secondColor p-1" />, body: "changePassword", onClick: openModal },
+    { style: `border-b border-black link`, icon: <LogOut size={'35px'} className="bg-secondColor p-1" />, body: "logout", onClick: logout },
+  ]
+
+
+
+
+  const variants = {
+    open: {
+      transition: { staggerChildren: 0.07, delayChildren: 0.2 }
+    },
+    closed: {
+      transition: { staggerChildren: 0.05, staggerDirection: -1 }
+    }
+  };
+
+
+  // const MotionMenu = motion(Sidebar)
+
   return (
     <>
       <AddModel title="Change Password"  {...{ setIsOpen, isOpen, closeModal }}>
@@ -76,24 +118,27 @@ export default function SideBar({ isSidebarOpen, setSidebarOpen }: Props) {
           })} lable='Confirm New Password' placeholder='Type your confirm new password' icon={<KeyRound color="black" />} />
           {renderErrors(errors?.confirmPassword?.message)}
           <div className="flex justify-center">
-            <Button isLoading={isLoading} rounded={'lg'} className='gap-2 mt-4' variant={"destructive"}>Change<Check className='rounded-full p-1 text-2xl text-white' size={22} strokeWidth={5} /></Button>
+            <Button isLoading={isLoading} rounded={'lg'} className='gap-2 mt-4' variant={"ghost"}>Change<Check className='rounded-full p-1 text-2xl ' size={22} strokeWidth={5} /></Button>
           </div>
 
         </form>
       </AddModel>
-      <Sidebar collapsed={iscollapsed} className='h-screen side fixed'>
-        <Menu>
+      <Sidebar collapsed={iscollapsed} className='h-screen side fixed hidden lg:block'>
+        <Menu >
           <MenuItem className='border-b border-black h-16' onClick={handleToggle} icon={<List size={'30px'} />} ></MenuItem>
-          <MenuItem className={`${pathname === "/dashboard/home" ? 'bg-secondColor ' : ""} border-b border-black  link`} component={<Link to="/dashboard/home" />} icon={<Home size={'35px'} className="bg-secondColor p-1" />}>{t("dashboard")}</MenuItem>
-          <MenuItem className={`${pathname === "/dashboard/groups" ? 'bg-secondColor' : ""} border-b border-black  link`} component={<Link to='/dashboard/groups' />} icon={<Users2 size={'35px'} className="bg-secondColor p-1" />}>{t("groups")}</MenuItem>
-          <MenuItem className={`${pathname === "/dashboard/student" ? 'bg-secondColor' : ""} border-b border-black  link`} component={<Link to='/dashboard/student' />} icon={<GraduationCap size={'35px'} className="bg-secondColor p-1" />}>{t("students")}</MenuItem>
-          <MenuItem className={`${pathname === "/dashboard/quiz" ? 'bg-secondColor' : ""} border-b border-black  link`} component={<Link to='/dashboard/quiz' />} icon={<LayoutList size={'35px'} className="bg-secondColor p-1" />}>{t("quizzes")}</MenuItem>
-          <MenuItem className={`${pathname === "/dashboard/questions" ? 'bg-secondColor' : ""} border-b border-black  link`} component={<Link to='/dashboard/questions' />} icon={<MessageCircleQuestion size={'35px'} className="bg-secondColor p-1" />}>{t("questions")}</MenuItem>
-          <MenuItem className={`${pathname === "/dashboard/results" ? 'bg-secondColor' : ""} border-b border-black  link`} component={<Link to='/dashboard/results' />} icon={<FileText size={'35px'} className="bg-secondColor p-1" />}>{t("results")}</MenuItem>
-          <MenuItem className="border-b border-black link" onClick={openModal} icon={<LockKeyholeOpen size={'35px'} className="bg-secondColor p-1" />}> {t("changePassword")}</MenuItem>
-          <MenuItem className="border-b border-black link" onClick={logout} icon={<LogOut size={'35px'} className="bg-secondColor p-1" />} >{t("logout")}</MenuItem>
+
+          {CookieServices.get("role").role === "Instructor" ? <> <motion.div variants={variants}>
+            {sidebarInstructorItems?.map(({ style, path, icon, body, onClick }: IMenu, idx) => <MenuItem key={idx} className={`${style}`} onClick={onClick} component={path} icon={icon} >{t(body)}</MenuItem>)}
+          </motion.div>
+          </> :
+            <>
+              {sidebarStudentItems?.map(({ style, path, icon, body, onClick }: IMenu, idx) => <MenuItem key={idx} className={`${style}`} onClick={onClick} component={path} icon={icon} >{t(body)}</MenuItem>)}
+            </>
+          }
+
+
         </Menu>
-      </Sidebar>
+      </Sidebar >
     </>
   );
 }

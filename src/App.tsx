@@ -1,13 +1,11 @@
-//@ts-nocheck
-import { RouterProvider, createHashRouter } from "react-router-dom";
-import { AuthLayout, MasterLayout, ProtectedRoute } from "./Components";
-import { ForgetPassword, Groups, Home, Login, NotFound, Questions, QuizDetails, QuizQuestions, Quizzes, Register, ResetPassword, ResultFinal, Results, ResultsDetails, Students } from "./Pages";
-import { ToastContainer } from "react-toastify";
 import { Provider } from "react-redux";
+import { RouterProvider, createHashRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { AuthLayout, InstructorProtectedRoute, MasterLayout, ProtectedRoute, StudentProtectedRoute } from "./Components";
+import { ExamQuestions, ForgetPassword, Groups, Home, Login, NotFound, Questions, QuizDetails, Quizzes, Register, ResetPassword, ResultFinal, Results, ResultsDetails, Students } from "./Pages";
 import store from "./Redux/store";
-
-// import LoadingComponent from "./Components/Loading/Loading";
 function App() {
+
 
   const routes = createHashRouter([
     {
@@ -31,16 +29,15 @@ function App() {
       ),
       errorElement: <NotFound />,
       children: [
-        { index: true, element: <Home /> },
-        { path: "home", element: <Home /> },
-        { path: "groups", element: <Groups /> },
+        { path: "home", element: <InstructorProtectedRoute><Home /></InstructorProtectedRoute> },
+        { path: "groups", element: <InstructorProtectedRoute><Groups /></InstructorProtectedRoute> },
         { path: "quiz", element: <Quizzes /> },
-        { path: "quiz-details/:id", element: <QuizDetails /> },
-        { path: "quiz-questions/:id", element: <QuizQuestions /> },
-        { path: "questions", element: <Questions /> },
+        { path: "quiz-details/:id", element: <InstructorProtectedRoute><QuizDetails /></InstructorProtectedRoute> },
+        { path: "exam-questions/:id", element: <StudentProtectedRoute><ExamQuestions /></StudentProtectedRoute> },
+        { path: "questions", element: <InstructorProtectedRoute><Questions /></InstructorProtectedRoute> },
         { path: "results", element: <Results /> },
         { path: "results-details", element: <ResultsDetails /> },
-        { path: "student", element: <Students /> },
+        { path: "student", element: <InstructorProtectedRoute><Students /></InstructorProtectedRoute> },
         { path: "results-final", element: <ResultFinal /> },
       ],
     },

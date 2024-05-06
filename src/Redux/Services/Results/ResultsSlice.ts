@@ -11,15 +11,16 @@ export const ResultsApiSlice = createApi({
   refetchOnMountOrArgChange: true,
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
-  quizzesResults: builder.query({
+    quizzesResults: builder.query({
       query: () => ({
         url: RESULTS_URLS.resultsList,
         headers: {
           Authorization: `Bearer ${CookieServices.get("token")}`
         }
+
       }),
-      providesTags: (result) => ['Results', ...result.map(({ _id }: any) => ({ type: 'Results', _id }))]
+      providesTags: (result) => ['Results', ...result.map(({ _id }: any) => ({ type: 'Results', _id }))],
     }),
   }),
 })
-export const {useQuizzesResultsQuery} = ResultsApiSlice
+export const { useQuizzesResultsQuery } = ResultsApiSlice

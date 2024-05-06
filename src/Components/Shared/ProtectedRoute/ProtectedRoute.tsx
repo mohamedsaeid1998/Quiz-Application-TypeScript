@@ -7,8 +7,6 @@ interface prop {
   children: ReactNode;
 }
 
-
-
 const ProtectedRoute = ({ children }: prop) => {
   if (!CookieServices.get("token")) {
     return <Navigate to='/' />

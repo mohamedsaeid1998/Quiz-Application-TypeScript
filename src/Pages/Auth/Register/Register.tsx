@@ -8,6 +8,7 @@ import { BookUser, Check, KeyRound, Mail } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import './Register.module.scss'
+import transition from '@/Utils/Helpers/Transition/transition'
 
 interface IProps {
 

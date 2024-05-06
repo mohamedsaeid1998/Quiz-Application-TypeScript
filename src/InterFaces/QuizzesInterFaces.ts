@@ -52,7 +52,6 @@ export interface IQuizzesResponse {
 }
 
 export interface ICreateQuiz {
-
   title: string,
   description: string,
   group: string,
@@ -62,7 +61,6 @@ export interface ICreateQuiz {
   schadule: Date,
   duration: number,
   score_per_question: number
-
 }
 
 
@@ -96,3 +94,22 @@ export interface IQuizzesResponse {
 }
 
 
+export interface IJoinQuizResponse {
+  data:{
+    createdAt:string
+    participant:string
+    quiz:string
+    score:number
+    started_at:string
+    updatedAt:string
+    __v:number
+    _id:string
+  }
+  message:string
+}
+
+
+
+export interface IJoinQuiz {
+code:string
+}

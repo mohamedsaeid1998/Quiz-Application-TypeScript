@@ -34,7 +34,8 @@ export const QUIZZES_URLS = {
   upcomingQuizzes: "/api/quiz/incomming",
   completedQuizzes: "/api/quiz/completed",
   createQuiz: "/api/quiz",
-  quizzesOperations: (id: string) => `/api/quiz/${id}`
+  quizzesOperations: (id: string) => `/api/quiz/${id}`,
+  joinQuiz: "/api/quiz/join"
 }
 
 // ****************************** Results ************************************
@@ -47,6 +48,7 @@ export const RESULTS_URLS = {
 
 export const QUESTIONS_URLS = {
   createQuestion: "/api/question",
-  questionOperations: (id: string) => `/api/question/${id}`
+  questionOperations: (id: string) => `/api/question/${id}`,
+  examQuestions: (id: string) =>`/api/quiz/without-answers/${id}`
 }
 

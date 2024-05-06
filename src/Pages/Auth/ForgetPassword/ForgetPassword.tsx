@@ -8,6 +8,8 @@ import { Check, Mail } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import './ForgetPassword.module.scss'
+import transition from '@/Utils/Helpers/Transition/transition'
+
 interface IProps {
 
 }

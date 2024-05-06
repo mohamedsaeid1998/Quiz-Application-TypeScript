@@ -66,6 +66,7 @@ export const QuestionsApiSlice = createApi({
         return error;
       }
     }),
+
     editQuestion: builder.mutation({
       query: (data) => {
         const { editItemId, ...bodyData } = data
@@ -90,6 +91,7 @@ export const QuestionsApiSlice = createApi({
       }
 
     }),
+    
     questionDetails: builder.query({
       query: (id) => ({
         url: QUESTIONS_URLS.questionOperations(id),
@@ -99,6 +101,16 @@ export const QuestionsApiSlice = createApi({
       }),
 
     }),
+    getQuestions: builder.query({
+      query: (id) => ({
+        url: QUESTIONS_URLS.examQuestions(id),
+        headers: {
+          Authorization: `Bearer ${CookieServices.get("token")}`
+        }
+      }),
+
+    }),
+
   }),
 })
-export const { useAllQuestionsQuery, useCreateQuestionMutation, useDeleteQuestionMutation,useEditQuestionMutation,useQuestionDetailsQuery } = QuestionsApiSlice
+export const { useGetQuestionsQuery,useAllQuestionsQuery, useCreateQuestionMutation, useDeleteQuestionMutation,useEditQuestionMutation,useQuestionDetailsQuery } = QuestionsApiSlice

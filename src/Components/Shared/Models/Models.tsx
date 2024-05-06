@@ -34,12 +34,18 @@ interface IPropsDetailsModel {
   children: ReactNode
 }
 
+interface IPropsJoinQuizModel {
+  isOpenJoinQuizModel: boolean
+  closeJoinQuizModel: () => void
+  children: ReactNode
+}
+
 export const AddModel = ({ isOpen, closeModal, children, title }: IProps) => {
   return (
     <>
-      <div className='w-full'>
+
         <Transition appear show={isOpen} as={Fragment}>
-          <Dialog as="div" className="relative z-10" onClose={closeModal}>
+          <Dialog as="div" className="relative z-50" onClose={closeModal}>
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -63,10 +69,10 @@ export const AddModel = ({ isOpen, closeModal, children, title }: IProps) => {
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                 >
-                  <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white  p-4 md:p-6 text-left align-middle shadow-xl transition-all">
                     <Dialog.Title
                       as="h3"
-                      className="text-lg font-bold leading-6 text-gray-900"
+                      className=" font-bold leading-6 text-gray-900"
                     >
                       {title}
                     </Dialog.Title>
@@ -80,7 +86,7 @@ export const AddModel = ({ isOpen, closeModal, children, title }: IProps) => {
             </div>
           </Dialog>
         </Transition>
-      </div>
+
     </>
   )
 }
@@ -166,7 +172,7 @@ export const EditModel = ({ isOpenEditModel, closeModalEdit, children, title }: 
                   <Dialog.Panel className="w-full max-w-lg transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                     <Dialog.Title
                       as="h3"
-                      className="text-lg font-bold leading-6 text-gray-900"
+                      className=" font-bold leading-6 text-gray-900"
                     >
                       {title}
                     </Dialog.Title>
@@ -264,10 +270,10 @@ export const DetailsModel = ({ isOpenDetailsModel, closeDetailsModel, children, 
                   leaveFrom="opacity-100 scale-100"
                   leaveTo="opacity-0 scale-95"
                 >
-                  <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <Dialog.Panel className="w-full max-w-2xl transform overflow-hidden rounded-2xl bg-white p-4 md:p-6 text-left align-middle shadow-xl transition-all">
                     <Dialog.Title
                       as="h3"
-                      className="text-lg font-bold leading-6 text-gray-900"
+                      className=" font-bold leading-6 text-gray-900"
                     >
                       {title}
                     </Dialog.Title>
@@ -282,6 +288,53 @@ export const DetailsModel = ({ isOpenDetailsModel, closeDetailsModel, children, 
           </Dialog>
         </Transition>
       </div>
+    </>
+  )
+}
+
+export const JoinTaskModel = ({ isOpenJoinQuizModel, closeJoinQuizModel, children }: IPropsJoinQuizModel) => {
+  return (
+    <>
+
+      <Transition appear show={isOpenJoinQuizModel} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeJoinQuizModel}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black/25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <div className="p-5  flex flex-col items-center  gap-3">
+                    <div className='text-center font-extrabold text-3xl '>
+                      Join Quiz
+                    </div>
+                      <p className='text-md text-center'>Input the code received for the quiz below to join</p>
+                    {children}
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </>
   )
 }

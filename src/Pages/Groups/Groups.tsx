@@ -10,7 +10,6 @@ import { useTranslation } from 'react-i18next';
 import './Groups.module.scss';
 import { AddGroupModal, DeleteGroupModal, EditGroupModal } from './GroupsModels';
 
-
 interface IProps {
 
 }
@@ -23,14 +22,9 @@ const Groups = ({ }: IProps) => {
 
   const { data: allStudents } = useAllStudentsQuery(0)
 
-  // console.log(allStudents);
-
   //? ***************Get Groups List ***************
   const { isLoading: loading, data: groupsList } = useGroupsListQuery(0)
   const { data: studentsData, refetch: studentsRefetch } = useAllStudentsWithoutGroupsQuery(0)
-
-  // console.log(groupsList);
-
   //* ***************Create New Group ***************
   const [isOpen, setIsOpen] = useState(false)
   const openModal = () => setIsOpen(true)
@@ -87,7 +81,7 @@ const Groups = ({ }: IProps) => {
     <DeleteGroupModal {...{ closeModalDelete, isOpenDeleteModel, deleteItemId, studentsRefetch }} />
     <EditGroupModal {...{ loadingData, isOpenEditModel, closeModalEdit, studentsRefetch, editItemId, allStudents, errors, editRegister, handleSubmitEdit }} />
 
-    <main className='m-5 mt-3'>
+
       <div className="border-2 rounded-md p-3" >
         {loading ? <div className='flex justify-between items-center font-semibold'>
           <h6 className="h-[14px] mb-2 w-[90px] animate-pulse bg-gray-500 rounded-md">{""}</h6>
@@ -95,25 +89,25 @@ const Groups = ({ }: IProps) => {
         </div>
           :
           <div className='flex justify-between items-center font-semibold'>
-            {t("GroupsList")}
-            <Button onClick={openModal} variant={'outline'} rounded={'full'} className="text-left gap-2 group"><Plus className='bg-black group-hover:bg-white rounded-full p-1 text-2xl text-white group-hover:text-black transition duration-0' size={20} strokeWidth={5} /> {t("AddGroup")} </Button>
+            <h2>{t("GroupsList")}</h2>
+            <Button onClick={openModal} variant={'outline'} rounded={'full'} className="text-left gap-2 group"><Plus className='bg-black group-hover:bg-white rounded-full p-1 text-white group-hover:text-black transition duration-0' size={20} strokeWidth={5} /> <span>{t("AddGroup")}</span> </Button>
           </div>}
 
-        <div className=' mt-4 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-7 '>
+        <div className=' mt-4 grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6 md:gap-y-4 '>
           {loading && Array.from({ length: 2 }, (_, idx) => <GroupsCardSkeleton key={idx} />)}
           {groupsList?.map(({ max_students, name, _id }: IGroupsList) =>
             <div key={_id} className=' border-2 rounded-md p-3 flex justify-between items-center '>
               <div className='flex flex-col'>
-                <h3 className='text-lg font-bold tracking-wide'>Group : {name}</h3>
+                <h3 className=' font-bold tracking-wide'>Group : {name}</h3>
                 <span className='text-md font-semibold text-slate-500 '>No. of students : {max_students}</span>
               </div>
-              <div className='flex space-x-3'><FilePenLine onClick={() => openModalEdit(_id)} className='cursor-pointer' /> <Trash2 onClick={() => openModalDelete(_id)} className='cursor-pointer' /> </div>
+              <div className='flex space-x-3'><FilePenLine color='gold' onClick={() => openModalEdit(_id)} className='cursor-pointer' /> <Trash2 color='red' onClick={() => openModalDelete(_id)} className='cursor-pointer' /> </div>
             </div>
           )}
 
         </div>
       </div >
-    </main>
+
   </>
 }
 

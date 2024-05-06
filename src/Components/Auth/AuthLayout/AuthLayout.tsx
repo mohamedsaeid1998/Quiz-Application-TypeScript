@@ -1,11 +1,15 @@
-import './AuthLayout.module.scss'
+import { AnimatePresence } from 'framer-motion'
 import { Outlet } from 'react-router-dom'
+import './AuthLayout.module.scss'
 
 const AuthLayout = () => {
+
   return <>
-    <div>
-      <Outlet />
-    </div>
+  
+    <AnimatePresence mode='wait' >
+        <Outlet />
+
+    </AnimatePresence>
   </>
 }
 
