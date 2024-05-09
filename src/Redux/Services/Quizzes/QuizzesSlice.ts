@@ -1,5 +1,5 @@
 import { IFormError } from "@/InterFaces/AuthInterFaces";
-import { IJoinQuizResponse, IQuizzesResponse } from "@/InterFaces/QuizzesInterFaces";
+import { IJoinQuizResponse, IQuizzesResponse, ISubmitQuizResponse } from "@/InterFaces/QuizzesInterFaces";
 import CookieServices from "@/Services/CookieServices/CookieServices";
 import { BASE_URL, QUIZZES_URLS } from "@/Services/EndPoints/EndPoints";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
@@ -124,12 +124,33 @@ export const QuizzesApiSlice = createApi({
       },
       invalidatesTags: ["Quizzes"],
       transformResponse: (response: IJoinQuizResponse) => {
-        console.log(response);
         toast.success(response.message);
         return response as IJoinQuizResponse;
-      } ,
+      },
       transformErrorResponse: (error: IFormError) => {
-        console.log(error);
+        toast.error(error?.data?.message);
+        return error;
+      }
+
+    }),
+    submitQuiz: builder.mutation({
+      query: (data) => {
+        const { _id, ...bodyData } = data
+        return {
+          url: QUIZZES_URLS.finishQuiz(_id),
+          method: "POST",
+          body: bodyData,
+          headers: {
+            Authorization: `Bearer ${CookieServices.get("token")}`
+          }
+        }
+      },
+      invalidatesTags: ["Quizzes"],
+      transformResponse: (response: ISubmitQuizResponse) => {
+        toast.success(response.message);
+        return response as ISubmitQuizResponse;
+      },
+      transformErrorResponse: (error: IFormError) => {
         toast.error(error?.data?.message);
         return error;
       }
@@ -137,4 +158,4 @@ export const QuizzesApiSlice = createApi({
     }),
   }),
 })
-export const { useJoinQuizMutation, useGetFirstUpcomingQuizzesQuery, useCompletedQuizzesQuery, useCreateQuizMutation, useQuizzesDetailsQuery, useDeleteQuizMutation, useEditQuizMutation } = QuizzesApiSlice
+export const { useSubmitQuizMutation, useJoinQuizMutation, useGetFirstUpcomingQuizzesQuery, useCompletedQuizzesQuery, useCreateQuizMutation, useQuizzesDetailsQuery, useDeleteQuizMutation, useEditQuizMutation } = QuizzesApiSlice

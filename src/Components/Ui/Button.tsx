@@ -4,7 +4,6 @@ import { Loader } from "lucide-react";
 import { motion } from "framer-motion";
 import { ButtonHTMLAttributes, ReactNode, useEffect, useState } from "react";
 
-
 export const buttonVariants = cva("inline-flex items-center justify-center font-extrabold transition duration-200 ", {
   variants: {
     variant: {
@@ -56,8 +55,10 @@ const Button = ({ className, children, variant, size, fullWidth, rounded, isLoad
   }, [isLoading])
 
   return <>
-    <motion.button whileHover={{ scale: 1.1 ,transition:0.1  }}
-      whileTap={{ scale: 0.9 , transition:0.5}} className={`${tailwindCMerge(buttonVariants({ variant, size, fullWidth, rounded }))} ${className} ${loading ? "opacity-70" : ""}`} {...rest} disabled={loading} >
+    <motion.button
+      whileHover={{ scale: 1.1, transition: { duration: 0.1 } }}
+      whileTap={{ scale: 0.5 }}
+      className={`${tailwindCMerge(buttonVariants({ variant, size, fullWidth, rounded }))} ${className} ${loading ? "opacity-70" : ""}`} {...rest as any} disabled={loading} >
       {loading ? <><span className='animate-spin'>  <Loader />  </span><span>Processing...</span> </> : children}
 
     </motion.button>

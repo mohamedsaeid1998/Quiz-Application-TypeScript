@@ -1,4 +1,3 @@
-//@ts-ignore
 import moment from 'moment';
 import { quizIcon, quizImg, studentLogo } from "@/Assets/Images";
 import { ICompletedQuizzes, IUpcomingQuizzes } from "@/InterFaces/QuizzesInterFaces";
@@ -23,20 +22,22 @@ const StudentQuizzesPage = ({ CompletedQuizzes, UpcomingQuizzes, allDataLoaded }
   const closeJoinQuizModel = () => setIsOpenJoinQuiz(false)
 
   const List = [
-    { icon: quizIcon, text: "Join Quiz", className: "w-10 sm:w-12 lg:w-14 ", path: "" },
+    { icon: quizIcon, text: "Join Quiz", className: "w-10 sm:w-12 lg:w-14 ", path: "", openModel: openJoinQuizModel },
     { icon: studentLogo, text: "Results", className: "w-12 md:w-20", path: "/dashboard/results" },
-
   ]
+
   return <>
     <JoinQuizModal {...{ closeJoinQuizModel, isOpenJoinQuizModel, openJoinQuizModel }} />
 
+    <div className=' flex gap-3 w-full'>
 
-    <div className='flex flex-col space-y-2 w-[140px]  '>
-      {!allDataLoaded && Array.from({ length: 2 }, (_, idx) => <div key={idx} className=" max-w-[250px] h-[190px] animate-pulse bg-gray-500  quizBox border-2 border-gray-200  rounded-md ">
+
+    <div className='flex flex-col space-y-2 w-[140px] md:w-[200px]  '>
+      {!allDataLoaded && Array.from({ length: 2 }, (_, idx) => <div key={idx} className=" sm:w-[140px]  md:w-[200px] h-[190px] animate-pulse bg-gray-500 quizBox border-2 border-gray-200  rounded-md ">
       </div>)}
 
-      {allDataLoaded && List?.map(({ icon, text, className, path }) => <Link key={text} to={path} className=''>
-        <figure className="flex flex-col max-w-[250px] h-[190px] items-center justify-center  quizBox border-2 cursor-pointer  border-gray-200  text-center rounded-md">
+      {allDataLoaded && List?.map(({ icon, text, className, path, openModel }) => <Link key={text} to={path} >
+        <figure onClick={openModel} className="flex flex-col max-w-[250px] h-[190px] p-1 items-center justify-center  quizBox border-2 cursor-pointer  border-gray-200  text-center rounded-md">
           <img src={icon} className={`${className} m-auto my-1  `} alt="quiz icon for set up a new quiz" />
           <figcaption className="my-1 font-bold leading-tight capitalize overflow-y-hidden">
             <h3>{t(text)}</h3>
@@ -60,12 +61,12 @@ const StudentQuizzesPage = ({ CompletedQuizzes, UpcomingQuizzes, allDataLoaded }
 
             <div className=''>
               <h3 className=' font-bold mb-2'>{title}</h3>
-              <div className="text-[#777]">
+              <div className="text-[#4c4b4b]">
                 <span>{moment(createdAt).format("Do MMM YY")}</span> | <span>{moment(schadule).format("HH:mmA")}</span>
               </div>
               <span className='font-bold mt-3 hidden md:block'>No. of student’s enrolled: 32</span>
             </div>
-            <div className='' onClick={openJoinQuizModel}>
+            <div onClick={openJoinQuizModel}>
 
               <Button className='flex  items-center gap-1 text-md font-bold text-white md:me-5 ' variant={'secondary'} rounded={'full'} >Join  <ArrowRight className='rounded-full ' size={15} strokeWidth={4} color='white' /></Button>
             </div>
@@ -85,35 +86,35 @@ const StudentQuizzesPage = ({ CompletedQuizzes, UpcomingQuizzes, allDataLoaded }
           <Link className='flex items-center text-xs' to={"/dashboard/results"}>{t("results")}  <ArrowRight className=' p-1' size={23} strokeWidth={4} color='#C5D86D' /></Link>
         </div>}
         <table className='w-full border-2 border-separate rounded-md mt-2 border-slate-400'>
-          <thead className='text-gray-400 '>
+          <thead className='text-white  '>
             {!allDataLoaded ? <tr >
-              <th className='px-2 py-3 bg-slate-700 '><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></th>
-              <th className='px-2 py-3 bg-slate-700'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md '>{""}</span></th>
-              <th className='hidden lg:table-cell px-2 py-3  bg-slate-700'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></th>
-              <th className='hidden md:table-cell px-2 py-3 bg-slate-700'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></th>
-              <th className='px-2 py-3 bg-slate-700'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></th>
+              <th className='px-2 py-3 bg-black '><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></th>
+              <th className='px-2 py-3 bg-black'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md '>{""}</span></th>
+              <th className='hidden lg:table-cell px-2 py-3  bg-black'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></th>
+              <th className='hidden md:table-cell px-2 py-3 bg-black'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></th>
+              <th className='px-2 py-3 bg-black'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></th>
             </tr> :
               <tr>
-                <th className='px-2 py-3 font-semibold bg-slate-700'>TITLE</th>
-                <th className='px-2 py-3 font-semibold bg-slate-700'>STATUS</th>
-                <th className='hidden lg:table-cell px-2 py-3 font-semibold  bg-slate-700'>ENROLLED</th>
-                <th className='hidden md:table-cell px-2 py-3 font-semibold bg-slate-700'>SCHEDULE</th>
-                <th className='px-2 py-3 font-semibold bg-slate-700'>CLOSED</th>
+                <th className='px-2 py-3 font-semibold bg-black'>TITLE</th>
+                <th className='px-2 py-3 font-semibold bg-black'>STATUS</th>
+                <th className='hidden lg:table-cell px-2 py-3 font-semibold  bg-black'>ENROLLED</th>
+                <th className='hidden md:table-cell px-2 py-3 font-semibold bg-black'>SCHEDULE</th>
+                <th className='px-2 py-3 font-semibold bg-black'>CLOSED</th>
               </tr>
 
             }
 
           </thead>
-          <tbody className='text-center text-gray-500 divide-y'>
+          <tbody className='text-center text-black divide-y'>
             {!allDataLoaded ? Array.from({ length: 5 }, (_, idx) => <tr key={idx} className='bg-white dark:border-gray-700 dark:bg-gray-800 hover:bg-blue-200'>
-              <td className='py-3 border whitespace-nowrap border-slate-300 '><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></td>
-              <td className='py-3 border border-slate-300'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md '>{""}</span></td>
-              <td className='hidden lg:table-cell py-3 border border-slate-300'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></td>
-              <td className='hidden md:table-cell py-3 border border-slate-300'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></td>
-              <td className='py-3 border border-slate-300'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></td>
+              <td className='py-3 border whitespace-nowrap bg-white border-slate-300 '><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></td>
+              <td className='py-3 border bg-white border-slate-300'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md '>{""}</span></td>
+              <td className='hidden lg:table-cell py-3 border bg-white border-slate-300'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></td>
+              <td className='hidden md:table-cell py-3 border bg-white border-slate-300'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></td>
+              <td className='py-3 border bg-white border-slate-300'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></td>
             </tr>) : null}
 
-            {allDataLoaded && CompletedQuizzes?.map(({ title, status, participants, schadule, closed_at, _id }: ICompletedQuizzes) => <tr key={_id} className='bg-white dark:border-gray-700 dark:bg-gray-800 hover:bg-blue-200'>
+            {allDataLoaded && CompletedQuizzes?.map(({ title, status, participants, schadule, closed_at, _id }: ICompletedQuizzes) => <tr key={_id} className='bg-white dark:border-gray-700  hover:bg-blue-200'>
               <td className='py-3 font-medium border whitespace-nowrap border-slate-300 truncate'>{title}</td>
               <td className='py-3 border border-slate-300'><span className='p-1 tracking-wider font-medium text-sm bg-red-200 text-red-800 rounded-full '>{status}</span></td>
               <td className='hidden lg:table-cell py-3 border border-slate-300'>{participants}</td>
@@ -129,7 +130,7 @@ const StudentQuizzesPage = ({ CompletedQuizzes, UpcomingQuizzes, allDataLoaded }
 
 
     </div>
-
+    </div>
   </>
 }
 

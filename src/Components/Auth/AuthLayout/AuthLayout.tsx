@@ -8,7 +8,6 @@ const AuthLayout = () => {
   
     <AnimatePresence mode='wait' >
         <Outlet />
-
     </AnimatePresence>
   </>
 }

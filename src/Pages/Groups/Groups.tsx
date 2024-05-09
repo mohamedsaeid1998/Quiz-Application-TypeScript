@@ -1,4 +1,4 @@
-import { GroupsCardSkeleton } from '@/Components';
+import { AnimationContainer, GroupsCardSkeleton } from '@/Components';
 import Button from '@/Components/Ui/Button';
 import { IGroups, IGroupsList } from '@/InterFaces/GroupsInterFaces';
 import { useGetGroupByIdQuery, useGroupsListQuery } from '@/Redux/Services/Groups/GroupsSlice';
@@ -9,15 +9,11 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import './Groups.module.scss';
 import { AddGroupModal, DeleteGroupModal, EditGroupModal } from './GroupsModels';
-
-interface IProps {
-
-}
-
-
-const Groups = ({ }: IProps) => {
+import { motion } from 'framer-motion';
+import { opacityAnimation } from '@/Utils/Helpers/FramerVariables/FramerVariables';
+const Groups = () => {
   const { t } = useTranslation();
-
+  const { handleSubmit: handleSubmitEdit, setValue, register: editRegister, formState: { errors } } = useForm<IGroups>()
   //? ***************Get All Students ***************
 
   const { data: allStudents } = useAllStudentsQuery(0)
@@ -31,7 +27,6 @@ const Groups = ({ }: IProps) => {
   const closeModal = () => {
     setIsOpen(false)
   }
-
 
   //! *************** Delete Group ***************
   const [deleteItemId, setDeleteItem] = useState("")
@@ -61,7 +56,7 @@ const Groups = ({ }: IProps) => {
     setLoadingData(false)
     setEditItem(_id)
   }
-  const { handleSubmit: handleSubmitEdit, setValue, register: editRegister, formState: { errors } } = useForm<IGroups>()
+
 
   //? *************** GetGroupById ***************
 
@@ -81,7 +76,7 @@ const Groups = ({ }: IProps) => {
     <DeleteGroupModal {...{ closeModalDelete, isOpenDeleteModel, deleteItemId, studentsRefetch }} />
     <EditGroupModal {...{ loadingData, isOpenEditModel, closeModalEdit, studentsRefetch, editItemId, allStudents, errors, editRegister, handleSubmitEdit }} />
 
-
+    <AnimationContainer>
       <div className="border-2 rounded-md p-3" >
         {loading ? <div className='flex justify-between items-center font-semibold'>
           <h6 className="h-[14px] mb-2 w-[90px] animate-pulse bg-gray-500 rounded-md">{""}</h6>
@@ -107,7 +102,7 @@ const Groups = ({ }: IProps) => {
 
         </div>
       </div >
-
+    </AnimationContainer>
   </>
 }
 

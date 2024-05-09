@@ -13,6 +13,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ConfirmPasswordInput, PasswordInput } from "../AuthInputs/AuthInputs";
 import { AddModel } from "../Models/Models";
 import { motion } from "framer-motion";
+import { variants } from "@/Utils/Helpers/FramerVariables/FramerVariables";
 
 interface IProps {
   setSidebarOpen: Dispatch<SetStateAction<boolean>>
@@ -71,13 +72,12 @@ export default function SideBar({ isSidebarOpen, setSidebarOpen }: IProps) {
     { style: `${pathname === "/dashboard/home" ? 'bg-secondColor ' : ""} border-b border-black  link`, path: <Link to="/dashboard/home" />, icon: <Users2 size={'35px'} className="bg-secondColor p-1" />, body: "dashboard" },
     { style: `${pathname === "/dashboard/groups" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/groups' />, icon: <Home size={'35px'} className="bg-secondColor p-1" />, body: "groups" },
     { style: `${pathname === "/dashboard/student" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/student' />, icon: <GraduationCap size={'35px'} className="bg-secondColor p-1" />, body: "students" },
-    { style: `${pathname === "/dashboard/quiz" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/quiz' />, icon: <LayoutList size={'35px'} className="bg-secondColor p-1" />, body: "quizzes" },
+    { style: `${pathname?.includes("quiz") ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/quiz' />, icon: <LayoutList size={'35px'} className="bg-secondColor p-1" />, body: "quizzes" },
     { style: `${pathname === "/dashboard/questions" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/questions' />, icon: <MessageCircleQuestion size={'35px'} className="bg-secondColor p-1" />, body: "questions" },
-    { style: `${pathname === "/dashboard/results" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/results' />, icon: <FileText size={'35px'} className="bg-secondColor p-1" />, body: "results" },
+    { style: `${pathname?.includes("results") ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/results' />, icon: <FileText size={'35px'} className="bg-secondColor p-1" />, body: "results" },
     { style: `border-b border-black link`, icon: <LockKeyholeOpen size={'35px'} className="bg-secondColor p-1" />, body: "changePassword", onClick: openModal },
     { style: `border-b border-black link`, icon: <LogOut size={'35px'} className="bg-secondColor p-1" />, body: "logout", onClick: logout },
   ]
-
 
   const sidebarStudentItems: IMenu[] = [
     { style: `${pathname === "/dashboard/quiz" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/quiz' />, icon: <LayoutList size={'35px'} className="bg-secondColor p-1" />, body: "quizzes" },
@@ -85,21 +85,6 @@ export default function SideBar({ isSidebarOpen, setSidebarOpen }: IProps) {
     { style: `border-b border-black link`, icon: <LockKeyholeOpen size={'35px'} className="bg-secondColor p-1" />, body: "changePassword", onClick: openModal },
     { style: `border-b border-black link`, icon: <LogOut size={'35px'} className="bg-secondColor p-1" />, body: "logout", onClick: logout },
   ]
-
-
-
-
-  const variants = {
-    open: {
-      transition: { staggerChildren: 0.07, delayChildren: 0.2 }
-    },
-    closed: {
-      transition: { staggerChildren: 0.05, staggerDirection: -1 }
-    }
-  };
-
-
-  // const MotionMenu = motion(Sidebar)
 
   return (
     <>

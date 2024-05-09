@@ -1,4 +1,4 @@
-import { Button, PaginationButtons } from '@/Components';
+import { AnimationContainer, Button, PaginationButtons } from '@/Components';
 import { IQuestions } from '@/InterFaces/QuestionsInterFaces';
 import { useAllQuestionsQuery } from '@/Redux/Services/Questions/QuestionsSlice';
 import { Eye, FilePenLine, Plus, Trash2 } from 'lucide-react';
@@ -19,10 +19,7 @@ const Questions = ({ }: IProps) => {
   //? ***************Get Questions ***************
   const { data: allQuestions, isLoading } = useAllQuestionsQuery(0)
 
-
-
   const [currentPage, setCurrentPage] = useState(0)
-
 
   const handlePageChange = (selectedPage: number) => {
     setCurrentPage(selectedPage);
@@ -37,7 +34,6 @@ const Questions = ({ }: IProps) => {
   const openModal = () => setIsOpen(true)
   const closeModal = () => setIsOpen(false)
 
-
   //! *************** Delete Question ***************
   const [deleteItemId, setDeleteItem] = useState("")
   const [isOpenDeleteModel, setIsOpenDeleteModel] = useState(false)
@@ -49,7 +45,6 @@ const Questions = ({ }: IProps) => {
     setIsOpenDeleteModel(false)
     setDeleteItem("")
   }
-
 
   //TODO *************** Edit Question ***************
   const [editItemId, setEditItem] = useState("")
@@ -82,30 +77,14 @@ const Questions = ({ }: IProps) => {
     setDetailsItem(_id)
   }
 
-  const difficulty = [
-    { _id: "easy", title: "Easy" },
-    { _id: "medium", title: "Medium" },
-    { _id: "hard", title: "Hard" },
-  ]
-
-  const Answers = [
-    { _id: "A", title: "A" },
-    { _id: "B", title: "B" },
-    { _id: "C", title: "C" },
-    { _id: "D", title: "D" },
-  ]
-
-  const type = [
-    { _id: "FE", title: "FE" },
-    { _id: "BE", title: "BE" },
-  ]
 
   return <>
-    <CreateQuestionModal {...{ closeModal, isOpen, difficulty, type, Answers }} />
+    <CreateQuestionModal {...{ closeModal, isOpen }} />
     <DeleteQuestionModal {...{ deleteItemId, isOpenDeleteModel, closeModalDelete }} />
-    <EditQuestionModal {...{ rightAnswer, isOpenEditModel, closeModalEdit, editItemId, Answers }} />
+    <EditQuestionModal {...{ rightAnswer, isOpenEditModel, closeModalEdit, editItemId }} />
     <DetailsQuestionModal {...{ detailsItemId, isOpenDetailsModel, closeDetailsModel }} />
 
+    <AnimationContainer>
     <div className="p-3 mt-2 overflow-x-auto border-2 rounded-md" >
       {isLoading ? <div className='flex justify-between items-center font-semibold'>
         <h6 className="h-[14px] mb-2 w-[90px] animate-pulse bg-gray-500 rounded-md">{""}</h6>
@@ -168,8 +147,7 @@ const Questions = ({ }: IProps) => {
       </table>
       {!isLoading && <PaginationButtons members={allQuestions} count={questionsPerPage}  {...{ currentPage, handlePageChange }} />}
     </div>
-
-
+    </AnimationContainer>
 
   </>
 }

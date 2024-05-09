@@ -5,7 +5,6 @@ export const FieldValidation = {
   required,
 }
 
-
 export const emailValidation = {
   required: "Email is required !!",
   pattern: {

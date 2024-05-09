@@ -35,7 +35,8 @@ export const QUIZZES_URLS = {
   completedQuizzes: "/api/quiz/completed",
   createQuiz: "/api/quiz",
   quizzesOperations: (id: string) => `/api/quiz/${id}`,
-  joinQuiz: "/api/quiz/join"
+  joinQuiz: "/api/quiz/join",
+  finishQuiz: (id: string) => `/api/quiz/submit/${id}`,
 }
 
 // ****************************** Results ************************************

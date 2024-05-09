@@ -52,7 +52,7 @@ interface IEditQuizProps {
   quizTitle: string
 }
 
-export const EditQuizModal = ({ isOpenEditModel, closeModalEdit, editItemId, quizTitle,refetch }: IEditQuizProps) => {
+export const EditQuizModal = ({ isOpenEditModel, closeModalEdit, editItemId, quizTitle, refetch }: IEditQuizProps) => {
 
   const { handleSubmit, register, formState: { errors } } = useForm<IEditQuiz>()
   const [submitEditQuiz, { isLoading: editLoading }] = useEditQuizMutation()
@@ -65,13 +65,13 @@ export const EditQuizModal = ({ isOpenEditModel, closeModalEdit, editItemId, qui
     }
   }
 
-  return <> 
+  return <>
     <EditModel title="Update Quiz Title"  {...{ isOpenEditModel, closeModalEdit }}>
       <form onSubmit={handleSubmit(handleEditQuiz)} className="mt-4">
         <Input label="Title" {...register("title", FieldValidation)} defaultValue={quizTitle} />
         {renderErrors(errors?.title?.message)}
         <div className="flex justify-center">
-        <Button isLoading={editLoading} rounded={'lg'} variant={"ghost"} className="mt-4" >Edit Quiz</Button>
+          <Button isLoading={editLoading} rounded={'lg'} variant={"ghost"} className="mt-4" >Edit Quiz</Button>
         </div>
       </form>
     </EditModel>

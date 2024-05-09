@@ -1,6 +1,5 @@
 import { InputHTMLAttributes, Ref, SelectHTMLAttributes, TextareaHTMLAttributes, forwardRef, useId } from 'react'
 
-
 interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
   className?: string
@@ -35,7 +34,7 @@ export const Input = forwardRef(({ className = "", label, ...rest }: IProps, ref
       <label htmlFor={inputId} className='bg-secondColor p-2 font-semibold  flex justify-center min-w-20'>
         {label}
       </label>
-      <input ref={ref} id={inputId} className=" pl-3 text-black  outline-none flex-1 border-none  bg-transparent py-1.5  placeholder:text-gray-400  caret-mainColor " {...rest} />
+      <input ref={ref} id={inputId} className=" pl-3 text-black  outline-none flex-1 border-none  bg-transparent py-1.5  placeholder:text-gray-400 truncate caret-mainColor " {...rest} />
     </div>
   </>
 })

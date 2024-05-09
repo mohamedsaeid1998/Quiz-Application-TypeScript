@@ -8,13 +8,8 @@ import { Check, Mail } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import './ForgetPassword.module.scss'
-import transition from '@/Utils/Helpers/Transition/transition'
 
-interface IProps {
-
-}
-
-const ForgetPassword = ({ }: IProps) => {
+const ForgetPassword = () => {
 
   const [submitForget, { isLoading }] = useForgetMutation()
   const { register, handleSubmit, formState: { errors } } = useForm<IFormForget>()
@@ -26,7 +21,6 @@ const ForgetPassword = ({ }: IProps) => {
       navigate('/reset-password')
     }
   }
-
 
   return <>
     <AuthBackground header={"Forget Password"}>

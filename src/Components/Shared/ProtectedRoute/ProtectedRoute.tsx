@@ -11,8 +11,6 @@ const ProtectedRoute = ({ children }: prop) => {
   if (!CookieServices.get("token")) {
     return <Navigate to='/' />
   } else {
-
-
     return children;
   }
 };

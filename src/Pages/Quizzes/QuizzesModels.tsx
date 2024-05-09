@@ -6,6 +6,7 @@ import { ICreateQuiz, IJoinQuiz } from "@/InterFaces/QuizzesInterFaces"
 import { useGroupsListQuery } from "@/Redux/Services/Groups/GroupsSlice"
 import { useCreateQuizMutation, useJoinQuizMutation } from "@/Redux/Services/Quizzes/QuizzesSlice"
 import { renderErrors } from "@/Utils/Helpers/ErrorMessage/ErrorMessage"
+import { difficulty, duration, questions_number, type } from "@/Utils/Helpers/Variables/Variables"
 import { FieldValidation } from "@/Utils/Validation"
 import { Loader, SaveAll } from "lucide-react"
 import { useRef } from "react"
@@ -17,13 +18,9 @@ interface IAddQuizzesProps {
   isOpen: boolean
   openInfoModel: (code: string) => void
   closeModal: () => void
-  duration: {}[]
-  questions_number: {}[]
-  difficulty: {}[]
-  type: {}[]
 }
 
-export const CreateQuizModal = ({ closeModal, isOpen, duration, questions_number, difficulty, type, openInfoModel }: IAddQuizzesProps) => {
+export const CreateQuizModal = ({ closeModal, isOpen, openInfoModel }: IAddQuizzesProps) => {
   //? ***************Get Groups List ***************
   const { isLoading: groupsLoading, data: groupsList } = useGroupsListQuery(0)
   const { register, handleSubmit, reset, formState: { errors: addErrors } } = useForm<ICreateQuiz>()
@@ -68,41 +65,33 @@ export const CreateQuizModal = ({ closeModal, isOpen, duration, questions_number
         <DateInput label="Schedule" {...register("schadule", FieldValidation)} />
         {renderErrors(addErrors?.schadule?.message)}
         <div className="flex flex-col sm:flex-row  justify-between items-center sm:space-x-5">
-        <div className="w-full">
-        <SelectInput label="level" {...register("difficulty", FieldValidation)} list={difficulty} />
-          {renderErrors(addErrors?.difficulty?.message)}
-        </div>
-        <div className="w-full">
-        <SelectInput label="Category" {...register("type", FieldValidation)} list={type} />
-          {renderErrors(addErrors?.type?.message)}
-        </div>
-        <div className="w-full">
-        <div className={` mt-4 flex flex-1 border-2 rounded-lg focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor `}>
-            <label htmlFor="group" className='bg-secondColor p-2 font-semibold  flex justify-center min-w-20 items-center'>
-              Group
-            </label>
-            <select id="group" {...register("group", FieldValidation)} className="px-2 rounded-r-md outline-none flex-1 border-none text-center  bg-transparent py-1.5 pl-1 text-black placeholder:text-gray-400  sm:text-sm sm:leading-6"  >
-              {groupsList?.map(({ _id, name }: any) => (
-                <option
-                  key={_id}
-                  value={_id}
-                  className="text-black"
-                >
-                  {name}
-                </option>
-              ))}
-            </select>
+          <div className="w-full">
+            <SelectInput label="level" {...register("difficulty", FieldValidation)} list={difficulty} />
+            {renderErrors(addErrors?.difficulty?.message)}
           </div>
-          {renderErrors(addErrors?.group?.message)}
-        </div>
-
-
-
-
-
-
-
-
+          <div className="w-full">
+            <SelectInput label="Category" {...register("type", FieldValidation)} list={type} />
+            {renderErrors(addErrors?.type?.message)}
+          </div>
+          <div className="w-full">
+            <div className={` mt-4 flex flex-1 border-2 rounded-lg focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor `}>
+              <label htmlFor="group" className='bg-secondColor p-2 font-semibold  flex justify-center min-w-20 items-center'>
+                Group
+              </label>
+              <select id="group" {...register("group", FieldValidation)} className="px-2 rounded-r-md outline-none flex-1 border-none text-center  bg-transparent py-1.5 pl-1 text-black placeholder:text-gray-400  sm:text-sm sm:leading-6"  >
+                {groupsList?.map(({ _id, name }: any) => (
+                  <option
+                    key={_id}
+                    value={_id}
+                    className="text-black"
+                  >
+                    {name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            {renderErrors(addErrors?.group?.message)}
+          </div>
 
         </div>
 
@@ -115,16 +104,11 @@ export const CreateQuizModal = ({ closeModal, isOpen, duration, questions_number
   </>
 }
 
-
-
-
 interface IInfoQuizProps {
   isOpenInfoModel: boolean
   closeInfoModel: () => void
   quizCode: string
 }
-
-
 
 export const InfoQuizModal = ({ isOpenInfoModel, closeInfoModel, quizCode }: IInfoQuizProps) => {
 
@@ -142,7 +126,7 @@ export const InfoQuizModal = ({ isOpenInfoModel, closeInfoModel, quizCode }: IIn
     }
   };
   return <>
-    <InfoModel {...{ closeInfoModel, isOpenInfoModel }}>
+    <InfoModel {...{ closeInfoModel, isOpenInfoModel }} title="Quiz was successfully created" >
       <div onClick={handleCopy} className={`w-full flex border-2 rounded-lg focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor `}>
         <label htmlFor="Info" className='bg-secondColor p-2 font-semibold  flex justify-center min-w-20'>
           Code
@@ -159,12 +143,10 @@ export const InfoQuizModal = ({ isOpenInfoModel, closeInfoModel, quizCode }: IIn
   </>
 }
 
-
 interface IJoinQuizProps {
   isOpenJoinQuizModel: boolean
   closeJoinQuizModel: () => void
 }
-
 
 export const JoinQuizModal = ({ isOpenJoinQuizModel, closeJoinQuizModel }: IJoinQuizProps) => {
   const navigate = useNavigate()
@@ -177,7 +159,6 @@ export const JoinQuizModal = ({ isOpenJoinQuizModel, closeJoinQuizModel }: IJoin
     }
   }
 
-
   return <>
     <JoinTaskModel {...{ closeJoinQuizModel, isOpenJoinQuizModel }}>
       <form className="w-full" onSubmit={handleSubmit(handleJoinQuiz)}>
@@ -189,5 +170,25 @@ export const JoinQuizModal = ({ isOpenJoinQuizModel, closeJoinQuizModel }: IJoin
       </form>
 
     </JoinTaskModel>
+  </>
+}
+
+interface IQuizResultProps {
+  isOpenInfoModel: boolean
+  closeInfoModel: () => void
+  score: number[]
+}
+
+export const QuizResultModal = ({ isOpenInfoModel, closeInfoModel, score }: IQuizResultProps) => {
+
+  return <>
+    <InfoModel {...{ closeInfoModel, isOpenInfoModel }} title=" Congratulations" >
+      <div className={`w-full flex justify-center items-center`}>
+        <p className="text-lg font-bold ">your Score is : <span className="text-green-500 text-lg ">{score[0]} / {score[1] * score[2]}</span></p>
+
+
+      </div>
+      <p className="text-black flex justify-center items-center"> Question with {score[2]} points</p>
+    </InfoModel>
   </>
 }

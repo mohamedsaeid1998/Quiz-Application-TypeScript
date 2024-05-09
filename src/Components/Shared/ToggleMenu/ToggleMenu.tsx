@@ -6,15 +6,15 @@ import CookieServices from "@/Services/CookieServices/CookieServices";
 import { renderErrors } from "@/Utils/Helpers/ErrorMessage/ErrorMessage";
 import { passRegValidation } from "@/Utils/Validation";
 import { Check, FileText, GraduationCap, Home, KeyRound, LayoutList, LockKeyholeOpen, LogOut, MessageCircleQuestion, Plus, Users2 } from "lucide-react";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { ConfirmPasswordInput, PasswordInput } from "../AuthInputs/AuthInputs";
 import { AddModel } from "../Models/Models";
 
 interface IProps {
-  active:boolean
-  setActive:Dispatch<SetStateAction<boolean>>
+  active: boolean
+  setActive: Dispatch<SetStateAction<boolean>>
 }
 
 const ToggleMenu = ({ active, setActive }: IProps) => {
@@ -103,7 +103,7 @@ const ToggleMenu = ({ active, setActive }: IProps) => {
           {StudentMenu?.map(({ color, path, icon, onClick }, idx) => <li key={idx} style={color}>
             <Link onClick={onClick} to={path} >{icon}</Link>
           </li>)}
-          </>
+        </>
       }
     </ul>
   </>

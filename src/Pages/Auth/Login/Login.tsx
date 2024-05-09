@@ -10,13 +10,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import './Login.module.scss'
 import CookieServices from '@/Services/CookieServices/CookieServices'
 
-
-interface IProps {
-
-}
-
-
-const Login = ({ }: IProps) => {
+const Login = () => {
 
   const [submitLogin, { isLoading }] = useLoginMutation()
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<IFormLogin>()
@@ -28,8 +22,6 @@ const Login = ({ }: IProps) => {
       CookieServices.get("role").role === "Instructor" ? navigate('/dashboard/home') : navigate('/dashboard/quiz')
     }
   }
-
-
 
   return <>
     <AuthBackground header={"Continue your learning journey with QuizWiz !"}>

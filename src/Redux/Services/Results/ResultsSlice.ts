@@ -2,8 +2,6 @@ import CookieServices from "@/Services/CookieServices/CookieServices";
 import { BASE_URL, RESULTS_URLS } from "@/Services/EndPoints/EndPoints";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-
-
 export const ResultsApiSlice = createApi({
   reducerPath: "results",
   tagTypes: ["Results"],

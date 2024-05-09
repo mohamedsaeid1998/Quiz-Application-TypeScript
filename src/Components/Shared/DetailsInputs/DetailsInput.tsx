@@ -1,6 +1,4 @@
-
 import { ReactNode, Ref, forwardRef } from "react"
-
 
 interface IProps {
   label: string

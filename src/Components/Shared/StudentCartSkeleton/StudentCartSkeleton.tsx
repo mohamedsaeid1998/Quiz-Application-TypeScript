@@ -1,9 +1,5 @@
 
-interface IProps {
-
-}
-
-const StudentCartSkeleton = ({ }: IProps) => {
+const StudentCartSkeleton = () => {
   return <>
 
     <div className=' border-2 flex items-center mt-4 rounded-lg'>

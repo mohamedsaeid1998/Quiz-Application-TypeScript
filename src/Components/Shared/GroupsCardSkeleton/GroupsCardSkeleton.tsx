@@ -1,9 +1,5 @@
 
-interface IProps {
-
-}
-
-const GroupsCardSkeleton = ({ }: IProps) => {
+const GroupsCardSkeleton = () => {
   return <>
     <div className=' border-2 rounded-md p-5 flex justify-between items-center '>
       <div className='flex flex-col'>

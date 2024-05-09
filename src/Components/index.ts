@@ -8,6 +8,7 @@ export { default as InstructorProtectedRoute } from './Shared/InstructorProtecte
 export { default as TestCode } from './Shared/TestCode/TestCode'
 export { default as SideBar } from './Shared/SideBar/SideBar'
 export { default as ToggleMenu } from './Shared/ToggleMenu/ToggleMenu'
+export { default as AnimationContainer } from './Shared/AnimationContainer/AnimationContainer'
 export { default as Navbar } from './Shared/Navbar/Navbar'
 export { default as GroupsCardSkeleton } from './Shared/GroupsCardSkeleton/GroupsCardSkeleton'
 export { default as QuizzesCardSkeleton } from './Shared/QuizzesCardSkeleton/QuizzesCardSkeleton'

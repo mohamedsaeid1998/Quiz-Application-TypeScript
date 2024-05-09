@@ -1,6 +1,6 @@
 
 import { studentLogo } from '@/Assets/Images';
-import { PaginationButtons } from '@/Components';
+import { AnimationContainer, PaginationButtons } from '@/Components';
 import { IAllStudents } from '@/InterFaces/StudentsInterFaces';
 import { useAllStudentsQuery } from '@/Redux/Services/Students/StudentsSlice';
 import { Eye } from 'lucide-react';
@@ -43,7 +43,7 @@ const Students = ({ }: IProps) => {
 
   return <>
     <DetailsStudentModal{...{ isOpenDetailsModel, detailsItemId, closeDetailsModel }} />
-
+    <AnimationContainer>
     <div className="border-2 rounded-md p-3" >
       {loading ? <h6 className="h-[14px] mb-2 w-[90px] animate-pulse bg-gray-500 rounded-md">{""}</h6> : <h2 className=' font-semibold'>{t("StudentsList")}</h2>}
       <div className=' mt-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3  '>
@@ -64,7 +64,7 @@ const Students = ({ }: IProps) => {
       {!loading && <PaginationButtons members={allStudents} count={studentsPerPage}  {...{ currentPage, handlePageChange }} />}
 
     </div>
-
+    </AnimationContainer>
   </>
 }
 

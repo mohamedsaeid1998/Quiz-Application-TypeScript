@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { Button } from '@/Components';
+import { AnimationContainer, Button } from '@/Components';
 import { DetailsInput } from '@/Components/Shared/DetailsInputs/DetailsInput';
 import { useQuizzesDetailsQuery } from '@/Redux/Services/Quizzes/QuizzesSlice';
 import { CalendarDays, ChevronsRight, Clock, Pencil, SaveAll, Trash2 } from 'lucide-react';
@@ -9,11 +9,8 @@ import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import './QuizDetails.module.scss';
 import { DeleteQuizModal, EditQuizModal } from './QuizDetailsModels';
-interface IProps {
 
-}
-
-const QuizDetails = ({ }: IProps) => {
+const QuizDetails = () => {
   const { id } = useParams()
   const { data: QuizData, refetch } = useQuizzesDetailsQuery(id)
   const textRef = useRef<HTMLParagraphElement>(null);
@@ -63,7 +60,7 @@ const QuizDetails = ({ }: IProps) => {
     <DeleteQuizModal {...{ closeModalDelete, isOpenDeleteModel, deleteItemId }} />
     <EditQuizModal {...{ quizTitle, isOpenEditModel, closeModalEdit, editItemId, refetch }} />
 
-
+    <AnimationContainer>
       <div className='flex justify-center items-center w-full'>
         <div className="p-3 border-2 rounded-md w-[400px] " >
 
@@ -106,7 +103,7 @@ const QuizDetails = ({ }: IProps) => {
               :
               <>
 
-                <DetailsInput label='Number of questions' content={`${QuizData?.questions_number} Questions`}  />
+                <DetailsInput label='Number of questions' content={`${QuizData?.questions_number} Questions`} />
                 <DetailsInput label='Score_per_question' content={`${QuizData?.score_per_question} Points`} />
                 <DetailsInput title={QuizData?.description} className='mt-0' label='Description' content={`${QuizData?.description}`} />
                 <DetailsInput label='difficulty' content={`${QuizData?.difficulty}`} />
@@ -122,7 +119,7 @@ const QuizDetails = ({ }: IProps) => {
 
         </div>
       </div>
-
+    </AnimationContainer>
   </>
 }
 

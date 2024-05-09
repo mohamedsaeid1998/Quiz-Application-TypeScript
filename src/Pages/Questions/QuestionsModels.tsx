@@ -6,6 +6,7 @@ import { ICreateQuestions, IEditQuestion } from "@/InterFaces/QuestionsInterFace
 import { useCreateQuestionMutation, useDeleteQuestionMutation, useEditQuestionMutation, useQuestionDetailsQuery } from "@/Redux/Services/Questions/QuestionsSlice"
 import { RightAnswers } from "@/Types"
 import { renderErrors } from "@/Utils/Helpers/ErrorMessage/ErrorMessage"
+import { Answers, difficulty, type } from "@/Utils/Helpers/Variables/Variables"
 import { FieldValidation } from "@/Utils/Validation"
 import { Loader } from "lucide-react"
 import { useEffect } from "react"
@@ -14,13 +15,10 @@ import { useForm } from "react-hook-form"
 interface IAddQuestionsProps {
   isOpen: boolean
   closeModal: () => void
-  difficulty: {}[]
-  type: {}[]
-  Answers: {}[]
 }
 
-export const CreateQuestionModal = ({ closeModal, isOpen, difficulty, type, Answers }: IAddQuestionsProps) => {
-  const { register, handleSubmit, reset, formState: { errors: addErrors } } = useForm<ICreateQuestions>()
+export const CreateQuestionModal = ({ closeModal, isOpen }: IAddQuestionsProps) => {
+  const { register, handleSubmit,reset ,formState: { errors: addErrors } } = useForm<ICreateQuestions>()
   const [submitCreateQuestion, { isLoading: createLoading }] = useCreateQuestionMutation()
   const handleCreateQuestion = async (data: ICreateQuestions) => {
     const response = await submitCreateQuestion(data)
@@ -33,7 +31,7 @@ export const CreateQuestionModal = ({ closeModal, isOpen, difficulty, type, Answ
 
   return <>
     <AddModel title="Set up a new Question"  {...{ isOpen, closeModal }}>
-      <form className="text-center" onSubmit={handleSubmit(handleCreateQuestion)}>
+      <form  onSubmit={handleSubmit(handleCreateQuestion)}>
 
         <Input {...register("title", FieldValidation)} label="Title" />
         {renderErrors(addErrors?.title?.message)}
@@ -43,7 +41,7 @@ export const CreateQuestionModal = ({ closeModal, isOpen, difficulty, type, Answ
 
         <div className="grid grid-cols-2 gap-4 mt-4">
 
-          <div className='w-full'>
+          <div className='w-full '>
             <Input {...register("options.A", FieldValidation)} label="A" />
             {renderErrors(addErrors?.options?.A?.message)}
           </div>
@@ -66,15 +64,15 @@ export const CreateQuestionModal = ({ closeModal, isOpen, difficulty, type, Answ
         </div>
 
         <div className="flex flex-col sm:flex-row  justify-between items-center sm:gap-4">
-        <div className='w-full'>
-          <SelectInput {...register("answer", FieldValidation)} label=" Answer" list={Answers} />
-        </div>
-        <div className='w-full'>
-          <SelectInput label=" difficulty" {...register("difficulty", FieldValidation)} list={difficulty} />
-        </div>
-        <div className='w-full'>
-          <SelectInput label="type" {...register("type", FieldValidation)} list={type} />
-        </div>
+          <div className='w-full'>
+            <SelectInput {...register("answer", FieldValidation)} label=" Answer" list={Answers} />
+          </div>
+          <div className='w-full'>
+            <SelectInput label=" difficulty" {...register("difficulty", FieldValidation)} list={difficulty} />
+          </div>
+          <div className='w-full'>
+            <SelectInput label="type" {...register("type", FieldValidation)} list={type} />
+          </div>
         </div>
 
         <div className="flex justify-center">
@@ -104,9 +102,6 @@ export const DeleteQuestionModal = ({ isOpenDeleteModel, closeModalDelete, delet
     }
   }
 
-
-
-
   return <>
     <DeleteModel {...{ isOpenDeleteModel, closeModalDelete }}>
       <form onSubmit={handleSubmitDelete(handleDeleteQuiz)}>
@@ -128,10 +123,9 @@ interface IEditQuestionProps {
   closeModalEdit: () => void
   editItemId: string
   rightAnswer: typeof RightAnswers
-  Answers: {}[]
 }
 
-export const EditQuestionModal = ({ isOpenEditModel, closeModalEdit, editItemId, rightAnswer, Answers }: IEditQuestionProps) => {
+export const EditQuestionModal = ({ isOpenEditModel, closeModalEdit, editItemId, rightAnswer }: IEditQuestionProps) => {
 
   const { handleSubmit, register, setValue } = useForm<IEditQuestion>()
   const [submitEditQuestion, { isLoading: editLoading }] = useEditQuestionMutation()
@@ -149,7 +143,7 @@ export const EditQuestionModal = ({ isOpenEditModel, closeModalEdit, editItemId,
 
   return <>
     <EditModel title="Update Question Title"  {...{ isOpenEditModel, closeModalEdit }}>
-      <form onSubmit={handleSubmit(handleEditQuestion)} className="">
+      <form onSubmit={handleSubmit(handleEditQuestion)}>
         <SelectInput label="RightAnswer"  {...register("answer", FieldValidation)} list={Answers} />
         <div className="flex justify-center">
           <Button isLoading={editLoading} rounded={'lg'} variant={"ghost"} className="mt-4" >Edit Question</Button>
@@ -168,14 +162,12 @@ interface IDetailsQuestionsProps {
 
 export const DetailsQuestionModal = ({ closeDetailsModel, isOpenDetailsModel, detailsItemId }: IDetailsQuestionsProps) => {
 
-  const { data: questionDetails,status} = useQuestionDetailsQuery(detailsItemId)
+  const { data: questionDetails, status } = useQuestionDetailsQuery(detailsItemId)
 
   return <>
     <DetailsModel title="Question Details"  {...{ isOpenDetailsModel, closeDetailsModel }}>
 
-
-
-      {status==="fulfilled"? <>
+      {status === "fulfilled" ? <>
         <DetailsInput label="Title" content={`${questionDetails?.title}`} />
 
 
@@ -203,18 +195,16 @@ export const DetailsQuestionModal = ({ closeDetailsModel, isOpenDetailsModel, de
         </div>
 
         <div className="flex flex-col sm:flex-row  justify-between items-center sm:gap-4 gap-3  mt-4 ">
-        <div className='w-full'>
-          <DetailsInput label="answer" content={`${questionDetails?.answer}`}  />
+          <div className='w-full'>
+            <DetailsInput label="answer" content={`${questionDetails?.answer}`} />
+          </div>
+          <div className='w-full'>
+            <DetailsInput label="type" content={`${questionDetails?.type}`} />
+          </div>
+          <div className='w-full'>
+            <DetailsInput label="difficulty" content={`${questionDetails?.difficulty}`} />
+          </div>
         </div>
-        <div className='w-full'>
-          <DetailsInput label="type" content={`${questionDetails?.type}`} />
-        </div>
-        <div className='w-full'>
-          <DetailsInput label="difficulty" content={`${questionDetails?.difficulty}`} />
-        </div>
-        </div>
-
-
 
         <div className="flex justify-center">
           <Button onClick={closeDetailsModel} rounded={'lg'} className='gap-2 mt-4' variant={"ghost"}>Cancel</Button>

@@ -1,96 +1,131 @@
 import { Button, Stepper } from '@/Components'
 import { useGetQuestionsQuery } from '@/Redux/Services/Questions/QuestionsSlice'
-import { animate, stagger, useAnimate } from 'framer-motion'
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { stagger, useAnimate } from 'framer-motion'
+import { useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 import './ExamQuestions.module.scss'
+import { useSubmitQuizMutation } from '@/Redux/Services/Quizzes/QuizzesSlice'
+import { QuizResultModal } from '../Quizzes/QuizzesModels'
+import SubmitButton from './SubmitButton'
+import { sparklesAnimation, sparklesFadeOut, sparklesReset } from '@/Utils/Helpers/FramerVariables/FramerVariables'
+import { Loader } from 'lucide-react'
 
-
-
-type AnimationSequence = Parameters<typeof animate>[0];
 
 const ExamQuestions = () => {
-  const { register, handleSubmit } = useForm()
   const { id } = useParams()
   const { data: questionsData, isLoading: questionLoding } = useGetQuestionsQuery(id)
-  const [questionIndex, setQuestionIndex] = useState(0);
-
-  const [searchParams, setSearchParams] = useSearchParams({ "question_number": "1" })
-
-  console.log(searchParams);
+  console.log(questionsData);
 
 
-  let Questions = questionsData?.data?.questions?.[questionIndex];
-  console.log(questionsData?.data?.questions);
+  const [searchParams, setSearchParams] = useSearchParams({ "question-number": "0" })
+  const [questionNumber, setQuestionNumber] = useState(Number(searchParams.get("question-number")));
 
+  let Questions = questionsData?.data?.questions?.[questionNumber];
+  const questionsDuration: number = questionsData?.data?.score_per_question;
+  // ! *************    when Refresh back to Start Question  *************
+  useEffect(() => {
+    setSearchParams({ "question-number": "0" });
+    const storedAnswers = localStorage?.getItem('examAnswers');
+    if (storedAnswers) {
+      setAllAnswers(JSON?.parse(storedAnswers));
+    }
+
+    window.addEventListener('beforeunload', () => {
+      localStorage.removeItem('examAnswers');
+    });
+
+    return () => {
+      window.removeEventListener('beforeunload', () => {
+        localStorage.removeItem('examAnswers');
+      });
+    };
+  }, []);
+
+
+  // ! *************    Remove checked  *************
+  const clearSelectedValue = () => {
+    const inputs = document.querySelectorAll<HTMLInputElement>('input[type="radio"]');
+    inputs.forEach((input) => {
+      input.checked = false;
+    });
+  };
+
+  // ! *************  تخزين رقم السوال  *************
+  useEffect(() => {
+    setQuestionNumber(Number(searchParams.get("question-number")));
+  }, [searchParams]);
+
+  // ! *************  Next Button كود  *************
   const handleNextQuestion = () => {
-    setQuestionIndex(prev => prev + 1);
+    if (questionNumber + 1 < questionsData?.data?.questions?.length)
+      setSearchParams({ "question-number": String(questionNumber + 1) });
+    clearSelectedValue()
   }
+
+  // ! *************  Prev Button كود  *************
   const handlePrevQuestion = () => {
-    if (questionIndex >= 1)
-      setQuestionIndex(prev => prev - 1);
+    if (questionNumber) {
+      if (questionNumber >= 1)
+        setSearchParams({ "question-number": String(questionNumber - 1) });
+    }
+    clearSelectedValue()
   }
+
+  // ! *************   Answers  *************
   const [allAnswers, setAllAnswers] = useState<{ answers: { question: string; answer: string; }[] }>({ answers: [] });
 
-  const handleSubmitAnswers = (data: any) => {
-    const newAnswer = { question: Questions?.options?._id, answer: data.answer };
-    setAllAnswers(prev => ({ answers: [...prev.answers, newAnswer] }));
-    handleNextQuestion();
-  }
+  // ! ************* Handel Answers  *************
+  const [selectedAnswersCount, setSelectedAnswersCount] = useState(0);
 
-  console.log(allAnswers);
+  const handleChangeAnswers = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const questionId = Questions?._id;
+    const answerValue = e.target.value;
 
+    setAllAnswers(prev => {
+      const updatedAnswers = prev.answers.map(answer => {
+        if (answer?.question === questionId) {
+          return { question: questionId, answer: answerValue };
+        }
+        return answer;
+      });
 
+      if (!updatedAnswers?.find(answer => answer?.question === questionId)) {
+        updatedAnswers?.push({ question: questionId, answer: answerValue });
+      }
+
+      const count = updatedAnswers.filter(answer => answer.answer !== "").length;
+      setSelectedAnswersCount(count);
+
+      return { answers: updatedAnswers };
+    });
+  };
+
+  const [answeredQuestions, setAnsweredQuestions] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (Questions && Questions.options && Questions?._id) {
+      if (!answeredQuestions.includes(Questions?._id) && allAnswers.answers.some(answer => answer.question === Questions?._id)) {
+        setAnsweredQuestions(prev => [...prev, Questions?._id]);
+      }
+    }
+  }, [questionNumber, allAnswers.answers]);
+
+  useEffect(() => {
+    const selectedAnswer = allAnswers?.answers?.find(answer => answer?.question === Questions?._id)?.answer;
+    if (selectedAnswer) {
+      const input = document?.querySelector<HTMLInputElement>(`input[value="${selectedAnswer}"]`);
+      if (input) {
+        input.checked = true;
+      }
+    }
+  }, [Questions, allAnswers, questionNumber]);
 
 
   // ! **************** Button Animation ****************
   const [scope, animate] = useAnimate()
 
-  const randomNumberBetween = (min: number, max: number) => {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
-
-  const onButtonClick = () => {
-    const sparkles = Array.from({ length: 15 });
-    const sparklesAnimation: AnimationSequence = sparkles.map((_, index) => [
-      `.sparkle-${index}`,
-      {
-        x: randomNumberBetween(-80, 80),
-        y: randomNumberBetween(-40, 40),
-        scale: randomNumberBetween(1.5, 2.5),
-        opacity: 1,
-
-      },
-      {
-        duration: 0.4,
-        at: "<"
-      }
-    ])
-
-    const sparklesFadeOut: AnimationSequence = sparkles.map((_, index) => [
-      `.sparkle-${index}`,
-      {
-        opacity: 0,
-        scale: 0
-      },
-      {
-        duration: 0.3,
-        at: "<"
-      }
-    ])
-
-    const sparklesReset: AnimationSequence = sparkles.map((_, index) => [
-      `.sparkle-${index}`,
-      {
-        x: 0,
-        y: 0,
-      },
-      {
-        duration: 0.000001,
-      },
-    ]);
-
+  const onButtonClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault()
     animate([
       ...sparklesReset,
       [".letter", { y: -32 }, { duration: 0.2, delay: stagger(0.05) }],
@@ -100,86 +135,95 @@ const ExamQuestions = () => {
       [".letter", { y: 0 }, { duration: 0.000001 }],
       ...sparklesFadeOut,
     ])
+    handelSubmitAnswers()
   }
 
+  // ! **************** Submit Quiz Answers ****************
+
+  const [isOpenInfoModel, setIsOpenInfoModel] = useState(false)
+  const [score, setScore] = useState([0, 0, 0])
+  const [rightAnswers, setRightAnswers] = useState([])
+
+  const openInfoModel = (score: number[]) => {
+    setIsOpenInfoModel(true)
+    setScore(score)
+  }
+
+  const closeInfoModel = () => setIsOpenInfoModel(false)
+
+  const [submitQuizAnswers, { isLoading }] = useSubmitQuizMutation()
+
+  const handelSubmitAnswers = async () => {
+    if (selectedAnswersCount !== questionsData?.data?.questions?.length) {
+      alert(` ${questionsData?.data?.questions?.length - selectedAnswersCount} questions without answers`)
+      return;
+    } else {
+      const response = await submitQuizAnswers({ ...allAnswers, _id: id })
+      if ('data' in response && response.data.message === "Student submitted successfully") {
+        //@ts-ignore
+        response?.data?.data.questions.map((ques: any) => setRightAnswers(prev => [...prev, ques?.answer]))
+        openInfoModel([response?.data?.data?.score, response?.data?.data?.questions?.length, questionsDuration])
+      }
+    }
+  }
+
+  const [uncertainQuestions, setUncertainQuestions] = useState(false);
+  console.log(uncertainQuestions);
+
   return <>
+    {Questions ? <>
+      <QuizResultModal {...{ isOpenInfoModel, closeInfoModel, score }} />
+      <form className=" lg:p-3 xl:p-3 mt-2 overflow-x-auto border-2 rounded-md" >
 
+        <Stepper  {...{ questionsData, answeredQuestions, setSearchParams, clearSelectedValue, uncertainQuestions }} />
 
-    <form onSubmit={handleSubmit(handleSubmitAnswers)} className="p-3 mt-2 overflow-x-auto border-2 rounded-md" >
-      <div>
-        <Stepper {...{ questionsData }} />
-      </div>
+        <div className='ms-8 '>
 
-      <div className='ms-8 '>
-        {Questions ? <>
-          <h3 className='text-red-500 font-bold text-2xl'>{Questions?.title}</h3>
+          <div className='flex justify-between items-center'>
+            <h3 className='text-red-500 font-bold text-md xl:text-xl lg:text-lg'>{Questions?.title}</h3>
+            <span className='me-5 h-10 w-10 bg-blue-600 rounded-full  justify-center items-center text-white hidden sm:flex '>{selectedAnswersCount} / {questionsData?.data?.questions?.length}</span>
+          </div>
 
           <div className=' font-bold mt-2 text-lg tracking-wider flex flex-col gap-2'>
             <div className='flex gap-2 '>
-              <input type='radio' id="options"  {...register("answer")} value={"A"} />
-              <label htmlFor="options" >{Questions?.options?.A}</label>
+              <input type='radio' id="optionA" name='questions' onChange={(e) => handleChangeAnswers(e)} value={"A"} />
+              <label htmlFor="optionA" >{Questions?.options?.A}</label>
+              {answeredQuestions.includes(Questions?._id) && rightAnswers[questionNumber] === 'A' && <span className="text-green-500">Right Answer</span>}
+
             </div>
             <div className='flex gap-2 '>
-              <input type='radio' id="options" {...register("answer")} value={"B"} className="accent-green-400 focus:accent-green-400" />
-              <label htmlFor="options">{Questions?.options?.B}</label>
+              <input type='radio' id="optionB" name='questions' onChange={(e) => handleChangeAnswers(e)} value={"B"} />
+              <label htmlFor="optionB">{Questions?.options?.B}</label>
+              {answeredQuestions.includes(Questions?._id) && rightAnswers[questionNumber] === 'B' && <span className="text-green-500">Right Answer</span>}
+
             </div>
             <div className='flex gap-2 '>
-              <input type='radio' id="options" {...register("answer")} value={"C"} className="accent-yellow-200 focus:accent-yellow-200" />
-              <label htmlFor="options">{Questions?.options?.C}</label>
+              <input type='radio' id="optionC" name='questions' onChange={(e) => handleChangeAnswers(e)} value={"C"} />
+              <label htmlFor="optionC">{Questions?.options?.C}</label>
+              {answeredQuestions.includes(Questions?._id) && rightAnswers[questionNumber] === 'C' && <span className="text-green-500">Right Answer</span>}
+
             </div>
             <div className='flex gap-2 '>
-              <input type='radio' id="options" {...register("answer")} value={"D"} className="accent-pink-300 focus:accent-pink-500" />
-              <label htmlFor="options">{Questions?.options?.D}</label>
+              <input type='radio' id="optionD" name='questions' onChange={(e) => handleChangeAnswers(e)} value={"D"} />
+              <label htmlFor="optionD">{Questions?.options?.D}</label>
+              {answeredQuestions.includes(Questions?._id) && rightAnswers[questionNumber] === 'D' && <span className="text-green-500">Right Answer</span>}
+
             </div>
           </div>
 
-        </> : "Wait"}
-      </div>
 
-      <div className='flex justify-around mt-4 mb-8'>
-        <Button type='button' onClick={handlePrevQuestion} variant={'primary'} className='uppercase'>Back</Button>
-        <div ref={scope}>
-          <button
-            onClick={onButtonClick}
-            className="relative rounded-full border-2 font-bold tracking-wider  border-blue-600 px-5 py-1 text-xl text-blue-600 transition-colors hover:bg-blue-100"
-          >
-            <span className="sr-only">SUBMIT</span>
-            <span className="block h-8 overflow-hidden " aria-hidden>
-              {["S", "U", "B", "M", "I", "T"].map((letter, index) => (
-                <span
-                  data-letter={letter}
-                  className="letter relative inline-block h-8 leading-8 after:absolute after:left-0 after:top-full after:h-8 after:content-[attr(data-letter)]"
-                  key={`${letter}-${index}`}
-                >
-                  {letter}
-                </span>
-              ))}
-            </span>
-            <span
-              aria-hidden
-              className="pointer-events-none absolute inset-0 -z-10 block"
-            >
-              {Array.from({ length: 20 }).map((_, index) => (
-                <svg
-                  className={`absolute left-1/2 top-1/2 opacity-0 sparkle-${index}`}
-                  key={index}
-                  viewBox="0 0 122 117"
-                  width="10"
-                  height="10"
-                >
-                  <path
-                    className="fill-blue-600"
-                    d="M64.39,2,80.11,38.76,120,42.33a3.2,3.2,0,0,1,1.83,5.59h0L91.64,74.25l8.92,39a3.2,3.2,0,0,1-4.87,3.4L61.44,96.19,27.09,116.73a3.2,3.2,0,0,1-4.76-3.46h0l8.92-39L1.09,47.92A3.2,3.2,0,0,1,3,42.32l39.74-3.56L58.49,2a3.2,3.2,0,0,1,5.9,0Z"
-                  />
-                </svg>
-              ))}
-            </span>
-          </button>
         </div>
-        <Button type='button' onClick={handleNextQuestion} variant={'secondary'} className='uppercase'>Next</Button>
-      </div>
-    </form>
 
+        <div className='flex justify-evenly mt-4 mb-8'>
+
+          <Button type='button' onClick={handlePrevQuestion} variant={'primary'} className={`uppercase ${questionNumber <= 0 ? "hidden" : ""}`}>Back</Button>
+          {!rightAnswers[questionNumber] && <button onClick={() => setUncertainQuestions(prev => !prev)} type="button" className={`bg-[#D1BA59] text-black px-4 text-md h-10 rounded-md font-extrabold  uppercase `}>Uncertain</button>}
+          <SubmitButton {...{ questionNumber, questionsData, rightAnswers, isLoading, onButtonClick, scope }} />
+          <Button type='button' onClick={handleNextQuestion} variant={'secondary'} className={`uppercase ${questionNumber + 1 === questionsData?.data?.questions?.length ? "hidden" : ""}`}>Next</Button>
+
+        </div>
+      </form >
+    </> : <div className="flex flex-col h-[70vh] justify-center items-center"><Loader className="animate-spin" size={150} color="#C5D86D" /><h4 className='text-2xl mt-2 font-bold tracking-widest'>loading Questions...</h4></div>}
   </>
 }
 

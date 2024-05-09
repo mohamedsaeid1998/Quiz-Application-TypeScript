@@ -95,21 +95,45 @@ export interface IQuizzesResponse {
 
 
 export interface IJoinQuizResponse {
-  data:{
-    createdAt:string
-    participant:string
-    quiz:string
-    score:number
-    started_at:string
-    updatedAt:string
-    __v:number
-    _id:string
+  data: {
+    createdAt: string
+    participant: string
+    quiz: string
+    score: number
+    started_at: string
+    updatedAt: string
+    __v: number
+    _id: string
   }
-  message:string
+  message: string
+}
+export interface ISubmitQuizResponse {
+  data: {
+    finished_at: string
+    participant: string
+    questions: {}[]
+    quiz: string
+    score: number
+    started_at: string
+    _id: string
+  }
+  message: string
+}
+export interface ISubmitQuiz{
+  data: {
+    data: {
+      finished_at: string
+      participant: string
+      questions: {}[]
+      quiz: string
+      score: number
+      started_at: string
+      _id: string
+    }
+    message: string
+  }
 }
 
-
-
 export interface IJoinQuiz {
-code:string
+  code: string
 }

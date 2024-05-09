@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react'
 import ReactPaginate from 'react-paginate'
 import './PaginationButtons.module.scss'
 import { motion } from 'framer-motion'
+import { paginationVariants } from '@/Utils/Helpers/FramerVariables/FramerVariables'
 
 interface IProps {
   members: []
@@ -11,23 +12,6 @@ interface IProps {
   count: number
 }
 const PaginationButtons = ({ members, handlePageChange, currentPage, count }: IProps) => {
-
-  const paginationVariants = {
-    hidden: {
-      opacity: 0,
-      y: 200,
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 260,
-        damping: 20,
-        duration: 2
-      }
-    }
-  }
 
   const showNextButton = Math.ceil(members.length / count) !== currentPage + 1
   const showPrevButton = currentPage !== 0
@@ -54,7 +38,7 @@ const PaginationButtons = ({ members, handlePageChange, currentPage, count }: IP
         onPageChange={({ selected }) => handlePageChange(selected)}
         pageRangeDisplayed={3}
         pageCount={Math.ceil(members?.length / count)}
-        containerClassName='flex items-center justify-center  '
+        containerClassName='flex items-center justify-center '
         pageClassName=' border border-solid border-[#D3D3D3] hover:bg-[#D3D3D3]  flex items-center justify-center rounded-full mr-3 sm:mr-4 font-semibold p-3 md:p-4 w-1 h-1'
         activeClassName='bg-mainColor text-white'
         forcePage={currentPage}
