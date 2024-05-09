@@ -5,7 +5,7 @@ import CookieServices from "@/Services/CookieServices/CookieServices";
 import { renderErrors } from "@/Utils/Helpers/ErrorMessage/ErrorMessage";
 import { passRegValidation } from "@/Utils/Validation";
 import { Check, FileText, GraduationCap, Home, KeyRound, LayoutList, Menu as List, LockKeyholeOpen, LogOut, MessageCircleQuestion, Users2 } from "lucide-react";
-import { Dispatch, ReactElement, ReactNode, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
@@ -22,8 +22,8 @@ interface IProps {
 
 interface IMenu {
   style: string
-  path?: ReactElement;
-  icon: ReactNode
+  path?: React.ReactElement;
+  icon: React.ReactNode
   body: string
   onClick?: () => void
 }
@@ -72,7 +72,7 @@ export default function SideBar({ isSidebarOpen, setSidebarOpen }: IProps) {
     { style: `${pathname === "/dashboard/home" ? 'bg-secondColor ' : ""} border-b border-black  link`, path: <Link to="/dashboard/home" />, icon: <Users2 size={'35px'} className="bg-secondColor p-1" />, body: "dashboard" },
     { style: `${pathname === "/dashboard/groups" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/groups' />, icon: <Home size={'35px'} className="bg-secondColor p-1" />, body: "groups" },
     { style: `${pathname === "/dashboard/student" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/student' />, icon: <GraduationCap size={'35px'} className="bg-secondColor p-1" />, body: "students" },
-    { style: `${pathname?.includes("quiz") ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/quiz' />, icon: <LayoutList size={'35px'} className="bg-secondColor p-1" />, body: "quizzes" },
+    { style: `${pathname?.includes("quiz")  ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/quiz' />, icon: <LayoutList size={'35px'} className="bg-secondColor p-1" />, body: "quizzes" },
     { style: `${pathname === "/dashboard/questions" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/questions' />, icon: <MessageCircleQuestion size={'35px'} className="bg-secondColor p-1" />, body: "questions" },
     { style: `${pathname?.includes("results") ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/results' />, icon: <FileText size={'35px'} className="bg-secondColor p-1" />, body: "results" },
     { style: `border-b border-black link`, icon: <LockKeyholeOpen size={'35px'} className="bg-secondColor p-1" />, body: "changePassword", onClick: openModal },
@@ -80,7 +80,7 @@ export default function SideBar({ isSidebarOpen, setSidebarOpen }: IProps) {
   ]
 
   const sidebarStudentItems: IMenu[] = [
-    { style: `${pathname === "/dashboard/quiz" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/quiz' />, icon: <LayoutList size={'35px'} className="bg-secondColor p-1" />, body: "quizzes" },
+    { style: `${pathname?.includes("quiz") || pathname?.includes("exam")  ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/quiz' />, icon: <LayoutList size={'35px'} className="bg-secondColor p-1" />, body: "quizzes" },
     { style: `${pathname === "/dashboard/results" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/results' />, icon: <FileText size={'35px'} className="bg-secondColor p-1" />, body: "results" },
     { style: `border-b border-black link`, icon: <LockKeyholeOpen size={'35px'} className="bg-secondColor p-1" />, body: "changePassword", onClick: openModal },
     { style: `border-b border-black link`, icon: <LogOut size={'35px'} className="bg-secondColor p-1" />, body: "logout", onClick: logout },

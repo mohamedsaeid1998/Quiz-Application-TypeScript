@@ -1,9 +1,9 @@
 import CookieServices from "@/Services/CookieServices/CookieServices";
-import { ReactNode, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface IProps {
-  children: ReactNode
+  children: React.ReactNode
 }
 
 const InstructorProtectedRoute = ({ children }: IProps) => {

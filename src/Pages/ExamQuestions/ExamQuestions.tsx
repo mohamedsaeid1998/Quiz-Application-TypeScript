@@ -13,7 +13,7 @@ import { Loader } from 'lucide-react'
 
 const ExamQuestions = () => {
   const { id } = useParams()
-  const { data: questionsData, isLoading: questionLoding } = useGetQuestionsQuery(id)
+  const { data: questionsData } = useGetQuestionsQuery(id)
   console.log(questionsData);
 
 

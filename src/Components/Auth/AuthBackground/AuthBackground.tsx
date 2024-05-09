@@ -2,13 +2,12 @@ import { UserPlus, UserRound } from 'lucide-react';
 import './AuthBackground.module.scss'
 import { Link, useLocation } from 'react-router-dom';
 import { authBackground } from '@/Assets/Images';
-import { ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { opacityAnimation } from '@/Utils/Helpers/FramerVariables/FramerVariables';
 
 interface IProps {
   header: String
-  children: ReactNode
+  children: React.ReactNode
 }
 
 const AuthBackground = ({ header, children }: IProps) => {

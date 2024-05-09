@@ -1,8 +1,7 @@
 import { opacityAnimation } from '@/Utils/Helpers/FramerVariables/FramerVariables';
 import { motion } from 'framer-motion';
-import { ReactNode } from 'react';
 interface IProps {
-  children: ReactNode
+  children: React.ReactNode
 }
 
 const AnimationContainer = ({ children }: IProps) => {

@@ -1,10 +1,10 @@
-import { ReactNode, Ref, forwardRef } from "react"
+import { Ref, forwardRef } from "react"
 
 interface IProps {
   label: string
   className?: string
   content: string
-  icon?: ReactNode
+  icon?: React.ReactNode
 }
 
 export const DetailsInput = forwardRef(({ className = "", label, content, icon, ...rest }: IProps, ref: Ref<HTMLParagraphElement>) => {

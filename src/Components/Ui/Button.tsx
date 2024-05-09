@@ -2,7 +2,7 @@ import { tailwindCMerge } from "@/Utils/Config/TailwindCMerge";
 import { cva, type VariantProps } from "class-variance-authority";
 import { Loader } from "lucide-react";
 import { motion } from "framer-motion";
-import { ButtonHTMLAttributes, ReactNode, useEffect, useState } from "react";
+import { ButtonHTMLAttributes, useEffect, useState } from "react";
 
 export const buttonVariants = cva("inline-flex items-center justify-center font-extrabold transition duration-200 ", {
   variants: {
@@ -41,7 +41,7 @@ export const buttonVariants = cva("inline-flex items-center justify-center font-
 
 
 interface IProps extends ButtonHTMLAttributes<HTMLButtonElement>, VariantProps<typeof buttonVariants> {
-  children: ReactNode
+  children: React.ReactNode
   className?: string
   isLoading?: boolean
 }

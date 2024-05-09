@@ -1,44 +1,44 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Check, Trash2 } from 'lucide-react'
-import { Fragment, ReactNode } from 'react'
+import { Fragment } from 'react'
 
 interface IProps {
   isOpen: boolean
   closeModal: () => void
   title?: string
-  children: ReactNode
+  children: React.ReactNode
 }
 
 interface IPropsDeleteModel {
   isOpenDeleteModel: boolean
   closeModalDelete: () => void
-  children: ReactNode
+  children: React.ReactNode
 }
 
 interface IPropsEditModel {
   title?: string
   isOpenEditModel: boolean
   closeModalEdit: () => void
-  children: ReactNode
+  children: React.ReactNode
 }
 
 interface IPropsInfoModel {
   isOpenInfoModel: boolean
   closeInfoModel: () => void
-  children: ReactNode
+  children: React.ReactNode
   title: string
 }
 interface IPropsDetailsModel {
   isOpenDetailsModel: boolean
   closeDetailsModel: () => void
   title?: string
-  children: ReactNode
+  children: React.ReactNode
 }
 
 interface IPropsJoinQuizModel {
   isOpenJoinQuizModel: boolean
   closeJoinQuizModel: () => void
-  children: ReactNode
+  children: React.ReactNode
 }
 
 export const AddModel = ({ isOpen, closeModal, children, title }: IProps) => {

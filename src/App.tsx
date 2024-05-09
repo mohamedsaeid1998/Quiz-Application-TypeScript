@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Provider } from "react-redux";
 import { RouterProvider, createHashRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";

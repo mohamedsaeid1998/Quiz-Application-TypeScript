@@ -1,17 +1,17 @@
 import { Eye, EyeOff } from "lucide-react"
 import { twMerge } from 'tailwind-merge'
-import { InputHTMLAttributes, ReactNode, Ref, SelectHTMLAttributes, forwardRef, useId, useState } from "react"
+import { InputHTMLAttributes, Ref, SelectHTMLAttributes, forwardRef, useId, useState } from "react"
 interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   lable?: string
   className?: string
-  icon?: ReactNode
+  icon?: React.ReactNode
   containerStyle?: string
   textColor?:string
 }
 
 interface ISelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
   lable: string
-  icon?: ReactNode
+  icon?: React.ReactNode
   categories?: string[] | undefined
 }
 

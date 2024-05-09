@@ -9,8 +9,6 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import './Groups.module.scss';
 import { AddGroupModal, DeleteGroupModal, EditGroupModal } from './GroupsModels';
-import { motion } from 'framer-motion';
-import { opacityAnimation } from '@/Utils/Helpers/FramerVariables/FramerVariables';
 const Groups = () => {
   const { t } = useTranslation();
   const { handleSubmit: handleSubmitEdit, setValue, register: editRegister, formState: { errors } } = useForm<IGroups>()
