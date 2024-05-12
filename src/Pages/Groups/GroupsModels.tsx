@@ -71,8 +71,8 @@ export const DeleteGroupModal = ({ isOpenDeleteModel, closeModalDelete, students
 
   const { handleSubmit: handleSubmitDelete } = useForm<IDeleteGroup>()
 
+  console.log("DeleteGroupModal");
   const [submitDeleteGroup, { isLoading: deleteLoading }] = useDeleteGroupMutation()
-
   const handleDeleteGroup = async (data: IDeleteGroup) => {
     const response = await submitDeleteGroup({ ...data, deleteItemId })
     if ('data' in response && response.data.message === "Record deleted successfully") {
@@ -80,9 +80,6 @@ export const DeleteGroupModal = ({ isOpenDeleteModel, closeModalDelete, students
       studentsRefetch();
     }
   }
-
-
-
 
   return <>
     <DeleteModel {...{ isOpenDeleteModel, closeModalDelete }}>

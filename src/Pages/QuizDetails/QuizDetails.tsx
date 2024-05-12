@@ -62,7 +62,7 @@ const QuizDetails = () => {
 
     <AnimationContainer>
       <div className='flex justify-center items-center w-full'>
-        <div className="p-3 border-2 rounded-md w-[400px] " >
+        <div className={`p-3 border-2 rounded-md w-[400px]  `} >
 
           <div className=' flex gap-8 items-center'>
             {QuizData ? <>
@@ -94,7 +94,7 @@ const QuizDetails = () => {
 
           <div className='flex flex-col gap-3 mt-5 '>
             {!QuizData ? <>
-              {Array.from({ length: 6 }, (_, idx) => <h6 key={idx} className="h-[43.2px] mb-2 w-[370px] animate-pulse bg-gray-500 rounded-md">{""}</h6>)}
+              {Array.from({ length: 6 }, (_, idx) => <h6 key={idx} className="h-[43.2px] mb-2 md:w-[370px] animate-pulse bg-gray-500 rounded-md">{""}</h6>)}
               <div className='flex items-center justify-between'>
                 <h6 className="h-[30px] mb-2 w-[75px] animate-pulse bg-gray-500 rounded-md">{""}</h6>
                 <h6 className="h-[30px] mb-2 w-[75px] animate-pulse bg-gray-500 rounded-md">{""}</h6>

@@ -89,7 +89,8 @@ const Groups = () => {
         <div className=' mt-4 grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-6 md:gap-y-4 '>
           {loading && Array.from({ length: 2 }, (_, idx) => <GroupsCardSkeleton key={idx} />)}
           {groupsList?.map(({ max_students, name, _id }: IGroupsList) =>
-            <div key={_id} className=' border-2 rounded-md p-3 flex justify-between items-center '>
+            <div
+              key={_id} className=' border-2 rounded-md p-3 flex justify-between items-center '>
               <div className='flex flex-col'>
                 <h3 className=' font-bold tracking-wide'>Group : {name}</h3>
                 <span className='text-md font-semibold text-slate-500 '>No. of students : {max_students}</span>

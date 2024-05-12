@@ -146,15 +146,6 @@
   }
 }
 
-.show {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-left: 20px;
-}
-.hide {
-  display: none;
-}
 
 .radioInput {
   width: 20px;
@@ -299,22 +290,29 @@ h3,
 h4,
 h5,
 h6 {
-  // font-size: 0.5rem;
   font-size: clamp(0.9rem, 0.7rem + 0.5vw, 2rem);
 }
 
 a {
-  // font-size: 0.5rem;
   font-size: clamp(0.6rem, 0.6rem + 0.5vw, 1.8rem);
 }
 td,
 th,
 span,
 label {
-  // font-size: 0.5rem;
   font-size: clamp(0.75rem, 0.5rem + 0.5vw, 1.8rem);
 }
 
 .stepper {
   filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.7))
+}
+
+
+.inputWrapper:has(input[type="radio"]:checked) {
+  background-color: rgb(96 165 250);
+  color: white;
+  .char{
+    background-color: black;
+    color: white;
+  }
 }

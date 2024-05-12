@@ -13,7 +13,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ConfirmPasswordInput, PasswordInput } from "../AuthInputs/AuthInputs";
 import { AddModel } from "../Models/Models";
 import { motion } from "framer-motion";
-import { variants } from "@/Utils/Helpers/FramerVariables/FramerVariables";
 
 interface IProps {
   setSidebarOpen: Dispatch<SetStateAction<boolean>>
@@ -27,7 +26,6 @@ interface IMenu {
   body: string
   onClick?: () => void
 }
-
 
 export default function SideBar({ isSidebarOpen, setSidebarOpen }: IProps) {
   const { t } = useTranslation();
@@ -72,7 +70,7 @@ export default function SideBar({ isSidebarOpen, setSidebarOpen }: IProps) {
     { style: `${pathname === "/dashboard/home" ? 'bg-secondColor ' : ""} border-b border-black  link`, path: <Link to="/dashboard/home" />, icon: <Users2 size={'35px'} className="bg-secondColor p-1" />, body: "dashboard" },
     { style: `${pathname === "/dashboard/groups" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/groups' />, icon: <Home size={'35px'} className="bg-secondColor p-1" />, body: "groups" },
     { style: `${pathname === "/dashboard/student" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/student' />, icon: <GraduationCap size={'35px'} className="bg-secondColor p-1" />, body: "students" },
-    { style: `${pathname?.includes("quiz")  ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/quiz' />, icon: <LayoutList size={'35px'} className="bg-secondColor p-1" />, body: "quizzes" },
+    { style: `${pathname?.includes("quiz") ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/quiz' />, icon: <LayoutList size={'35px'} className="bg-secondColor p-1" />, body: "quizzes" },
     { style: `${pathname === "/dashboard/questions" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/questions' />, icon: <MessageCircleQuestion size={'35px'} className="bg-secondColor p-1" />, body: "questions" },
     { style: `${pathname?.includes("results") ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/results' />, icon: <FileText size={'35px'} className="bg-secondColor p-1" />, body: "results" },
     { style: `border-b border-black link`, icon: <LockKeyholeOpen size={'35px'} className="bg-secondColor p-1" />, body: "changePassword", onClick: openModal },
@@ -80,11 +78,13 @@ export default function SideBar({ isSidebarOpen, setSidebarOpen }: IProps) {
   ]
 
   const sidebarStudentItems: IMenu[] = [
-    { style: `${pathname?.includes("quiz") || pathname?.includes("exam")  ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/quiz' />, icon: <LayoutList size={'35px'} className="bg-secondColor p-1" />, body: "quizzes" },
+    { style: `${pathname?.includes("quiz") || pathname?.includes("exam") ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/quiz' />, icon: <LayoutList size={'35px'} className="bg-secondColor p-1" />, body: "quizzes" },
     { style: `${pathname === "/dashboard/results" ? 'bg-secondColor' : ""} border-b border-black  link`, path: <Link to='/dashboard/results' />, icon: <FileText size={'35px'} className="bg-secondColor p-1" />, body: "results" },
     { style: `border-b border-black link`, icon: <LockKeyholeOpen size={'35px'} className="bg-secondColor p-1" />, body: "changePassword", onClick: openModal },
     { style: `border-b border-black link`, icon: <LogOut size={'35px'} className="bg-secondColor p-1" />, body: "logout", onClick: logout },
   ]
+
+  const MotionMenuItems = motion(MenuItem)
 
   return (
     <>
@@ -109,18 +109,17 @@ export default function SideBar({ isSidebarOpen, setSidebarOpen }: IProps) {
         </form>
       </AddModel>
       <Sidebar collapsed={iscollapsed} className='h-screen side fixed hidden lg:block'>
-        <Menu >
+        <Menu  >
           <MenuItem className='border-b border-black h-16' onClick={handleToggle} icon={<List size={'30px'} />} ></MenuItem>
 
-          {CookieServices.get("role").role === "Instructor" ? <> <motion.div variants={variants}>
-            {sidebarInstructorItems?.map(({ style, path, icon, body, onClick }: IMenu, idx) => <MenuItem key={idx} className={`${style}`} onClick={onClick} component={path} icon={icon} >{t(body)}</MenuItem>)}
-          </motion.div>
+          {CookieServices.get("role").role === "Instructor" ? <>
+            {sidebarInstructorItems?.map(({ style, path, icon, body, onClick }: IMenu, idx) => <MotionMenuItems whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }} key={idx} className={`${style}`} onClick={onClick} component={path} icon={icon} >{t(body)}</MotionMenuItems>)}
           </> :
             <>
-              {sidebarStudentItems?.map(({ style, path, icon, body, onClick }: IMenu, idx) => <MenuItem key={idx} className={`${style}`} onClick={onClick} component={path} icon={icon} >{t(body)}</MenuItem>)}
+              {sidebarStudentItems?.map(({ style, path, icon, body, onClick }: IMenu, idx) => <MotionMenuItems whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }} key={idx} className={`${style}`} onClick={onClick} component={path} icon={icon} >{t(body)}</MotionMenuItems>)}
             </>
           }
-
 
         </Menu>
       </Sidebar >

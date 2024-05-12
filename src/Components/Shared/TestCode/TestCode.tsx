@@ -1,4 +1,4 @@
-import { ChangeEvent, MouseEvent, useEffect, useState } from 'react'
+import { MouseEvent, useState } from 'react'
 import { toast } from 'react-toastify'
 import { Button } from '@/Components'
 import { AuthInput } from '../AuthInputs/AuthInputs'
@@ -9,7 +9,7 @@ interface IProps {
 }
 
 const TestCode = ({ setValue }: IProps) => {
-  
+
   const handleTestCode = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
 
@@ -30,32 +30,23 @@ const TestCode = ({ setValue }: IProps) => {
     }
 
   }
-  const [radioCheckedAdmin, setRadioCheckedAdmin] = useState(false);
-  const [radioCheckedUser, setRadioCheckedUser] = useState(false);
-
-  useEffect(() => {
-    if (radioCheckedAdmin) {
-      setValue("email", "msmma19998@gmail.com")
-      setValue("password", "01021754177@Aa")
-    }
-    if (radioCheckedUser) {
-      setValue("email", "m_smma71@yahoo.com")
-      setValue("password", "01021754177@Aa")
-    }
-
-  }, [radioCheckedAdmin, radioCheckedUser])
-
+  const [radioCheckedAdmin, setRadioCheckedAdmin] = useState<boolean>(false);
+  const [radioCheckedUser, setRadioCheckedUser] = useState<boolean>(false);
 
   const [testCode, setTestCode] = useState("")
   const [show, setShow] = useState(false)
 
 
-  const handleRadioChangeAdmin = (e: ChangeEvent<HTMLInputElement>) => {
-    setRadioCheckedAdmin(e.target.checked);
+  const handleRadioChangeAdmin = (e: MouseEvent<HTMLInputElement>) => {
+    setRadioCheckedAdmin(e.currentTarget.checked);
+    setValue("email", "msmma19998@gmail.com")
+    setValue("password", "01021754177@Aa")
   };
 
-  const handleRadioChangeUser = (e: ChangeEvent<HTMLInputElement>) => {
-    setRadioCheckedUser(e.target.checked);
+  const handleRadioChangeUser = (e: MouseEvent<HTMLInputElement>) => {
+    setRadioCheckedUser(e.currentTarget.checked);
+    setValue("email", "m_smma71@yahoo.com")
+    setValue("password", "01021754177@Aa")
   };
   return <>
     <form className="flex flex-col lg:flex-row justify-center mt-2 ">
@@ -76,19 +67,19 @@ const TestCode = ({ setValue }: IProps) => {
         </Button>
       </div>
       <div
-        className={`${show ? "show" : "hide"} flex  space-x-3 justify-center items-center`}>
+        className={`${show ? "flex items-center gap-[10px] ml-[10px]" : "hidden"} flex  space-x-3 justify-center items-center`}>
         <div className="flex space-x-2  items-center mt-2 ">
           <label htmlFor="admin" >Admin</label>
-          <input type="radio" name="check " id="admin"
-            checked={radioCheckedAdmin}
-            onChange={handleRadioChangeAdmin}
+          <input type="radio" name="check" id="admin"
+            defaultValue={radioCheckedAdmin ? "true" : "false"}
+            onClick={(e) => handleRadioChangeAdmin(e)}
             className="radioInput" />
         </div>
         <div className="flex space-x-2  items-center  mt-2 ">
           <label htmlFor="user">User</label>
-          <input type="radio" name="check " id="user"
-            checked={radioCheckedUser}
-            onChange={handleRadioChangeUser}
+          <input type="radio" name="check" id="user"
+            defaultValue={radioCheckedUser ? "true" : "false"}
+            onClick={(e) => handleRadioChangeUser(e)}
             className="radioInput" />
         </div>
       </div>

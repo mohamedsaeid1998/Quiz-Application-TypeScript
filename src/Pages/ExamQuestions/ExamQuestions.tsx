@@ -116,9 +116,11 @@ const ExamQuestions = () => {
       const input = document?.querySelector<HTMLInputElement>(`input[value="${selectedAnswer}"]`);
       if (input) {
         input.checked = true;
+
       }
     }
   }, [Questions, allAnswers, questionNumber]);
+  console.log(allAnswers);
 
 
   // ! **************** Button Animation ****************
@@ -170,47 +172,48 @@ const ExamQuestions = () => {
   const [uncertainQuestions, setUncertainQuestions] = useState(false);
   console.log(uncertainQuestions);
 
+
+
   return <>
     {Questions ? <>
       <QuizResultModal {...{ isOpenInfoModel, closeInfoModel, score }} />
       <form className=" lg:p-3 xl:p-3 mt-2 overflow-x-auto border-2 rounded-md" >
 
-        <Stepper  {...{ questionsData, answeredQuestions, setSearchParams, clearSelectedValue, uncertainQuestions }} />
+        <Stepper  {...{ questionsData, answeredQuestions, setSearchParams, clearSelectedValue, uncertainQuestions, selectedAnswersCount }} />
 
-        <div className='ms-8 '>
+        <div className=' mx-5 '>
 
-          <div className='flex justify-between items-center'>
-            <h3 className='text-red-500 font-bold text-md xl:text-xl lg:text-lg'>{Questions?.title}</h3>
-            <span className='me-5 h-10 w-10 bg-blue-600 rounded-full  justify-center items-center text-white hidden sm:flex '>{selectedAnswersCount} / {questionsData?.data?.questions?.length}</span>
+          <div className='flex justify-between items-center gap-5'>
+            <h3 className='text-white py-2 rounded-md w-full text-center  bg-red-500 font-bold text-md xl:text-xl lg:text-lg '>{Questions?.title}</h3>
           </div>
 
-          <div className=' font-bold mt-2 text-lg tracking-wider flex flex-col gap-2'>
-            <div className='flex gap-2 '>
-              <input type='radio' id="optionA" name='questions' onChange={(e) => handleChangeAnswers(e)} value={"A"} />
-              <label htmlFor="optionA" >{Questions?.options?.A}</label>
-              {answeredQuestions.includes(Questions?._id) && rightAnswers[questionNumber] === 'A' && <span className="text-green-500">Right Answer</span>}
+          <div className=' font-bold text-lg tracking-wider grid md:grid-cols-2  mt-5 gap-2  grid-cols-1'>
 
-            </div>
-            <div className='flex gap-2 '>
-              <input type='radio' id="optionB" name='questions' onChange={(e) => handleChangeAnswers(e)} value={"B"} />
-              <label htmlFor="optionB">{Questions?.options?.B}</label>
-              {answeredQuestions.includes(Questions?._id) && rightAnswers[questionNumber] === 'B' && <span className="text-green-500">Right Answer</span>}
+            <label htmlFor="optionA" className={`flex font-bold ${answeredQuestions.includes(Questions?._id) && rightAnswers[questionNumber] === 'A' ? "border-green-600" : ""} text-black border-4 py-2  rounded-full px-5 items-center hover:bg-blue-400  group duration-500 transition-all inputWrapper`}>
+              <div className='w-7 h-7 rounded-full flex justify-center items-center border-2 group-hover:text-white group-hover:bg-black text-[12px] md:text-[15px] char'>A</div>
+              <input type='radio' id="optionA" name='questions' onChange={(e) => handleChangeAnswers(e)} value={"A"} className='hidden' />
+              <span className='text-[12px] md:text-[15px] text-center m-auto ' >{Questions?.options?.A}</span>
+            </label>
 
-            </div>
-            <div className='flex gap-2 '>
-              <input type='radio' id="optionC" name='questions' onChange={(e) => handleChangeAnswers(e)} value={"C"} />
-              <label htmlFor="optionC">{Questions?.options?.C}</label>
-              {answeredQuestions.includes(Questions?._id) && rightAnswers[questionNumber] === 'C' && <span className="text-green-500">Right Answer</span>}
+            <label htmlFor="optionB" className={`flex font-bold  ${answeredQuestions.includes(Questions?._id) && rightAnswers[questionNumber] === 'B' ? "border-green-600" : ""} text-black border-4 py-2  rounded-full px-5 items-center hover:bg-blue-400  group duration-500 transition-all inputWrapper`}>
+              <div className='w-7 h-7 rounded-full flex justify-center items-center border-2 group-hover:text-white group-hover:bg-black text-[12px] md:text-[15px] char'>B</div>
+              <input type='radio' id="optionB" name='questions' onChange={(e) => handleChangeAnswers(e)} value={"B"} className='hidden' />
+              <span className='text-[12px] md:text-[15px] text-center m-auto'>{Questions?.options?.B}</span>
+            </label>
 
-            </div>
-            <div className='flex gap-2 '>
-              <input type='radio' id="optionD" name='questions' onChange={(e) => handleChangeAnswers(e)} value={"D"} />
-              <label htmlFor="optionD">{Questions?.options?.D}</label>
-              {answeredQuestions.includes(Questions?._id) && rightAnswers[questionNumber] === 'D' && <span className="text-green-500">Right Answer</span>}
+            <label htmlFor="optionC" className={`flex font-bold ${answeredQuestions.includes(Questions?._id) && rightAnswers[questionNumber] === 'C' ? "border-green-600" : ""} text-black border-4 py-2  rounded-full px-5 items-center hover:bg-blue-400  group duration-500 transition-all inputWrapper`}>
+              <div className='w-7 h-7 rounded-full flex justify-center items-center border-2 group-hover:text-white group-hover:bg-black text-[12px] md:text-[15px] char'>C</div>
+              <input type='radio' id="optionC" name='questions' onChange={(e) => handleChangeAnswers(e)} value={"C"} className='hidden' />
+              <span className='text-[12px] md:text-[15px] text-center m-auto'>{Questions?.options?.C}</span>
+            </label>
 
-            </div>
+            <label htmlFor="optionD" className={`flex font-bold ${answeredQuestions.includes(Questions?._id) && rightAnswers[questionNumber] === 'D' ? "border-green-600" : ""} text-black border-4 py-2  rounded-full px-5 items-center hover:bg-blue-400  group duration-500 transition-all inputWrapper`}>
+              <div className='w-7 h-7 rounded-full flex justify-center items-center border-2 group-hover:text-white group-hover:bg-black text-[12px] md:text-[15px] char'>D</div>
+              <input type='radio' id="optionD" name='questions' onChange={(e) => handleChangeAnswers(e)} value={"D"} className='hidden' />
+              <span className='text-[12px] md:text-[15px] text-center m-auto'>{Questions?.options?.D}</span>
+            </label>
+
           </div>
-
 
         </div>
 

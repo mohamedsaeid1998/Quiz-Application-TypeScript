@@ -9,7 +9,6 @@ const ResultsDetails = () => {
   const location = useLocation()
   const data = location?.state
   const [Loading, setLoading] = useState(false)
-  console.log(location);
   useEffect(() => {
     if (data) {
       setLoading(false)
