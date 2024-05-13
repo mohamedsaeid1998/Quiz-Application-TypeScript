@@ -14,9 +14,9 @@ const InstructorProtectedRoute = ({ children }: IProps) => {
     if (userRole === "Student") {
       navigate(-1);
     }
-  }, [navigate]); 
+  }, [navigate]);
 
-  return children; 
+  return children;
 };
 
 export default InstructorProtectedRoute;

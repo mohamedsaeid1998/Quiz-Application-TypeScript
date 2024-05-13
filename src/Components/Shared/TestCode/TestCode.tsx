@@ -49,8 +49,8 @@ const TestCode = ({ setValue }: IProps) => {
     setValue("password", "01021754177@Aa")
   };
   return <>
-    <form className="flex flex-col lg:flex-row justify-center mt-2 ">
-      <div className='flex items-center space-x-5 justify-center'>
+    <form className="flex flex-col justify-center mt-2 lg:flex-row ">
+      <div className='flex items-center justify-center space-x-5'>
         <AuthInput
           className='w-32'
           type="password"
@@ -67,16 +67,16 @@ const TestCode = ({ setValue }: IProps) => {
         </Button>
       </div>
       <div
-        className={`${show ? "flex items-center gap-[10px] ml-[10px]" : "hidden"} flex  space-x-3 justify-center items-center`}>
-        <div className="flex space-x-2  items-center mt-2 ">
-          <label htmlFor="admin" >Admin</label>
+        className={`${show ? "flex items-center gap-[10px] ml-[10px]" : "hidden"} space-x-3 justify-center`}>
+        <div className="flex items-center mt-2 space-x-2 ">
+          <label htmlFor="admin" >Instructor</label>
           <input type="radio" name="check" id="admin"
             defaultValue={radioCheckedAdmin ? "true" : "false"}
             onClick={(e) => handleRadioChangeAdmin(e)}
             className="radioInput" />
         </div>
-        <div className="flex space-x-2  items-center  mt-2 ">
-          <label htmlFor="user">User</label>
+        <div className="flex items-center mt-2 space-x-2 ">
+          <label htmlFor="user">Student</label>
           <input type="radio" name="check" id="user"
             defaultValue={radioCheckedUser ? "true" : "false"}
             onClick={(e) => handleRadioChangeUser(e)}

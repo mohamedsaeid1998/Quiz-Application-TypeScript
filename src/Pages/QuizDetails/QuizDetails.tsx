@@ -61,13 +61,13 @@ const QuizDetails = () => {
     <EditQuizModal {...{ quizTitle, isOpenEditModel, closeModalEdit, editItemId, refetch }} />
 
     <AnimationContainer>
-      <div className='flex justify-center items-center w-full'>
+      <div className='flex items-center justify-center w-full'>
         <div className={`p-3 border-2 rounded-md w-[400px]  `} >
 
-          <div className=' flex gap-8 items-center'>
+          <div className='flex items-center gap-8 '>
             {QuizData ? <>
               <Link className='flex items-center gap-1 text-sm font-bold' to={`/dashboard/quiz`}>Quizzes</Link>
-              <ChevronsRight className=' ' size={15} strokeWidth={4} color='#C5D86D' />
+              <ChevronsRight className='' size={15} strokeWidth={4} color='#C5D86D' />
               <Link className='flex items-center gap-1 text-sm font-bold' to={`/dashboard/quiz`}>{QuizData?.title}</Link>
             </>
               :
@@ -77,7 +77,7 @@ const QuizDetails = () => {
               </>
             }
           </div>
-          {QuizData ? <h3 className='text-2xl font-extrabold my-2 tracking-widest'>{QuizData?.title}</h3> : <h6 className=" my-2 h-[14px] mb-2 w-[160px] animate-pulse bg-gray-500 rounded-md">{""}</h6>}
+          {QuizData ? <h3 className='my-2 text-2xl font-extrabold tracking-widest'>{QuizData?.title}</h3> : <h6 className=" my-2 h-[14px] mb-2 w-[160px] animate-pulse bg-gray-500 rounded-md">{""}</h6>}
 
           <div className='flex items-center gap-5'>
 

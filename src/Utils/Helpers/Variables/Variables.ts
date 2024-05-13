@@ -50,3 +50,10 @@ export const Answers = [
   { _id: "C", title: "C" },
   { _id: "D", title: "D" },
 ]
+
+export const radioButtons = [
+  { forId: "optionA", answer: 'A' },
+  { forId: "optionB", answer: 'B' },
+  { forId: "optionC", answer: 'C' },
+  { forId: "optionD", answer: 'D' },
+]

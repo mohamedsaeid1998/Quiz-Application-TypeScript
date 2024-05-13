@@ -1,4 +1,3 @@
-
 import { Button } from "@/Components"
 import { DateInput, Input, SelectInput, Textarea } from "@/Components/Shared/Inputs/Inputs"
 import { AddModel, InfoModel, JoinTaskModel } from "@/Components/Shared/Models/Models"
@@ -37,12 +36,12 @@ export const CreateQuizModal = ({ closeModal, isOpen, openInfoModel }: IAddQuizz
 
   return <>
     <AddModel title="Set up a new quiz"  {...{ isOpen, closeModal }}>
-      {groupsLoading && <div className="flex justify-center items-center"><Loader className="animate-spin" size={100} color="#C5D86D" /></div>}
+      {groupsLoading && <div className="flex items-center justify-center"><Loader className="animate-spin" size={100} color="#C5D86D" /></div>}
       {!groupsLoading && <form onSubmit={handleSubmit(handleCreateQuiz)}>
 
         <Input {...register("title", FieldValidation)} label="Title" />
         {renderErrors(addErrors?.title?.message)}
-        <div className="flex flex-col sm:flex-row  justify-between items-center sm:space-x-5 ">
+        <div className="flex flex-col items-center justify-between sm:flex-row sm:space-x-5 ">
 
           <div className="w-full">
             <SelectInput label="Duration" {...register("duration", FieldValidation)} list={duration} />
@@ -64,7 +63,7 @@ export const CreateQuizModal = ({ closeModal, isOpen, openInfoModel }: IAddQuizz
         {renderErrors(addErrors?.description?.message)}
         <DateInput label="Schedule" {...register("schadule", FieldValidation)} />
         {renderErrors(addErrors?.schadule?.message)}
-        <div className="flex flex-col sm:flex-row  justify-between items-center sm:space-x-5">
+        <div className="flex flex-col items-center justify-between sm:flex-row sm:space-x-5">
           <div className="w-full">
             <SelectInput label="level" {...register("difficulty", FieldValidation)} list={difficulty} />
             {renderErrors(addErrors?.difficulty?.message)}
@@ -75,7 +74,7 @@ export const CreateQuizModal = ({ closeModal, isOpen, openInfoModel }: IAddQuizz
           </div>
           <div className="w-full">
             <div className={` mt-4 flex flex-1 border-2 rounded-lg focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor `}>
-              <label htmlFor="group" className='bg-secondColor p-2 font-semibold  flex justify-center min-w-20 items-center'>
+              <label htmlFor="group" className='flex items-center justify-center p-2 font-semibold bg-secondColor min-w-20'>
                 Group
               </label>
               <select id="group" {...register("group", FieldValidation)} className="px-2 rounded-r-md outline-none flex-1 border-none text-center  bg-transparent py-1.5 pl-1 text-black placeholder:text-gray-400  sm:text-sm sm:leading-6"  >
@@ -128,13 +127,13 @@ export const InfoQuizModal = ({ isOpenInfoModel, closeInfoModel, quizCode }: IIn
   return <>
     <InfoModel {...{ closeInfoModel, isOpenInfoModel }} title="Quiz was successfully created" >
       <div onClick={handleCopy} className={`w-full flex border-2 rounded-lg focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor `}>
-        <label htmlFor="Info" className='bg-secondColor p-2 font-semibold  flex justify-center min-w-20'>
+        <label htmlFor="Info" className='flex justify-center p-2 font-semibold bg-secondColor min-w-20'>
           Code
         </label>
         <p ref={textRef} id="Info" className=" pl-3 text-black  outline-none flex-1 border-none  bg-transparent py-1.5 placeholder:text-gray-400  caret-mainColor " >
           {quizCode}
         </p>
-        <span className="flex items-center me-3 pl-3 text-white ">
+        <span className="flex items-center pl-3 text-white me-3 ">
           <SaveAll color='black' />
         </span>
       </div>
@@ -184,11 +183,11 @@ export const QuizResultModal = ({ isOpenInfoModel, closeInfoModel, score }: IQui
   return <>
     <InfoModel {...{ closeInfoModel, isOpenInfoModel }} title=" Congratulations" >
       <div className={`w-full flex justify-center items-center`}>
-        <p className="text-lg font-bold ">your Score is : <span className="text-green-500 text-lg ">{score[0]} / {score[1] * score[2]}</span></p>
+        <p className="text-lg font-bold ">your Score is : <span className="text-lg text-green-500 ">{score[0]} / {score[1] * score[2]}</span></p>
 
 
       </div>
-      <p className="text-black flex justify-center items-center"> Question with {score[2]} points</p>
+      <p className="flex items-center justify-center text-black"> Question with {score[2]} points</p>
     </InfoModel>
   </>
 }

@@ -1,60 +1,35 @@
 import { studentLogo } from "@/Assets/Images"
+import { letterAnimation, letterAnimationTwo, titleAnimation } from "@/Utils/Helpers/FramerVariables/FramerVariables"
 import { motion } from "framer-motion"
 import { Eye } from "lucide-react"
 import { useState } from "react"
 
-
 interface IPropsAnimatedName {
   title: string
-  openDetailsModel: any
-  _id: any
+  openDetailsModel: (_id: string) => void
+  _id: string
 }
 
 interface IPropsAnimatedWord {
   title: string
-  animation: any
+  animation: {
+    rest: {
+      y: number;
+    };
+    hover: {
+      y: number;
+      transition?: {
+        duration: number;
+        ease: number[];
+        type: string;
+      };
+    };
+  }
   isHovered: boolean
 }
 
 
-const letterAnimation = {
-  rest: {
-    y: 0,
-  },
-  hover: {
-    y: -25,
-    transition: {
-      duration: 0.3,
-      ease: [0.6, 0.01, 0.05, 0.95],
-      type: "tween",
-
-    }
-  }
-}
-const letterAnimationTwo = {
-  rest: {
-    y: 25,
-  },
-  hover: {
-    y: 0
-  }
-}
-
-const titleAnimation = {
-  rest: {
-    transition: {
-      staggerChildren: 0.003,
-    }
-  },
-  hover: {
-    transition: {
-      staggerChildren: 0.003,
-    }
-  },
-}
-
-
-const AnimatedCard = ({ title, openDetailsModel, _id }: IPropsAnimatedName) => {
+const StudentCard = ({ title, openDetailsModel, _id }: IPropsAnimatedName) => {
 
   const [isHovered, setIsHovered] = useState(false)
   return <>
@@ -79,7 +54,7 @@ const AnimatedCard = ({ title, openDetailsModel, _id }: IPropsAnimatedName) => {
   </>
 }
 
-export default AnimatedCard
+export default StudentCard
 
 
 const AnimatedWord = ({ title, animation, isHovered }: IPropsAnimatedWord) => {

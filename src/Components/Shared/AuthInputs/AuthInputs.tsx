@@ -6,7 +6,7 @@ interface IProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string
   icon?: React.ReactNode
   containerStyle?: string
-  textColor?:string
+  textColor?: string
 }
 
 interface ISelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
@@ -20,10 +20,10 @@ export const AuthInput = forwardRef(({ lable, className = "", icon, ...rest }: I
   const inputId = useId()
   return <>
     <div className={`${appliedClass} flex flex-col `} >
-      {lable ? <label htmlFor={inputId} className="text-white font-semibold">{lable}</label> : null}
+      {lable ? <label htmlFor={inputId} className="font-semibold text-white">{lable}</label> : null}
 
-      <div className="flex items-center mt-2 rounded-md border-2 border-white  focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor ">
-        {icon && <div className="flex items-center me-2 pl-3 text-white ">
+      <div className="flex items-center mt-2 border-2 border-white rounded-md outline-none focus-within:border-mainColor focus-within: focus-within:ring-1 focus-within:ring-mainColor ">
+        {icon && <div className="flex items-center pl-3 text-white me-2 ">
           {icon}
         </div>}
 
@@ -33,20 +33,20 @@ export const AuthInput = forwardRef(({ lable, className = "", icon, ...rest }: I
 
   </>
 })
-export const PasswordInput = forwardRef(({ lable, className,textColor,containerStyle, icon, ...rest }: IProps, ref: Ref<HTMLInputElement>) => {
+export const PasswordInput = forwardRef(({ lable, className, textColor, containerStyle, icon, ...rest }: IProps, ref: Ref<HTMLInputElement>) => {
   const appliedClass = `${className}`
   const inputId = useId()
   const [toggle, setToggle] = useState(false)
   return <>
     <div className={`${appliedClass} flex flex-col `} >
-      <label htmlFor={inputId} className="text-white font-semibold">{lable}</label>
+      <label htmlFor={inputId} className="font-semibold text-white">{lable}</label>
       <div className={twMerge(` flex items-center mt-2 rounded-md border-2 border-white focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor `, containerStyle)}>
-        <span className="flex items-center me-3 pl-3 text-white ">
+        <span className="flex items-center pl-3 text-white me-3 ">
           {icon}
         </span>
-        <input ref={ref} id={inputId} className={twMerge(`px-2 ms-1 rounded-r-md outline-none flex-1 border-none  bg-transparent py-1.5 pl-1 text-white placeholder:text-gray-400  sm:text-sm sm:leading-6 caret-mainColor `,textColor)} {...rest} type={toggle ? "text" : "password"} />
+        <input ref={ref} id={inputId} className={twMerge(`px-2 ms-1 rounded-r-md outline-none flex-1 border-none  bg-transparent py-1.5 pl-1 text-white placeholder:text-gray-400  sm:text-sm sm:leading-6 caret-mainColor `, textColor)} {...rest} type={toggle ? "text" : "password"} />
 
-        {toggle ? <Eye size={35} onClick={() => setToggle((prev) => !prev)} className="cursor-pointer  me-3 pl-3" /> : <EyeOff size={35} className="cursor-pointer  me-3 pl-3" onClick={() => setToggle((prev) => !prev)} />}
+        {toggle ? <Eye size={35} onClick={() => setToggle((prev) => !prev)} className="pl-3 cursor-pointer me-3" /> : <EyeOff size={35} className="pl-3 cursor-pointer me-3" onClick={() => setToggle((prev) => !prev)} />}
 
       </div>
     </div>
@@ -59,9 +59,9 @@ export const SelectInput = forwardRef(({ lable, className = "", icon, categories
   const inputId = useId()
   return <>
     <div className={`${appliedClass} flex flex-col`} >
-      <label htmlFor={inputId} className="text-white font-semibold">{lable}</label>
-      <div className="flex items-center mt-2 rounded-md border-2 border-white focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor">
-        <div className="flex items-center me-3 pl-3 text-white ">
+      <label htmlFor={inputId} className="font-semibold text-white">{lable}</label>
+      <div className="flex items-center mt-2 border-2 border-white rounded-md outline-none focus-within:border-mainColor focus-within: focus-within:ring-1 focus-within:ring-mainColor">
+        <div className="flex items-center pl-3 text-white me-3 ">
           {icon}
         </div>
 

@@ -15,8 +15,7 @@ const SubmitButton = ({ questionNumber, questionsData, rightAnswers, isLoading, 
       <button
         disabled={isLoading}
         onClick={(e) => onButtonClick(e)}
-        className="relative rounded-full border-2 font-bold tracking-wider  border-blue-600 px-5 py-1 text-xl text-blue-600 transition-colors hover:bg-blue-100"
-      >
+        className="relative px-5 py-1 text-xl font-bold tracking-wider text-blue-600 transition-colors border-2 border-blue-600 rounded-full hover:bg-blue-100">
         <span className="sr-only">SUBMIT</span>
         <span className="block h-8 overflow-hidden " aria-hidden>
           {["S", "U", "B", "M", "I", "T"].map((letter, index) => (
@@ -31,7 +30,7 @@ const SubmitButton = ({ questionNumber, questionsData, rightAnswers, isLoading, 
         </span>
         <span
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 block"
+          className="absolute inset-0 block pointer-events-none -z-10"
         >
           {Array.from({ length: 20 }).map((_, index) => (
             <svg

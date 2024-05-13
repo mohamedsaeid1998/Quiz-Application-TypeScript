@@ -9,11 +9,7 @@ import { CreateQuestionModal, DeleteQuestionModal, DetailsQuestionModal, EditQue
 import { RightAnswers } from '@/Types';
 import { AnimatePresence, motion } from 'framer-motion';
 
-interface IProps {
-
-}
-
-const Questions = ({ }: IProps) => {
+const Questions = () => {
   const { t } = useTranslation();
 
   //? ***************Get Questions ***************
@@ -70,12 +66,12 @@ const Questions = ({ }: IProps) => {
   const closeDetailsModel = useCallback(() => {
     setIsOpenDetailsModel(false)
     setDetailsItem("")
-  },[])
+  }, [])
 
   const openDetailsModel = useCallback((_id: string) => {
     setIsOpenDetailsModel(true)
     setDetailsItem(_id)
-  },[])
+  }, [])
 
 
   return <>
@@ -86,31 +82,31 @@ const Questions = ({ }: IProps) => {
 
     <AnimationContainer>
       <div className="p-3 mt-2 overflow-x-auto border-2 rounded-md" >
-        {isLoading ? <div className='flex justify-between items-center font-semibold'>
+        {isLoading ? <div className='flex items-center justify-between font-semibold'>
           <h6 className="h-[14px] mb-2 w-[90px] animate-pulse bg-gray-500 rounded-md">{""}</h6>
           <h6 className="rounded-full h-[35px] w-[145px] bg-gray-500 animate-pulse">{""} </h6>
         </div>
-          : <div className='flex justify-between items-center font-semibold'>
+          : <div className='flex items-center justify-between font-semibold'>
             <h3>{t("BankOfQuestions")}</h3>
-            <Button onClick={openModal} variant={'outline'} rounded={'full'} className="text-left gap-2 group "><Plus className='bg-black group-hover:bg-white rounded-full p-1  text-white group-hover:text-black transition duration-0' size={19} strokeWidth={5} /> <span>{t("AddQuestion")}</span> </Button>
+            <Button onClick={openModal} variant={'outline'} rounded={'full'} className="gap-2 text-left group "><Plus className='p-1 text-white transition bg-black rounded-full group-hover:bg-white group-hover:text-black duration-0' size={19} strokeWidth={5} /> <span>{t("AddQuestion")}</span> </Button>
           </div>}
 
-        <table className='w-full  border-separate rounded-md mt-2 border-slate-400'>
+        <table className='w-full mt-2 border-separate rounded-md border-slate-400'>
           <thead className='text-white '>
             {isLoading ? <tr >
               <th className='px-2 py-2 bg-black rounded-s-md '><span className='inline-block h-[12px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></th>
-              <th className='hidden lg:table-cell px-2 py-2 bg-black'><span className='inline-block h-[12px] w-[80px] animate-pulse bg-gray-500 rounded-md '>{""}</span></th>
-              <th className=' hidden md:table-cell px-2 py-2  bg-black'><span className='inline-block h-[12px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></th>
-              <th className='hidden md:table-cell px-2 py-2 bg-black'><span className='inline-block h-[12px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></th>
-              <th className=' px-2 py-2 bg-black'><span className='inline-block h-[12px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></th>
+              <th className='hidden px-2 py-2 bg-black lg:table-cell'><span className='inline-block h-[12px] w-[80px] animate-pulse bg-gray-500 rounded-md '>{""}</span></th>
+              <th className='hidden px-2 py-2 bg-black md:table-cell'><span className='inline-block h-[12px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></th>
+              <th className='hidden px-2 py-2 bg-black md:table-cell'><span className='inline-block h-[12px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></th>
+              <th className='px-2 py-2 bg-black '><span className='inline-block h-[12px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></th>
               <th className='px-2 py-2 bg-black rounded-e-md'><span className='inline-block h-[12px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></th>
             </tr> :
               <tr>
                 <th className='px-2 py-2 font-semibold bg-black rounded-s-md'>TITLE</th>
-                <th className='hidden lg:table-cell px-2 py-2 font-semibold bg-black'>DESCRIPTION</th>
-                <th className=' hidden md:table-cell px-2 py-2 font-semibold bg-black'>RIGHT ANSWER</th>
-                <th className='hidden md:table-cell px-2 py-2 font-semibold  bg-black'>DIFFICULTY</th>
-                <th className='hidden md:table-cell px-2 py-2 font-semibold bg-black'>TYPE</th>
+                <th className='hidden px-2 py-2 font-semibold bg-black lg:table-cell'>DESCRIPTION</th>
+                <th className='hidden px-2 py-2 font-semibold bg-black md:table-cell'>RIGHT ANSWER</th>
+                <th className='hidden px-2 py-2 font-semibold bg-black md:table-cell'>DIFFICULTY</th>
+                <th className='hidden px-2 py-2 font-semibold bg-black md:table-cell'>TYPE</th>
                 <th className='px-2 py-2 font-semibold bg-black rounded-e-md'>ACTIONS</th>
               </tr>
             }
@@ -119,11 +115,11 @@ const Questions = ({ }: IProps) => {
           <tbody className='text-center text-gray-500 divide-y'>
             {isLoading ? Array.from({ length: 5 }, (_, idx) => <tr key={idx} className='bg-white dark:border-gray-700 hover:bg-blue-200'>
               <td className='py-3 border whitespace-nowrap border-slate-300 '><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></td>
-              <td className='hidden lg:table-cell py-3 border border-slate-300'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md '>{""}</span></td>
-              <td className='hidden md:table-cell  py-3 border border-slate-300'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></td>
-              <td className='hidden md:table-cell  py-3 border border-slate-300'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></td>
+              <td className='hidden py-3 border lg:table-cell border-slate-300'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md '>{""}</span></td>
+              <td className='hidden py-3 border md:table-cell border-slate-300'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></td>
+              <td className='hidden py-3 border md:table-cell border-slate-300'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></td>
               <td className='py-3 border border-slate-300'><span className='inline-block h-[14px] w-[80px] animate-pulse bg-gray-500 rounded-md'>{""}</span></td>
-              <td className='py-3 border border-slate-300'><div className='flex justify-around items-center'><span className='animate-pulse rounded-md mr-1 h-[28px] w-[20px] bg-gray-500 ' /> <span className=' animate-pulse rounded-md mr-1 h-[28px] w-[20px] bg-gray-500 ' /> <span className=' animate-pulse rounded-md mr-1 h-[28px] w-[20px] bg-gray-500 ' /> </div></td>
+              <td className='py-3 border border-slate-300'><div className='flex items-center justify-around'><span className='animate-pulse rounded-md mr-1 h-[28px] w-[20px] bg-gray-500 ' /> <span className=' animate-pulse rounded-md mr-1 h-[28px] w-[20px] bg-gray-500 ' /> <span className=' animate-pulse rounded-md mr-1 h-[28px] w-[20px] bg-gray-500 ' /> </div></td>
             </tr>) : null}
             <AnimatePresence initial={false} >
               {currentQuestions?.map(({ title, description, answer, difficulty, type, _id }: IQuestions) => <motion.tr key={_id}
@@ -133,12 +129,12 @@ const Questions = ({ }: IProps) => {
                 transition={{ layout: { type: "spring" } }}
                 layout
                 className='bg-white dark:border-gray-700 hover:bg-blue-200'>
-                <td title={title} className='py-3 font-medium border whitespace-nowrap border-slate-300 truncate text-balance max-w-60'>{title}</td>
-                <td title={description} className='hidden lg:table-cell py-3 font-medium border whitespace-nowrap border-slate-300 truncate max-w-60'>{description}</td>
-                <td className='hidden md:table-cell py-3 font-medium border whitespace-nowrap border-slate-300 truncate'>{answer}</td>
-                <td className='hidden md:table-cell py-3 font-medium border whitespace-nowrap border-slate-300 truncate'>{difficulty}</td>
-                <td className='hidden md:table-cell py-3 font-medium border whitespace-nowrap border-slate-300 truncate'>{type}</td>
-                <td className='py-3 font-medium border whitespace-nowrap border-slate-300 truncate  p-3'> <div className='flex justify-around items-center'><Eye onClick={() => openDetailsModel(_id)} className='cursor-pointer' color='green' /> <FilePenLine onClick={() => openModalEdit(_id, answer)} className='cursor-pointer' color='gold' /> <Trash2 onClick={() => openModalDelete(_id)} className='cursor-pointer' color='red' /></div></td>
+                <td title={title} className='py-3 font-medium truncate border whitespace-nowrap border-slate-300 text-balance max-w-60'>{title}</td>
+                <td title={description} className='hidden py-3 font-medium truncate border lg:table-cell whitespace-nowrap border-slate-300 max-w-60'>{description}</td>
+                <td className='hidden py-3 font-medium truncate border md:table-cell whitespace-nowrap border-slate-300'>{answer}</td>
+                <td className='hidden py-3 font-medium truncate border md:table-cell whitespace-nowrap border-slate-300'>{difficulty}</td>
+                <td className='hidden py-3 font-medium truncate border md:table-cell whitespace-nowrap border-slate-300'>{type}</td>
+                <td className='p-1 py-3 font-medium truncate border whitespace-nowrap border-slate-300 md:p-3'> <div className='flex items-center justify-around gap-1'><Eye size={22} onClick={() => openDetailsModel(_id)} className='cursor-pointer' color='green' /> <FilePenLine size={22} onClick={() => openModalEdit(_id, answer)} className='cursor-pointer' color='gold' /> <Trash2 size={22} onClick={() => openModalDelete(_id)} className='cursor-pointer' color='red' /></div></td>
               </motion.tr>)}
             </AnimatePresence>
 

@@ -1,9 +1,6 @@
 import './NotFound.module.scss'
-interface IProps {
 
-}
-
-const NotFound = ({}: IProps) => {
+const NotFound = () => {
   return <>
     <div>NotFound</div>
   </>

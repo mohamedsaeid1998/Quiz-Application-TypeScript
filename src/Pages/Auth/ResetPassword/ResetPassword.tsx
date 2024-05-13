@@ -9,11 +9,7 @@ import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
 import './ResetPassword.module.scss'
 
-interface IProps {
-
-}
-
-const ResetPassword = ({ }: IProps) => {
+const ResetPassword = () => {
 
   const [submitResetPass, { isLoading }] = useResetPasswordMutation()
   const { register, handleSubmit, getValues, formState: { errors } } = useForm<IFormResetPass>()
@@ -46,11 +42,11 @@ const ResetPassword = ({ }: IProps) => {
         })} lable='Confirm Password' type='password' placeholder='Type your Confirm Password' icon={<KeyRound />} />
         {renderErrors(errors?.confirmPassword?.message)}
 
-        <div className='flex flex-col space-y-5 sm:space-y-0 sm:flex-row  justify-between items-center mt-5'>
+        <div className='flex flex-col items-center justify-between mt-5 space-y-5 sm:space-y-0 sm:flex-row'>
 
-          <Button isLoading={isLoading} rounded={'lg'} className='gap-3 group'>Reset <Check className='bg-black group-hover:bg-white rounded-full p-1 text-2xl text-white group-hover:text-black transition duration-200' size={20} strokeWidth={5} /></Button>
+          <Button isLoading={isLoading} rounded={'lg'} className='gap-3 group'>Reset <Check className='p-1 text-2xl text-white transition duration-200 bg-black rounded-full group-hover:bg-white group-hover:text-black' size={20} strokeWidth={5} /></Button>
 
-          <span>Login ? <Link to={'/'} className='text-mainColor underline'>click here</Link> </span>
+          <span>Login ? <Link to={'/'} className='underline text-mainColor'>click here</Link> </span>
         </div>
 
       </form>

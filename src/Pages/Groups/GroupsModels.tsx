@@ -33,7 +33,7 @@ export const AddGroupModal = ({ studentsData, closeModal, isOpen, studentsRefetc
         <GroupInput className='mt-5' {...register("name", FieldValidation)} label='Group Name' />
         {renderErrors(addErrors?.name?.message)}
         <div className={` mt-7 flex flex-col border-2 rounded-lg focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor `}>
-          <label htmlFor={"select"} className='bg-secondColor p-2 font-semibold  flex justify-center min-w-20'>
+          <label htmlFor={"select"} className='flex justify-center p-2 font-semibold bg-secondColor min-w-20'>
             List Students
           </label>
 
@@ -70,8 +70,6 @@ interface IDeleteGroupProps {
 export const DeleteGroupModal = ({ isOpenDeleteModel, closeModalDelete, studentsRefetch, deleteItemId }: IDeleteGroupProps) => {
 
   const { handleSubmit: handleSubmitDelete } = useForm<IDeleteGroup>()
-
-  console.log("DeleteGroupModal");
   const [submitDeleteGroup, { isLoading: deleteLoading }] = useDeleteGroupMutation()
   const handleDeleteGroup = async (data: IDeleteGroup) => {
     const response = await submitDeleteGroup({ ...data, deleteItemId })
@@ -111,7 +109,6 @@ interface IEditGroupProps {
 
 export const EditGroupModal = ({ loadingData, isOpenEditModel, closeModalEdit, editItemId, studentsRefetch, editRegister, handleSubmitEdit, errors, allStudents }: IEditGroupProps) => {
 
-
   const [submitEditGroup, { isLoading: editLoading }] = useEditGroupMutation()
 
   const handleEditGroup = async (data: IGroups) => {
@@ -122,17 +119,15 @@ export const EditGroupModal = ({ loadingData, isOpenEditModel, closeModalEdit, e
     }
   }
 
-
   return <>
     <EditModel title="Update Group"  {...{ isOpenEditModel, closeModalEdit }}>
-      {loadingData && <div className="flex justify-center items-center"><Loader className="animate-spin" size={100} color="#C5D86D" /></div>}
+      {loadingData && <div className="flex items-center justify-center"><Loader className="animate-spin" size={100} color="#C5D86D" /></div>}
       {!loadingData && <form onSubmit={handleSubmitEdit(handleEditGroup)}>
-
         <GroupInput className='mt-5' {...editRegister("name", FieldValidation)} label='Group Name' />
         {renderErrors(errors?.name?.message)}
 
         <div className={` mt-7 flex flex-col border-2 rounded-lg focus-within:border-mainColor focus-within: outline-none focus-within:ring-1 focus-within:ring-mainColor `}>
-          <label htmlFor={"select"} className='bg-secondColor p-2 font-semibold  flex justify-center min-w-20'>
+          <label htmlFor={"select"} className='flex justify-center p-2 font-semibold bg-secondColor min-w-20'>
             List Students
           </label>
 
@@ -161,4 +156,3 @@ export const EditGroupModal = ({ loadingData, isOpenEditModel, closeModalEdit, e
 
   </>
 }
-

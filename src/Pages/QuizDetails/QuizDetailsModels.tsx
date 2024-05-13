@@ -64,7 +64,7 @@ export const EditQuizModal = ({ isOpenEditModel, closeModalEdit, editItemId, qui
       closeModalEdit()
     }
   }
-
+  
   return <>
     <EditModel title="Update Quiz Title"  {...{ isOpenEditModel, closeModalEdit }}>
       <form onSubmit={handleSubmit(handleEditQuiz)} className="mt-4">

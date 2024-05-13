@@ -5,9 +5,8 @@ import './AuthLayout.module.scss'
 const AuthLayout = () => {
 
   return <>
-  
     <AnimatePresence mode='wait' >
-        <Outlet />
+      <Outlet />
     </AnimatePresence>
   </>
 }

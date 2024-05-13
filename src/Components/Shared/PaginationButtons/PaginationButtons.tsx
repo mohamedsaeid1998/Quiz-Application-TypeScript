@@ -24,14 +24,14 @@ const PaginationButtons = ({ members, handlePageChange, currentPage, count }: IP
         }
         nextLabel={
           showNextButton ?
-            <button className=' w-6 h-6  md:w-8 md:h-8  flex items-center justify-center bg-[#D3D3D3] rounded-md'>
+            <button className=' size-6  md:size-8 flex items-center justify-center bg-[#D3D3D3] rounded-md'>
               <ArrowRight />
             </button> : null
         }
 
         previousLabel={
           showPrevButton ?
-            <button className='w-6 h-6 mr-4  md:w-8 md:h-8  flex items-center justify-center bg-[#D3D3D3] rounded-md'>
+            <button className='size-6 mr-4  md:size-8   flex items-center justify-center bg-[#D3D3D3] rounded-md  '>
               <ArrowLeft />
             </button> : null}
 

@@ -1,16 +1,13 @@
 
-import { AnimatedCard, AnimationContainer, PaginationButtons } from '@/Components';
+import { StudentCard, AnimationContainer, PaginationButtons } from '@/Components';
 import { IAllStudents } from '@/InterFaces/StudentsInterFaces';
 import { useAllStudentsQuery } from '@/Redux/Services/Students/StudentsSlice';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import './Students.module.scss';
 import { DetailsStudentModal } from './StudentsModels';
-interface IProps {
 
-}
-
-const Students = ({ }: IProps) => {
+const Students = () => {
   const { t } = useTranslation();
   //? *************** Get AllStudents ***************
   const { isLoading: loading, data: allStudents } = useAllStudentsQuery(0)
@@ -52,9 +49,8 @@ const Students = ({ }: IProps) => {
             <span className='animate-pulse rounded-md h-[28px] w-[20px] bg-gray-500 ' />
           </div>)}
           {currentStudents?.map(({ first_name, last_name, _id }: IAllStudents) =>
-            <AnimatedCard key={_id} {...{openDetailsModel,_id}} title={first_name + " " + last_name}  />
+            <StudentCard key={_id} {...{ openDetailsModel, _id }} title={first_name + " " + last_name} />
           )}
-
 
         </div>
         {!loading && <PaginationButtons members={allStudents} count={studentsPerPage}  {...{ currentPage, handlePageChange }} />}

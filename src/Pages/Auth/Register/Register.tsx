@@ -8,11 +8,8 @@ import { BookUser, Check, KeyRound, Mail } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import './Register.module.scss'
-interface IProps {
 
-}
-
-const Register = ({ }: IProps) => {
+const Register = () => {
   const [submitRegister, { isLoading }] = useRegisterMutation()
   const { register, handleSubmit, formState: { errors } } = useForm<IFormRegister>()
   const navigate = useNavigate()
@@ -27,7 +24,7 @@ const Register = ({ }: IProps) => {
   return <>
     <AuthBackground header={"Create your account and start using QuizWiz !"}>
       <form onSubmit={handleSubmit(handleRegister)}>
-        <div className='flex flex-col lg:flex-row lg:space-x-5  w-full items-center'>
+        <div className='flex flex-col items-center w-full lg:flex-row lg:space-x-5'>
 
           <div className='w-full'>
             <AuthInput className='w-full' {...register("first_name", fieldValidation)} lable='Your first name' type='text' placeholder='Type your first name' icon={<BookUser />} />
@@ -50,7 +47,7 @@ const Register = ({ }: IProps) => {
         {renderErrors(errors?.password?.message)}
 
         <div className='mt-5'>
-          <Button isLoading={isLoading} rounded={'lg'} className='gap-3 group'>Sign up <Check className='bg-black group-hover:bg-white rounded-full p-1 text-2xl text-white group-hover:text-black transition duration-200' size={20} strokeWidth={5} /></Button>
+          <Button isLoading={isLoading} rounded={'lg'} className='gap-3 group'>Sign up <Check className='p-1 text-2xl text-white transition duration-200 bg-black rounded-full group-hover:bg-white group-hover:text-black' size={20} strokeWidth={5} /></Button>
         </div>
 
       </form>

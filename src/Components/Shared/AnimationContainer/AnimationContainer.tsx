@@ -12,7 +12,7 @@ const AnimationContainer = ({ children }: IProps) => {
       animate="animate"
       exit="exit"
       transition={{ ease: "easeInOut", duration: 0.5 }} >
-{children}
+      {children}
     </motion.div>
   </>
 }

@@ -18,7 +18,7 @@ interface IAddQuestionsProps {
 }
 
 export const CreateQuestionModal = ({ closeModal, isOpen }: IAddQuestionsProps) => {
-  const { register, handleSubmit,reset ,formState: { errors: addErrors } } = useForm<ICreateQuestions>()
+  const { register, handleSubmit, reset, formState: { errors: addErrors } } = useForm<ICreateQuestions>()
   const [submitCreateQuestion, { isLoading: createLoading }] = useCreateQuestionMutation()
   const handleCreateQuestion = async (data: ICreateQuestions) => {
     const response = await submitCreateQuestion(data)
@@ -31,7 +31,7 @@ export const CreateQuestionModal = ({ closeModal, isOpen }: IAddQuestionsProps) 
 
   return <>
     <AddModel title="Set up a new Question"  {...{ isOpen, closeModal }}>
-      <form  onSubmit={handleSubmit(handleCreateQuestion)}>
+      <form onSubmit={handleSubmit(handleCreateQuestion)}>
 
         <Input {...register("title", FieldValidation)} label="Title" />
         {renderErrors(addErrors?.title?.message)}
@@ -63,7 +63,7 @@ export const CreateQuestionModal = ({ closeModal, isOpen }: IAddQuestionsProps) 
 
         </div>
 
-        <div className="flex flex-col sm:flex-row  justify-between items-center sm:gap-4">
+        <div className="flex flex-col items-center justify-between sm:flex-row sm:gap-4">
           <div className='w-full'>
             <SelectInput {...register("answer", FieldValidation)} label=" Answer" list={Answers} />
           </div>
@@ -194,7 +194,7 @@ export const DetailsQuestionModal = ({ closeDetailsModel, isOpenDetailsModel, de
 
         </div>
 
-        <div className="flex flex-col sm:flex-row  justify-between items-center sm:gap-4 gap-3  mt-4 ">
+        <div className="flex flex-col items-center justify-between gap-3 mt-4 sm:flex-row sm:gap-4 ">
           <div className='w-full'>
             <DetailsInput label="answer" content={`${questionDetails?.answer}`} />
           </div>
@@ -208,7 +208,7 @@ export const DetailsQuestionModal = ({ closeDetailsModel, isOpenDetailsModel, de
 
         <div className="flex justify-center">
           <Button onClick={closeDetailsModel} rounded={'lg'} className='gap-2 mt-4' variant={"ghost"}>Cancel</Button>
-        </div></> : <div className="flex justify-center items-center"><Loader className="animate-spin" size={100} color="#C5D86D" /></div>}
+        </div></> : <div className="flex items-center justify-center"><Loader className="animate-spin" size={100} color="#C5D86D" /></div>}
 
     </DetailsModel>
   </>
