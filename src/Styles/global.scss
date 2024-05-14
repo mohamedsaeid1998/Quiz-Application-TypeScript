@@ -11,19 +11,8 @@
   box-sizing: border-box;
 }
 
-// :root {
-//   --clr-home: #ff2972;
-//   --clr-settings: #fee800;
-//   --clr-mail: #04fc43;
-//   --clr-key: #fe00f1;
-//   --clr-camera: #00b0fe;
-//   --clr-gamepad: #fea600;
-//   --clr-person: #a529ff;
-//   --clr-video: #01bdab;
-// }
-
 .active {
-  background-color: #0092471a !important;
+  // background-color: #0092471a !important;
 
   .ps-menu-label {
     color: white !important;
@@ -108,7 +97,6 @@
 @media (prefers-color-scheme: dark) {
   .dark\:bg-gray-700 {
     --tw-bg-opacity: 1;
-    // background-color: white !important;
   }
 }
 .quizBox {
@@ -133,9 +121,6 @@
   width: 100% !important;
 }
 
-// .css-1t8x7v1 > .ps-menu-button:hover {
-//   background-color: #ffeddf !important;
-// }
 .h-16 .ps-menu-button {
   height: 100% !important;
 }
@@ -146,18 +131,10 @@
   }
 }
 
-
 .radioInput {
   width: 20px;
   height: 20px;
 }
-// .inputWrapper {
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   margin-top: 25px;
-//   gap: 5px;
-// }
 
 a[role="button"] {
   padding: 5px 9.8px;
@@ -304,14 +281,13 @@ label {
 }
 
 .stepper {
-  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.7))
+  filter: drop-shadow(0 0 1px rgba(0, 0, 0, 0.7));
 }
-
 
 .inputWrapper:has(input[type="radio"]:checked) {
   background-color: rgb(96 165 250);
   color: white;
-  .char{
+  .char {
     background-color: black;
     color: white;
   }

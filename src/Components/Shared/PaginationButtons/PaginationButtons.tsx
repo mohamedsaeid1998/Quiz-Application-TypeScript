@@ -36,10 +36,10 @@ const PaginationButtons = ({ members, handlePageChange, currentPage, count }: IP
             </button> : null}
 
         onPageChange={({ selected }) => handlePageChange(selected)}
-        pageRangeDisplayed={3}
+        pageRangeDisplayed={2}
         pageCount={Math.ceil(members?.length / count)}
         containerClassName='flex items-center justify-center '
-        pageClassName=' border border-solid border-[#D3D3D3] hover:bg-[#D3D3D3]  flex items-center justify-center rounded-full mr-3 sm:mr-4 font-semibold p-3 md:p-4 w-1 h-1'
+        pageClassName=' border border-solid border-[#D3D3D3] hover:bg-[#D3D3D3]  flex items-center justify-center rounded-full mr-3 sm:mr-4 font-semibold p-2.5 md:p-4 w-1 h-1'
         activeClassName='bg-mainColor text-white'
         forcePage={currentPage}
 

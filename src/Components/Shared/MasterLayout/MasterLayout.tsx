@@ -12,7 +12,7 @@ const MasterLayout = () => {
 
   return (
     <>
-      <div className={` ${isOpen ? " lg:hidden bg-[#6763639c] z-20 fixed top-0 bottom-0 right-0 left-0 w-full h-full flex justify-center items-center " : "hidden "} `}>
+      <div className={` ${isOpen ? " lg:hidden bg-[#000000be] z-20 fixed top-0 bottom-0 right-0 left-0 w-full h-full flex justify-center items-center " : "hidden "} `}>
         <ToggleMenu {...{ active, setActive }} />
       </div>
 
@@ -27,7 +27,7 @@ const MasterLayout = () => {
           <Navbar />
           <AnimatePresence mode="wait" >
             <main
-              className='m-2 md:m-5 mt-3'>
+              className='m-2 mt-3 md:m-5'>
               <Outlet />
             </main>
           </AnimatePresence>

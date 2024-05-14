@@ -20,7 +20,7 @@ export const QuizzesApiSlice = createApi({
           Authorization: `Bearer ${CookieServices.get("token")}`
         }
       }),
-      providesTags: (result) => ['Quizzes', ...result.map(({ _id }: any) => ({ type: 'Quizzes', _id }))],
+      providesTags: (result) => ['Quizzes', ...result?.map(({ _id }: any) => ({ type: 'Quizzes', _id }))],
     }),
     completedQuizzes: builder.query({
       query: () => ({

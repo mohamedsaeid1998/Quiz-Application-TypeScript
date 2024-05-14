@@ -37,9 +37,9 @@ const StudentCard = ({ title, openDetailsModel, _id }: IPropsAnimatedName) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       whileHover={{ scale: 1.05, color: "green" }}
-      transition={{ type: "spring", stiffness: 300 }} className="flex items-center justify-between shadow-md p-3 rounded-md">
-      <img className='bg-secondColor w-8 rounded-md' src={studentLogo} alt="studentLogo" />
-      <div className='relative flex overflow-hidden flex-col '>
+      transition={{ type: "spring", stiffness: 300 }} className="flex items-center justify-between p-3 rounded-md shadow-md">
+      <img className='w-8 rounded-md bg-secondColor' src={studentLogo} alt="studentLogo" />
+      <div className='relative flex flex-col overflow-hidden '>
         <motion.div
 
           className='relative overflow-hidden'>
@@ -64,10 +64,10 @@ const AnimatedWord = ({ title, animation, isHovered }: IPropsAnimatedWord) => {
       initial="rest"
       animate={isHovered ? "hover" : "rest"}
       className='relative whitespace-nowrap'>
-      {title.split("").map((character, i) =>
+      {title?.split("")?.map((character, i) =>
         character === " " ?
           <span key={i}>&nbsp;</span>
-          : <motion.span
+          : <motion.span key={i}
             variants={animation}
             className='relative inline-block whitespace-nowrap'>
             {character}
