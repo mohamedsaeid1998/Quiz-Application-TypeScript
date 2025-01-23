@@ -3,11 +3,11 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 interface IProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const InstructorProtectedRoute = ({ children }: IProps) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userRole = CookieServices.get("role").role;

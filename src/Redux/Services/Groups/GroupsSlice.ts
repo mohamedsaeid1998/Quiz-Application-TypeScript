@@ -11,14 +11,20 @@ export const GroupsApiSlice = createApi({
   tagTypes: ["Groups"],
   refetchOnReconnect: true,
   refetchOnMountOrArgChange: true,
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASE_URL, prepareHeaders:(headers) =>{
+      const token = CookieServices.get('token');
+      if(token){
+        headers.set('Authorization', `Bearer ${token}`);
+      }else{
+        toast("you must login first",{type:"error"});
+      }
+    },
+  }),
   endpoints: (builder) => ({
     groupsList: builder.query({
       query: () => ({
         url: GROUPS_URLS.groupsList,
-        headers: {
-          Authorization: `Bearer ${CookieServices.get("token")}`
-        }
       }),
       providesTags: (result) => ['Groups', ...result.map(({ _id }: any) => ({ type: 'Groups', _id }))]
     }),
@@ -28,9 +34,6 @@ export const GroupsApiSlice = createApi({
           url: GROUPS_URLS.groupsList,
           method: "POST",
           body: data,
-          headers: {
-            Authorization: `Bearer ${CookieServices.get("token")}`
-          }
         }
       },
       invalidatesTags: ["Groups"],
@@ -51,9 +54,6 @@ export const GroupsApiSlice = createApi({
           url: GROUPS_URLS.UpdateOrDeleteGroup(data.deleteItemId),
           method: "DELETE",
           body: data,
-          headers: {
-            Authorization: `Bearer ${CookieServices.get("token")}`
-          }
         }
       },
       invalidatesTags: ["Groups"],
@@ -75,9 +75,6 @@ export const GroupsApiSlice = createApi({
           url: GROUPS_URLS.UpdateOrDeleteGroup(editItemId),
           method: "PUT",
           body: bodyData,
-          headers: {
-            Authorization: `Bearer ${CookieServices.get("token")}`
-          }
         }
       },
       invalidatesTags: ["Groups"],
@@ -96,9 +93,6 @@ export const GroupsApiSlice = createApi({
     getGroupById: builder.query({
       query: (_id) => ({
         url: GROUPS_URLS.UpdateOrDeleteGroup(_id),
-        headers: {
-          Authorization: `Bearer ${CookieServices.get("token")}`
-        }
       }),
     }),
 

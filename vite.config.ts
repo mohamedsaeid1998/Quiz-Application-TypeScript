@@ -9,5 +9,5 @@ export default defineConfig({
     },
   },
   plugins: [react()],
-  base: /Quiz-Application-TypeScript/
+ base: /Quiz-Application-TypeScript/
 });

@@ -11,23 +11,26 @@ export const QuizzesApiSlice = createApi({
   tagTypes: ["Quizzes"],
   refetchOnReconnect: true,
   refetchOnMountOrArgChange: true,
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASE_URL, prepareHeaders: (headers) => {
+      const token = CookieServices.get('token');
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      } else {
+        toast("you must login first", { type: "error" });
+      }
+    },
+  }),
   endpoints: (builder) => ({
     getFirstUpcomingQuizzes: builder.query({
       query: () => ({
         url: QUIZZES_URLS.upcomingQuizzes,
-        headers: {
-          Authorization: `Bearer ${CookieServices.get("token")}`
-        }
       }),
       providesTags: (result) => ['Quizzes', ...result?.map(({ _id }: any) => ({ type: 'Quizzes', _id }))],
     }),
     completedQuizzes: builder.query({
       query: () => ({
         url: QUIZZES_URLS.completedQuizzes,
-        headers: {
-          Authorization: `Bearer ${CookieServices.get("token")}`
-        }
       })
     }),
     createQuiz: builder.mutation({
@@ -36,9 +39,6 @@ export const QuizzesApiSlice = createApi({
           url: QUIZZES_URLS.createQuiz,
           method: "POST",
           body: data,
-          headers: {
-            Authorization: `Bearer ${CookieServices.get("token")}`
-          }
         }
       },
       invalidatesTags: ["Quizzes"],
@@ -58,9 +58,6 @@ export const QuizzesApiSlice = createApi({
         return {
           url: QUIZZES_URLS.quizzesOperations(deleteItemId),
           method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${CookieServices.get("token")}`
-          }
         }
       },
       invalidatesTags: ["Quizzes"],
@@ -82,9 +79,6 @@ export const QuizzesApiSlice = createApi({
           url: QUIZZES_URLS.quizzesOperations(editItemId),
           method: "PUT",
           body: bodyData,
-          headers: {
-            Authorization: `Bearer ${CookieServices.get("token")}`
-          }
         }
       },
       invalidatesTags: ["Quizzes"],
@@ -103,9 +97,6 @@ export const QuizzesApiSlice = createApi({
     quizzesDetails: builder.query({
       query: (_id) => ({
         url: QUIZZES_URLS.quizzesOperations(_id),
-        headers: {
-          Authorization: `Bearer ${CookieServices.get("token")}`
-        }
       }),
     }),
 
@@ -117,9 +108,6 @@ export const QuizzesApiSlice = createApi({
           url: QUIZZES_URLS.joinQuiz,
           method: "POST",
           body: data,
-          headers: {
-            Authorization: `Bearer ${CookieServices.get("token")}`
-          }
         }
       },
       invalidatesTags: ["Quizzes"],
@@ -140,9 +128,6 @@ export const QuizzesApiSlice = createApi({
           url: QUIZZES_URLS.finishQuiz(_id),
           method: "POST",
           body: bodyData,
-          headers: {
-            Authorization: `Bearer ${CookieServices.get("token")}`
-          }
         }
       },
       invalidatesTags: ["Quizzes"],

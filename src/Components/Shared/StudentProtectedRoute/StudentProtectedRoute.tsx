@@ -2,13 +2,12 @@ import CookieServices from "@/Services/CookieServices/CookieServices";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 interface IProps {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const StudentProtectedRoute = ({ children }: IProps) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userRole = CookieServices.get("role").role;
@@ -19,6 +18,5 @@ const StudentProtectedRoute = ({ children }: IProps) => {
 
   return children;
 };
-
 
 export default StudentProtectedRoute;

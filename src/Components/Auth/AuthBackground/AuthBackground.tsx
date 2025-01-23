@@ -25,9 +25,9 @@ const AuthBackground = ({ header, children }: IProps) => {
         className='leftContent w-[100%] md:w-[50%] h-full'>
         <h1 className='text-5xl'>QuizWiz</h1>
         <div className='m-auto justify-center items-center '>
-          <p className='pt-8 pb-8 text-mainColor text-3xl font-bold'>{header}</p>
+          <p className='pt-8 pb-8 text-mainColor text-3xl font-bold '>{header}</p>
           {pathname === "/" || pathname === "/register" ? <div className='flex space-x-12 mb-6'>
-            <Link to={"/"} className={`flex flex-col justify-center items-center w-44 h-32 font-bold bg-subBg  rounded-2xl ${pathname === "/" ? "border-[6px] border-mainColor" : ""}`}>
+            <Link to={"/"} className={`flex flex-col justify-center items-center w-44 h-32 font-bold bg-subBg rounded-2xl ${pathname === "/" ? "border-[6px] border-mainColor" : ""}`}>
               <UserRound size={65} color={`${pathname === "/" ? "#C5D86D" : "white"}`} />
               Sign in
             </Link>

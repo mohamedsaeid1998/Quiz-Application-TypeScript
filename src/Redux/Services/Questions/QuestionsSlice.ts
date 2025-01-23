@@ -10,14 +10,20 @@ export const QuestionsApiSlice = createApi({
   tagTypes: ["Questions"],
   refetchOnReconnect: true,
   refetchOnMountOrArgChange: true,
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASE_URL, prepareHeaders: (headers) => {
+      const token = CookieServices.get('token');
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      } else {
+        toast("you must login first", { type: "error" });
+      }
+    },
+  }),
   endpoints: (builder) => ({
     allQuestions: builder.query({
       query: () => ({
         url: QUESTIONS_URLS.createQuestion,
-        headers: {
-          Authorization: `Bearer ${CookieServices.get("token")}`
-        }
       }),
       providesTags: (result) => ['Questions', ...result.map(({ _id }: any) => ({ type: 'Questions', _id }))],
     }),
@@ -27,9 +33,6 @@ export const QuestionsApiSlice = createApi({
           url: QUESTIONS_URLS.createQuestion,
           method: "POST",
           body: data,
-          headers: {
-            Authorization: `Bearer ${CookieServices.get("token")}`
-          }
         }
       },
       invalidatesTags: ["Questions"],
@@ -50,9 +53,6 @@ export const QuestionsApiSlice = createApi({
         return {
           url: QUESTIONS_URLS.questionOperations(id),
           method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${CookieServices.get("token")}`
-          }
         }
       },
       invalidatesTags: ["Questions"],
@@ -74,9 +74,6 @@ export const QuestionsApiSlice = createApi({
           url: QUESTIONS_URLS.questionOperations(editItemId),
           method: "PUT",
           body: bodyData,
-          headers: {
-            Authorization: `Bearer ${CookieServices.get("token")}`
-          }
         }
       },
       invalidatesTags: ["Questions"],
@@ -91,26 +88,20 @@ export const QuestionsApiSlice = createApi({
       }
 
     }),
-    
+
     questionDetails: builder.query({
       query: (id) => ({
         url: QUESTIONS_URLS.questionOperations(id),
-        headers: {
-          Authorization: `Bearer ${CookieServices.get("token")}`
-        }
       }),
 
     }),
     getQuestions: builder.query({
       query: (id) => ({
         url: QUESTIONS_URLS.examQuestions(id),
-        headers: {
-          Authorization: `Bearer ${CookieServices.get("token")}`
-        }
       }),
 
     }),
 
   }),
 })
-export const { useGetQuestionsQuery,useAllQuestionsQuery, useCreateQuestionMutation, useDeleteQuestionMutation,useEditQuestionMutation,useQuestionDetailsQuery } = QuestionsApiSlice
+export const { useGetQuestionsQuery, useAllQuestionsQuery, useCreateQuestionMutation, useDeleteQuestionMutation, useEditQuestionMutation, useQuestionDetailsQuery } = QuestionsApiSlice

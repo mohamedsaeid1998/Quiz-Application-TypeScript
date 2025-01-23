@@ -8,7 +8,7 @@ export const AuthenticationApiSlice = createApi({
   tagTypes: ["Authentication"],
   refetchOnReconnect: true,
   refetchOnMountOrArgChange: true,
-  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
+  baseQuery: fetchBaseQuery({ baseUrl: BASE_URL}),
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (data) => ({

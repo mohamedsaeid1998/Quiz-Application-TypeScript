@@ -5,51 +5,51 @@ export const BASE_URL = import.meta.env.VITE_SERVER_URL
 // ****************************** Auth ************************************
 
 export const AUTH_URLS = {
-  login: "/api/auth/login",
-  register: "/api/auth/register",
-  forgotPass: "/api/auth/forgot-password",
-  resetPass: "/api/auth/reset-password",
-  changePass: "/api/auth/change-password",
+  login: "/auth/login",
+  register: "/auth/register",
+  forgotPass: "/auth/forgot-password",
+  resetPass: "/auth/reset-password",
+  changePass: "/auth/change-password",
 }
 
 // ****************************** Groups ************************************
 
 export const GROUPS_URLS = {
-  groupsList: "/api/group",
-  UpdateOrDeleteGroup: (id: string) => `/api/group/${id}`
+  groupsList: "/group",
+  UpdateOrDeleteGroup: (id: string) => `/group/${id}`
 }
 
 // ****************************** STUDENTS ************************************
 
 export const STUDENTS_URLS = {
-  allStudents: "/api/student",
-  topFiveStudents: "/api/student/top-five",
-  allStudentsWithoutGroups: "/api/student/without-group",
-  StudentDetails: (id: string) => `/api/student/${id}`
+  allStudents: "/student",
+  topFiveStudents: "/student/top-five",
+  allStudentsWithoutGroups: "/student/without-group",
+  StudentDetails: (id: string) => `/student/${id}`
 }
 
 // ****************************** Quizzes ************************************
 
 export const QUIZZES_URLS = {
-  upcomingQuizzes: "/api/quiz/incomming",
-  completedQuizzes: "/api/quiz/completed",
-  createQuiz: "/api/quiz",
-  quizzesOperations: (id: string) => `/api/quiz/${id}`,
-  joinQuiz: "/api/quiz/join",
-  finishQuiz: (id: string) => `/api/quiz/submit/${id}`,
+  upcomingQuizzes: "/quiz/incomming",
+  completedQuizzes: "/quiz/completed",
+  createQuiz: "/quiz",
+  quizzesOperations: (id: string) => `/quiz/${id}`,
+  joinQuiz: "/quiz/join",
+  finishQuiz: (id: string) => `/quiz/submit/${id}`,
 }
 
 // ****************************** Results ************************************
 
 export const RESULTS_URLS = {
-  resultsList: "/api/quiz/result",
+  resultsList: "/quiz/result",
 }
 
 // ****************************** Questions ************************************
 
 export const QUESTIONS_URLS = {
-  createQuestion: "/api/question",
-  questionOperations: (id: string) => `/api/question/${id}`,
-  examQuestions: (id: string) =>`/api/quiz/without-answers/${id}`
+  createQuestion: "/question",
+  questionOperations: (id: string) => `/question/${id}`,
+  examQuestions: (id: string) =>`/quiz/without-answers/${id}`
 }
 

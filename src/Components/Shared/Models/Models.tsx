@@ -1,50 +1,49 @@
-import { Dialog, Transition } from '@headlessui/react'
-import { Check, Trash2 } from 'lucide-react'
-import { Fragment } from 'react'
+import { Dialog, Transition } from "@headlessui/react";
+import { Check, Trash2 } from "lucide-react";
+import { Fragment } from "react";
 
 interface IProps {
-  isOpen: boolean
-  closeModal: () => void
-  title?: string
-  children: React.ReactNode
+  isOpen: boolean;
+  closeModal: () => void;
+  title?: string;
+  children: React.ReactNode;
 }
 
 interface IPropsDeleteModel {
-  isOpenDeleteModel: boolean
-  closeModalDelete: () => void
-  children: React.ReactNode
+  isOpenDeleteModel: boolean;
+  closeModalDelete: () => void;
+  children: React.ReactNode;
 }
 
 interface IPropsEditModel {
-  title?: string
-  isOpenEditModel: boolean
-  closeModalEdit: () => void
-  children: React.ReactNode
+  title?: string;
+  isOpenEditModel: boolean;
+  closeModalEdit: () => void;
+  children: React.ReactNode;
 }
 
 interface IPropsInfoModel {
-  isOpenInfoModel: boolean
-  closeInfoModel: () => void
-  children: React.ReactNode
-  title: string
+  isOpenInfoModel: boolean;
+  closeInfoModel: () => void;
+  children: React.ReactNode;
+  title: string;
 }
 interface IPropsDetailsModel {
-  isOpenDetailsModel: boolean
-  closeDetailsModel: () => void
-  title?: string
-  children: React.ReactNode
+  isOpenDetailsModel: boolean;
+  closeDetailsModel: () => void;
+  title?: string;
+  children: React.ReactNode;
 }
 
 interface IPropsJoinQuizModel {
-  isOpenJoinQuizModel: boolean
-  closeJoinQuizModel: () => void
-  children: React.ReactNode
+  isOpenJoinQuizModel: boolean;
+  closeJoinQuizModel: () => void;
+  children: React.ReactNode;
 }
 
 export const AddModel = ({ isOpen, closeModal, children, title }: IProps) => {
   return (
     <>
-
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-50" onClose={closeModal}>
           <Transition.Child
@@ -77,25 +76,25 @@ export const AddModel = ({ isOpen, closeModal, children, title }: IProps) => {
                   >
                     {title}
                   </Dialog.Title>
-                  <div className="mt-2">
-                    {children}
-                  </div>
-
+                  <div className="mt-2">{children}</div>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
           </div>
         </Dialog>
       </Transition>
-
     </>
-  )
-}
+  );
+};
 
-export const DeleteModel = ({ isOpenDeleteModel, closeModalDelete, children }: IPropsDeleteModel) => {
+export const DeleteModel = ({
+  isOpenDeleteModel,
+  closeModalDelete,
+  children,
+}: IPropsDeleteModel) => {
   return (
     <>
-      <div className='w-full'>
+      <div className="w-full">
         <Transition appear show={isOpenDeleteModel} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={closeModalDelete}>
             <Transition.Child
@@ -123,13 +122,9 @@ export const DeleteModel = ({ isOpenDeleteModel, closeModalDelete, children }: I
                 >
                   <Dialog.Panel className="w-full max-w-sm transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                     <div className="mt-2 flex flex-col items-center gap-3">
-                      <Trash2 size={70} className='text-red-500 mx-auto' />
-                      <div className='text-center'>
-                        {children}
-                      </div>
-
+                      <Trash2 size={70} className="text-red-500 mx-auto" />
+                      <div className="text-center">{children}</div>
                     </div>
-
                   </Dialog.Panel>
                 </Transition.Child>
               </div>
@@ -138,13 +133,18 @@ export const DeleteModel = ({ isOpenDeleteModel, closeModalDelete, children }: I
         </Transition>
       </div>
     </>
-  )
-}
+  );
+};
 
-export const EditModel = ({ isOpenEditModel, closeModalEdit, children, title }: IPropsEditModel) => {
+export const EditModel = ({
+  isOpenEditModel,
+  closeModalEdit,
+  children,
+  title,
+}: IPropsEditModel) => {
   return (
     <>
-      <div className='w-full'>
+      <div className="w-full">
         <Transition appear show={isOpenEditModel} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={closeModalEdit}>
             <Transition.Child
@@ -177,10 +177,7 @@ export const EditModel = ({ isOpenEditModel, closeModalEdit, children, title }: 
                     >
                       {title}
                     </Dialog.Title>
-                    <div className="mt-2">
-                      {children}
-                    </div>
-
+                    <div className="mt-2">{children}</div>
                   </Dialog.Panel>
                 </Transition.Child>
               </div>
@@ -189,13 +186,18 @@ export const EditModel = ({ isOpenEditModel, closeModalEdit, children, title }: 
         </Transition>
       </div>
     </>
-  )
-}
+  );
+};
 
-export const InfoModel = ({ isOpenInfoModel, closeInfoModel, children, title }: IPropsInfoModel) => {
+export const InfoModel = ({
+  isOpenInfoModel,
+  closeInfoModel,
+  children,
+  title,
+}: IPropsInfoModel) => {
   return (
     <>
-      <div className='w-full'>
+      <div className="w-full">
         <Transition appear show={isOpenInfoModel} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={closeInfoModel}>
             <Transition.Child
@@ -223,14 +225,17 @@ export const InfoModel = ({ isOpenInfoModel, closeInfoModel, children, title }: 
                 >
                   <Dialog.Panel className="w-full max-w-sm transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                     <div className="mt-2 flex flex-col items-center  gap-1">
-                      <Check className='bg-black rounded-full p-1 text-2xl' size={70} strokeWidth={3} color='white' />
-                      <div className='text-center font-extrabold text-2xl '>
+                      <Check
+                        className="bg-black rounded-full p-1 text-2xl"
+                        size={70}
+                        strokeWidth={3}
+                        color="white"
+                      />
+                      <div className="text-center font-extrabold text-2xl ">
                         {title}
                       </div>
                       {children}
-
                     </div>
-
                   </Dialog.Panel>
                 </Transition.Child>
               </div>
@@ -239,15 +244,24 @@ export const InfoModel = ({ isOpenInfoModel, closeInfoModel, children, title }: 
         </Transition>
       </div>
     </>
-  )
-}
+  );
+};
 
-export const DetailsModel = ({ isOpenDetailsModel, closeDetailsModel, children, title }: IPropsDetailsModel) => {
+export const DetailsModel = ({
+  isOpenDetailsModel,
+  closeDetailsModel,
+  children,
+  title,
+}: IPropsDetailsModel) => {
   return (
     <>
-      <div className='w-full'>
+      <div className="w-full">
         <Transition appear show={isOpenDetailsModel} as={Fragment}>
-          <Dialog as="div" className="relative z-10" onClose={closeDetailsModel}>
+          <Dialog
+            as="div"
+            className="relative z-10"
+            onClose={closeDetailsModel}
+          >
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -278,10 +292,7 @@ export const DetailsModel = ({ isOpenDetailsModel, closeDetailsModel, children, 
                     >
                       {title}
                     </Dialog.Title>
-                    <div className="mt-2">
-                      {children}
-                    </div>
-
+                    <div className="mt-2">{children}</div>
                   </Dialog.Panel>
                 </Transition.Child>
               </div>
@@ -290,13 +301,16 @@ export const DetailsModel = ({ isOpenDetailsModel, closeDetailsModel, children, 
         </Transition>
       </div>
     </>
-  )
-}
+  );
+};
 
-export const JoinTaskModel = ({ isOpenJoinQuizModel, closeJoinQuizModel, children }: IPropsJoinQuizModel) => {
+export const JoinTaskModel = ({
+  isOpenJoinQuizModel,
+  closeJoinQuizModel,
+  children,
+}: IPropsJoinQuizModel) => {
   return (
     <>
-
       <Transition appear show={isOpenJoinQuizModel} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeJoinQuizModel}>
           <Transition.Child
@@ -324,10 +338,12 @@ export const JoinTaskModel = ({ isOpenJoinQuizModel, closeJoinQuizModel, childre
               >
                 <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
                   <div className="p-5  flex flex-col items-center  gap-3">
-                    <div className='text-center font-extrabold text-3xl '>
+                    <div className="text-center font-extrabold text-3xl ">
                       Join Quiz
                     </div>
-                    <p className='text-md text-center'>Input the code received for the quiz below to join</p>
+                    <p className="text-md text-center">
+                      Input the code received for the quiz below to join
+                    </p>
                     {children}
                   </div>
                 </Dialog.Panel>
@@ -337,5 +353,5 @@ export const JoinTaskModel = ({ isOpenJoinQuizModel, closeJoinQuizModel, childre
         </Dialog>
       </Transition>
     </>
-  )
-}
+  );
+};
