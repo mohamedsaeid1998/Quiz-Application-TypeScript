@@ -1,10 +1,9 @@
-import { MouseEvent, useState } from 'react'
-import { toast } from 'react-toastify'
 import { Button } from '@/Components'
-import { AuthInput } from '../AuthInputs/AuthInputs'
 import { IFormLogin } from '@/InterFaces/AuthInterFaces'
+import { MouseEvent, useState } from 'react'
 import { UseFormSetValue } from 'react-hook-form'
-import useToggle from '@/Hooks/useToggle'
+import { toast } from 'react-toastify'
+import { AuthInput } from '../AuthInputs/AuthInputs'
 interface IProps {
   setValue: UseFormSetValue<IFormLogin>
 }
